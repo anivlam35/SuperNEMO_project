@@ -10,7 +10,7 @@ void extracting_data(){
 	TFile* file = new TFile(Form("../runs/Run-%d.root", run_number));
 	TTree* tree = (TTree*) file->Get("Event");
 	
-	// Uploding necessary event
+	// Uploading necessary event
 	TKEvent* event = new TKEvent();
 	tree->SetBranchAddress("Eventdata", &event);	
 	tree->GetEntry(event_number);
