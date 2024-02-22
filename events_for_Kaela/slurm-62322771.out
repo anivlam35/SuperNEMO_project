@@ -1,0 +1,28 @@
+****************************************************************
+*                      SLURM Batch System                      *
+*           IN2P3 Computing Centre, Villeurbanne FR            *
+****************************************************************
+* Date:                 Thu Jan 25 10:26:17 CET 2024
+* Job name:             stc.sh
+* Job id:               62322771
+* User:                 ikovalen
+* Account:              nemo
+* Submit host:          cca019
+* Partition:            htc
+* Quality of service:   normal
+* Nodelist:             ccwslurm0313
+****************************************************************
+root: can't figure out DISPLAY, set it manually
+In case you run a remote ssh session, restart your ssh session with:
+=========>  ssh -Y
+****************************************************************
+*                      SLURM Batch System                      *
+*           IN2P3 Computing Centre, Villeurbanne FR            *
+****************************************************************
+Date: Thu Jan 25 10:26:17 CET 2024
+Job informations can be found using these commands:
+Accounting:
+sacct -j 62322771
+Efficiency:
+seff 62322771
+****************************************************************

@@ -1,0 +1,42 @@
+****************************************************************
+*                      SLURM Batch System                      *
+*           IN2P3 Computing Centre, Villeurbanne FR            *
+****************************************************************
+* Date:                 Tue Feb 20 10:04:47 CET 2024
+* Job name:             stc.sh
+* Job id:               66430990
+* User:                 ikovalen
+* Account:              nemo
+* Submit host:          cca014
+* Partition:            htc
+* Quality of service:   normal
+* Nodelist:             ccwslurm0363
+****************************************************************
+   ------------------------------------------------------------
+  | Welcome to ROOT 6.16/00                  https://root.cern |
+  |                               (c) 1995-2018, The ROOT Team |
+  | Built for linuxx8664gcc on Jan 23 2019, 09:06:13           |
+  | From tags/v6-16-00@v6-16-00                                |
+  | Try '.help', '.demo', '.license', '.credits', '.quit'/'.q' |
+   ------------------------------------------------------------
+
+
+Processing tt_events_search.cpp...
+In file included from input_line_10:1:
+/sps/nemo/scratch/ikovalen/run_728/two_tracks_events/tt_events_search.cpp:26:12: error: no member named 'num_of_tracks' in 'TKEvent'
+                if (eve->num_of_tracks() > 1)
+                    ~~~  ^
+/sps/nemo/scratch/ikovalen/run_728/two_tracks_events/tt_events_search.cpp:28:32: warning: ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
+                        eve->make_top_projection(2, "tt_events_examples");
+                                                    ^
+****************************************************************
+*                      SLURM Batch System                      *
+*           IN2P3 Computing Centre, Villeurbanne FR            *
+****************************************************************
+Date: Tue Feb 20 10:04:52 CET 2024
+Job informations can be found using these commands:
+Accounting:
+sacct -j 66430990
+Efficiency:
+seff 66430990
+****************************************************************

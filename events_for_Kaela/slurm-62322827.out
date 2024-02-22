@@ -1,0 +1,34 @@
+****************************************************************
+*                      SLURM Batch System                      *
+*           IN2P3 Computing Centre, Villeurbanne FR            *
+****************************************************************
+* Date:                 Thu Jan 25 10:27:46 CET 2024
+* Job name:             stc.sh
+* Job id:               62322827
+* User:                 ikovalen
+* Account:              nemo
+* Submit host:          cca019
+* Partition:            htc
+* Quality of service:   normal
+* Nodelist:             ccwslurm0039
+****************************************************************
+
+Processing /sps/nemo/scratch/ikovalen/events_for_Kaela/visualize_quality.cpp...
+In file included from input_line_10:1:
+/sps/nemo/scratch/ikovalen/events_for_Kaela/visualize_quality.cpp:14:9: error: use of undeclared identifier 's'
+        s->SetBranchAddress("Eventdata", &event);
+        ^
+/sps/nemo/scratch/ikovalen/events_for_Kaela/visualize_quality.cpp:14:43: error: use of undeclared identifier 'event'
+        s->SetBranchAddress("Eventdata", &event);
+                                          ^
+****************************************************************
+*                      SLURM Batch System                      *
+*           IN2P3 Computing Centre, Villeurbanne FR            *
+****************************************************************
+Date: Thu Jan 25 10:27:50 CET 2024
+Job informations can be found using these commands:
+Accounting:
+sacct -j 62322827
+Efficiency:
+seff 62322827
+****************************************************************

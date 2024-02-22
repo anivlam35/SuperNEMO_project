@@ -1,0 +1,139 @@
+****************************************************************
+*                      SLURM Batch System                      *
+*           IN2P3 Computing Centre, Villeurbanne FR            *
+****************************************************************
+* Date:                 Tue Feb 20 10:13:15 CET 2024
+* Job name:             stc.sh
+* Job id:               66432370
+* User:                 ikovalen
+* Account:              nemo
+* Submit host:          cca014
+* Partition:            htc
+* Quality of service:   normal
+* Nodelist:             ccwslurm0335
+****************************************************************
+   ------------------------------------------------------------
+  | Welcome to ROOT 6.16/00                  https://root.cern |
+  |                               (c) 1995-2018, The ROOT Team |
+  | Built for linuxx8664gcc on Jan 23 2019, 09:06:13           |
+  | From tags/v6-16-00@v6-16-00                                |
+  | Try '.help', '.demo', '.license', '.credits', '.quit'/'.q' |
+   ------------------------------------------------------------
+
+
+Processing tt_events_search.cpp...
+In file included from input_line_10:1:
+/sps/nemo/scratch/ikovalen/run_728/two_tracks_events/tt_events_search.cpp:28:32: warning: ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
+                        eve->make_top_projection(2, "tt_events_examples");
+                                                    ^
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-0_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-4_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-9_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-13_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-19_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-20_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-26_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-30_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-37_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-45_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-46_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-49_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-53_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-55_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-63_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-84_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-87_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-94_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-96_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-119_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-120_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-127_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-129_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-135_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-148_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-152_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-169_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-171_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-172_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-174_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-177_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-188_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-192_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-199_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-209_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-212_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-213_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-239_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-242_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-244_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-247_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-256_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-259_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-261_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-265_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-267_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-270_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-280_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-289_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-306_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-309_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-315_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-316_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-322_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-323_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-331_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-333_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-334_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-340_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-347_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-348_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-351_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-353_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-379_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-385_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-388_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-389_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-396_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-399_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-416_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-421_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-425_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-429_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-434_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-441_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-443_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-448_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-450_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-451_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-452_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-456_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-458_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-459_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-470_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-474_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-479_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-484_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-494_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-499_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-505_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-507_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-521_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-524_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-553_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-556_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-557_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-563_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-577_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-587_2D.png has been created
+Info in <TCanvas::Print>: png file ./tt_events_examples/Run-974_event-591_2D.png has been created
+****************************************************************
+*                      SLURM Batch System                      *
+*           IN2P3 Computing Centre, Villeurbanne FR            *
+****************************************************************
+Date: Tue Feb 20 10:13:58 CET 2024
+Job informations can be found using these commands:
+Accounting:
+sacct -j 66432370
+Efficiency:
+seff 66432370
+****************************************************************
