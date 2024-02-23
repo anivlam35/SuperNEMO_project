@@ -17,6 +17,8 @@ const    int Y_BINS = 830;     //12;
 const double Z_MIN  = -1638.0; //-100.0; 
 const double Z_MAX  = 1638.0;  //100.0;
 const    int Z_BINS = 468;     //20;
+const    int N_ROWS = 7;
+const    int N_COLS = 6;
 
 int X_BasePlane = 0;
 
@@ -72,37 +74,37 @@ void FoilPlane_TracksSaving()
 		Eve->set_r("Manchester", "distance");
 		Eve->set_h();
 		Eve->reconstruct_ML(0);
-		for(int NSOR = 0; NSOR<N_SRCPLN; NSOR++)
+
+		if (Eve->get_no_tracks() == 1)
 		{
-			if (Eve->get_no_tracks() == 1)
-			{
-				double Y = Eve->get_tracks()[0]->get_a()*X_BasePlane*X_STP + Eve->get_tracks()[0]->get_b();
-				double Z = Eve->get_tracks()[0]->get_c()*X_BasePlane*X_STP + Eve->get_tracks()[0]->get_d();
+			double Y = Eve->get_track(0)->get_b();
+			double Z = Eve->get_track(0)->get_d();
 
-				if(Z!=0 && Y_MIN + NSOR%6*830 < Y && Y < Y_MIN + (NSOR%6+1)*830 && Z_MAX-((NSOR/6)+1)*468 < Z && Z < Z_MAX-(NSOR/6)*468)
+			if(Z!=0 && Y_MIN < Y && Y < Y_MAX && Z_MIN < Z && Z < Z_MAX)
+			{	
+				int NSOR = N_COLS * ((int)(Z_MAX - Z) / 468) + (int)(Y - Y_MIN) / 833;
+				if(Eve->get_track(0)->get_side()==0)
 				{
-					if(Eve->get_tracks()[0]->get_side()==0)
-					{
-						A_Tree[0][NSOR] = Eve->get_tracks()[0]->get_a();
-						B_Tree[0][NSOR] = Eve->get_tracks()[0]->get_b();
-						C_Tree[0][NSOR] = Eve->get_tracks()[0]->get_c();
-						D_Tree[0][NSOR] = Eve->get_tracks()[0]->get_d();
+					A_Tree[0][NSOR] = Eve->get_track(0)->get_a();
+					B_Tree[0][NSOR] = Eve->get_track(0)->get_b();
+					C_Tree[0][NSOR] = Eve->get_track(0)->get_c();
+					D_Tree[0][NSOR] = Eve->get_track(0)->get_d();
 
-						Tree[0][NSOR]->Fill();
-					}
-						
-					else
-					{
-						A_Tree[1][NSOR] = Eve->get_tracks()[0]->get_a();
-						B_Tree[1][NSOR] = Eve->get_tracks()[0]->get_b();
-						C_Tree[1][NSOR] = Eve->get_tracks()[0]->get_c();
-						D_Tree[1][NSOR] = Eve->get_tracks()[0]->get_d();
+					Tree[0][NSOR]->Fill();
+				}
+					
+				else
+				{
+					A_Tree[1][NSOR] = Eve->get_track(0)->get_a();
+					B_Tree[1][NSOR] = Eve->get_track(0)->get_b();
+					C_Tree[1][NSOR] = Eve->get_track(0)->get_c();
+					D_Tree[1][NSOR] = Eve->get_track(0)->get_d();
 
-						Tree[1][NSOR]->Fill();
-					}
+					Tree[1][NSOR]->Fill();
 				}
 			}
 		}
+		
 		if (i % 10000 == 0) cout <<"Event No. " << i << " done!" <<endl;
 	}	
 
