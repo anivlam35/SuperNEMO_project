@@ -1,6 +1,6 @@
-#include "/sps/nemo/scratch/ikovalen/TKEvent/TKEvent/include/TKEvent.h"
+#include "/sps/nemo/scratch/ikovalen/TKEvent_old/TKEvent/include/TKEvent.h"
 
-R__LOAD_LIBRARY(/sps/nemo/scratch/ikovalen/TKEvent/TKEvent/lib/libTKEvent.so);
+R__LOAD_LIBRARY(/sps/nemo/scratch/ikovalen/TKEvent_old/TKEvent/lib/libTKEvent.so);
 
 using namespace std;
 
@@ -9,7 +9,7 @@ const int NBINS = int(1 / STEP);
 
 void quality_events_search()
 {
-	TFile* f = new TFile("/sps/nemo/scratch/ikovalen/TKEvent/runs/Run-974.root");
+	TFile* f = new TFile("/sps/nemo/scratch/ikovalen/TKEvent_old/runs/Run-728.root");
 	TTree* s = (TTree*) f->Get("Event");
 
 	TKEvent* event = new TKEvent(-1,-1);
@@ -31,11 +31,7 @@ void quality_events_search()
 		TBranch* branch2 = Tree[BIN]->Branch("quality", &quality[BIN], "quality/D");
 	}
 
-	//TCanvas *C = new TCanvas("C", "Histogram of tracks quality", 800, 600);	
-
-	//TH1D *h = new TH1D("h", "Histogram of tracks quality", NBINS, 0, 1);
 	for(int event_number = 0; event_number < s->GetEntries(); event_number++)
-	//for(int event_number = 0; event_number < 1000; event_number++)
 	{	
 		s->GetEntry(event_number);
 		event->set_r("Manchester", "distance");
@@ -55,14 +51,10 @@ void quality_events_search()
 		if (event_number % 10000 == 0) cout << "Event " << event_number << "/" << s->GetEntries() << " is DONE!" << endl; 
 	}
 	
-	//h->Draw();
-	//C->Print("Tracks_quality_histogram.png");
-		
 	for(int BIN = 0; BIN < NBINS; BIN++)
 	{
         	stringstream treename;
                	treename << "Events with quality from " << STEP*BIN << " to " << (BIN + 1) * STEP;
-		
 		Tree[BIN]->Write(treename.str().c_str());	
 	}
 

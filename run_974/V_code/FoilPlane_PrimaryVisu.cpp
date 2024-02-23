@@ -8,7 +8,7 @@ const int  X_BasePlane = 0;
 const int X_OBSERV_MIN = -20;
 const int X_OBSERV_MAX = 20;
 const int     X_OBSERV = 0;
-const int     N_SRCPLN = 42;
+const int     N_SRCPLN = 14;
 
 // const int SRC_NO = 5;
 
@@ -53,7 +53,7 @@ void FoilPlane_PrimaryVisu()
 
 		TH2D* h_vert_real[2*X_OBSERV_MAX+1];  
 
-		for(int iX = X_OBSERV_MIN; iX<X_OBSERV_MAX+1; iX++)
+		for(int iX = X_OBSERV_MIN; iX<X_OBSERV_MAX+1; iX+=10)
 		{
 			stringstream h_name;
 
@@ -78,7 +78,7 @@ void FoilPlane_PrimaryVisu()
 			}
 		}
 
-		for(int iX = X_OBSERV_MIN; iX < X_OBSERV_MAX+1; iX+=5)
+		for(int iX = X_OBSERV_MIN; iX < X_OBSERV_MAX+1; iX+=10)
 		{
 			TCanvas* C0 = new TCanvas("Canvas", "Canvas");
 			h_vert_real[iX + X_OBSERV_MAX]->Draw("COLZ"); 

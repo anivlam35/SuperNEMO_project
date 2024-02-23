@@ -9,46 +9,55 @@ const int NBINS = int(1 / STEP);
 
 void high_quality_events_listing()
 {
-	TFile* f = new TFile("/sps/nemo/scratch/ikovalen/TKEvent/runs/Run-974.root");
-	TTree* s = (TTree*) f->Get("Event");
+	TFile* f = new TFile("quality_file.root");
+	
+	double input_quality;
+	cout << "Enter lower boundary of quality: ";
+	cin >> input_quality;
 
-	TKEvent* event = new TKEvent(-1,-1);
-	s->SetBranchAddress("Eventdata", &event);
+	int START_BIN = input_quality / STEP;
+	double l_qual = START_BIN * STEP;
+
+        TFile *output_file = new TFile(Form("events_with_quality_more_%3.2lf.root", l_qual), "RECREATE");
 	
-        TFile *quality_file = new TFile("events_with_quality_more_0_5.root", "RECREATE");
-	
-	TTree* Tree;
+	TTree* Out_Tree;
 	int e_number;
 	double quality;
 
-	string treename = "Events with quality more than 0.5";
-	Tree = new TTree(treename.c_str(), treename.c_str());
+	string treename = Form("Events with quality more than %3.2lf", l_qual);
+	Out_Tree = new TTree(treename.c_str(), treename.c_str());
 
-	TBranch* branch1 = Tree->Branch("e_number", &e_number, "event_number/I");
-	TBranch* branch2 = Tree->Branch("quality", &quality, "quality/D");
+	TBranch* branch1 = Out_Tree->Branch("e_number", &e_number, "event_number/I");
+	TBranch* branch2 = Out_Tree->Branch("quality", &quality, "quality/D");
 	
-
-	for(int event_number = 0; event_number < s->GetEntries(); event_number++)
-	{	
-		s->GetEntry(event_number);
-		event->set_r("Manchester", "distance");
-		event->set_h();
-		event->reconstruct_ML(0);
+        for(int BIN = START_BIN; BIN < NBINS; BIN++)
+        {
+                stringstream treename;
+                treename << "Events with quality from " << STEP*BIN << " to " << (BIN + 1) * STEP;
 		
-		if (event->get_no_tracks() == 1)
-		{	
-			if (event->get_track(0)->get_quality() > 0.5)
-			{
-				quality = event->get_track(0)->get_quality();
-				e_number = event_number;
-				Tree->Fill();
-			}
-		}
-		if (event_number % 10000 == 0) cout << "Event " << event_number << "/" << s->GetEntries() << " is DONE!" << endl; 
+		TTree* Tree = (TTree*) f->Get(treename.str().c_str());
+		
+		Tree->SetBranchAddress("e_number", &e_number);
+		Tree->SetBranchAddress("quality", &quality);
+		for(int Entry = 0; Entry < Tree->GetEntries(); Entry++)
+		{
+			Tree->GetEntry(Entry);
+			Out_Tree->Fill();		
+		}                
+    		cout << "BIN " << BIN - START_BIN + 1  << "/" << NBINS - START_BIN << " is DONE!" << endl;
 	}
 	
-	Tree->Write(treename.c_str());	
+	Out_Tree->Write(treename.c_str());	
 
-	quality_file->Close();
-
+	output_file->Close();
+	
+//	output_file = new TFile(Form("events_with_quality_more_%3.2lf.root", l_qual));
+//	TTree* Tree = (TTree*)output_file->Get(Form("Events with quality more than %3.2lf", l_qual));
+//      Tree->SetBranchAddress("e_number", &e_number);
+//      Tree->SetBranchAddress("quality", &quality);
+//	for(int Entry = 100000; Entry < 101000; Entry++)
+//	{
+//		Tree->GetEntry(Entry);
+//		cout << "Event number: " << e_number << ". Quality: " << quality << "." << endl; 	
+//	}
 }
