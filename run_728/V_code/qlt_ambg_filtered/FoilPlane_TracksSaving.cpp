@@ -74,7 +74,7 @@ void FoilPlane_TracksSaving()
 
 		if (Eve->get_no_tracks() == 1)
 		{	
-			if (Eve->get_track(0)->get_quality() > 0.6){
+			if (Eve->get_track(0)->get_quality() > 0.6 && Eve->get_track(0)->get_quality() < 0.96){
 			double Y = Eve->get_track(0)->get_b();
 			double Z = Eve->get_track(0)->get_d();
 

@@ -1,0 +1,108 @@
+****************************************************************
+*                      SLURM Batch System                      *
+*           IN2P3 Computing Centre, Villeurbanne FR            *
+****************************************************************
+* Date:                 Mon Feb 26 11:37:09 CET 2024
+* Job name:             sending_to_cluster.sh
+* Job id:               66941805
+* User:                 ikovalen
+* Account:              nemo
+* Submit host:          cca019
+* Partition:            htc
+* Quality of service:   normal
+* Nodelist:             ccwslurm0131
+****************************************************************
+   ------------------------------------------------------------
+  | Welcome to ROOT 6.16/00                  https://root.cern |
+  |                               (c) 1995-2018, The ROOT Team |
+  | Built for linuxx8664gcc on Jan 23 2019, 09:06:13           |
+  | From tags/v6-16-00@v6-16-00                                |
+  | Try '.help', '.demo', '.license', '.credits', '.quit'/'.q' |
+   ------------------------------------------------------------
+
+
+Processing /sps/nemo/scratch/ikovalen/SuperNEMO_project/run_728/V_code/qlt_ambg_filtered/OMs_tdc_extracting.cpp...
+Event No. 0 done!
+Event No. 10000 done!
+Event No. 20000 done!
+Event No. 30000 done!
+Event No. 40000 done!
+Event No. 50000 done!
+Event No. 60000 done!
+Event No. 70000 done!
+Event No. 80000 done!
+Event No. 90000 done!
+Event No. 100000 done!
+Event No. 110000 done!
+Event No. 120000 done!
+Event No. 130000 done!
+Event No. 140000 done!
+Event No. 150000 done!
+Event No. 160000 done!
+Event No. 170000 done!
+Event No. 180000 done!
+Event No. 190000 done!
+Event No. 200000 done!
+Event No. 210000 done!
+Event No. 220000 done!
+Event No. 230000 done!
+Event No. 240000 done!
+Event No. 250000 done!
+Event No. 260000 done!
+Event No. 270000 done!
+Event No. 280000 done!
+Event No. 290000 done!
+Event No. 300000 done!
+Event No. 310000 done!
+Event No. 320000 done!
+Event No. 330000 done!
+Event No. 340000 done!
+Event No. 350000 done!
+Event No. 360000 done!
+Event No. 370000 done!
+Event No. 380000 done!
+Event No. 390000 done!
+Event No. 400000 done!
+Event No. 410000 done!
+Event No. 420000 done!
+Event No. 430000 done!
+Event No. 440000 done!
+Event No. 450000 done!
+Event No. 460000 done!
+Event No. 470000 done!
+Event No. 480000 done!
+Event No. 490000 done!
+Event No. 500000 done!
+Event No. 510000 done!
+Event No. 520000 done!
+Event No. 530000 done!
+Event No. 540000 done!
+Event No. 550000 done!
+Event No. 560000 done!
+Event No. 570000 done!
+Event No. 580000 done!
+Event No. 590000 done!
+Event No. 600000 done!
+Event No. 610000 done!
+Event No. 620000 done!
+Event No. 630000 done!
+Event No. 640000 done!
+Event No. 650000 done!
+Event No. 660000 done!
+Event No. 670000 done!
+Event No. 680000 done!
+Event No. 690000 done!
+Event No. 700000 done!
+Event No. 710000 done!
+Event No. 720000 done!
+Event No. 730000 done!
+Event No. 740000 done!
+Event No. 750000 done!
+Event No. 760000 done!
+Event No. 770000 done!
+Event No. 780000 done!
+Event No. 790000 done!
+Event No. 800000 done!
+Event No. 810000 done!
+Event No. 820000 done!
+Event No. 830000 done!

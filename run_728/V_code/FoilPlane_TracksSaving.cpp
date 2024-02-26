@@ -72,16 +72,14 @@ void FoilPlane_TracksSaving()
 		Eve->set_r("Manchester", "distance");
 		Eve->set_h();
 		Eve->reconstruct_ML(0);
-		for(int NSOR = 0; NSOR<N_SRCPLN; NSOR++)
-		{
 			for(int j = 0; j<Eve->get_no_tracks(); j++)
 			{
-				double Y = Eve->get_tracks()[j]->get_a()*X_BasePlane*X_STP + Eve->get_tracks()[j]->get_b();
-				double Z = Eve->get_tracks()[j]->get_c()*X_BasePlane*X_STP + Eve->get_tracks()[j]->get_d();
+				double Y = Eve->get_tracks()[j]->get_b();
+				double Z = Eve->get_tracks()[j]->get_d();
 
-				if(Z!=0 && Y_MIN + NSOR%2*830 < Y && Y < Y_MIN + (NSOR%2+1)*830 && Z_MAX-((NSOR/2)+1)*468 < Z && Z < Z_MAX-(NSOR/2)*468)
+				if(Z!=0 && Y_MIN < Y && Y < Y_MAX && Z_MIN < Z && Z < Z_MAX)
 				{
-					cout << Z << endl;
+					int NSOR = N_COLS * ((int)(Z_MAX - Z) / 468) + (int)(Y - Y_MIN) / 833;
 					if(Eve->get_tracks()[j]->get_side()==0)
 					{
 						A_Tree[0][NSOR] = Eve->get_tracks()[j]->get_a();
@@ -103,7 +101,7 @@ void FoilPlane_TracksSaving()
 					}
 				}
 			}
-		}
+		
 		if (i % 10000 == 0) cout <<"Event No. " << i << " done!" <<endl;
 	}	
 
