@@ -36,7 +36,8 @@ void OMs_tdc_extracting()
 
 	// Filling Tree
 	// Use s->GetEntries() for all entries in Run
-	for(UInt_t i=0; i < s->GetEntries(); i++)	// Loop over events
+	for(UInt_t i=0; i < 10000; i++)	// Loop over events
+	//for(UInt_t i=0; i < s->GetEntries(); i++)	// Loop over events
 	{
 		s->GetEntry(i);
 		Eve->set_r("Manchester", "distance");
@@ -47,6 +48,7 @@ void OMs_tdc_extracting()
 		{	
 			TKOMhit* OMhit = Eve->get_cluster(0)->get_tr_hits()[0]->get_associated_OMhit();
 			int OM_num = OMhit->get_OM_num();
+			cout << "TDC: " << OMhit->get_OM_pcell() << endl;
 			CHRG_Tree[OM_num] = OMhit->get_OM_TDC();
 			Tree[OM_num]->Fill(); 
 		}
@@ -56,6 +58,7 @@ void OMs_tdc_extracting()
 			{
 	                        TKOMhit* OMhit = Eve->get_cluster(0)->get_tr_hits()[0]->get_associated_OMhit();
                         	int OM_num = OMhit->get_OM_num();
+				cout <<	"TDC: " << OMhit->get_OM_TDC() << endl;
                         	CHRG_Tree[OM_num] = OMhit->get_OM_TDC();
                         	Tree[OM_num]->Fill();
 			}

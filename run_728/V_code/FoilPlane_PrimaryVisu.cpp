@@ -88,8 +88,14 @@ void FoilPlane_PrimaryVisu()
 		for(int iX = X_OBSERV_MIN; iX < X_OBSERV_MAX+1; iX+=10)
 		{
 			TCanvas* C0 = new TCanvas("Canvas", "Canvas");
-			h_vert_real[iX + X_OBSERV_MAX]->Draw("COLZ"); 
-			//h_vert_real[iX + X_OBSERV_MAX]->Write(h_name.str().c_str());
+			h_vert_real[iX + X_OBSERV_MAX]->Draw("COLZ");
+
+			C0->Update();
+			TPaveStats *st = (TPaveStats*)h_vert_real[iX + X_OBSERV_MAX]->FindObject("stats");
+			st->SetX1NDC(0.75);			
+			st->SetX2NDC(0.9);
+                        st->SetY1NDC(0.78);
+                        st->SetY2NDC(0.9);
 
 			stringstream hnm;
 			hnm << "HISTOS/SRC" << NSOR << "X" << iX - X_OBSERV_MIN << "NEG.png" ;

@@ -106,3 +106,30 @@ Event No. 800000 done!
 Event No. 810000 done!
 Event No. 820000 done!
 Event No. 830000 done!
+Event No. 840000 done!
+Event No. 850000 done!
+Event No. 860000 done!
+Event No. 870000 done!
+Event No. 880000 done!
+Event No. 890000 done!
+Event No. 900000 done!
+Event No. 910000 done!
+Event No. 920000 done!
+Event No. 930000 done!
+Event No. 940000 done!
+Event No. 950000 done!
+Event No. 960000 done!
+Event No. 970000 done!
+Event No. 980000 done!
+DONE!
+****************************************************************
+*                      SLURM Batch System                      *
+*           IN2P3 Computing Centre, Villeurbanne FR            *
+****************************************************************
+Date: Mon Feb 26 12:26:53 CET 2024
+Job informations can be found using these commands:
+Accounting:
+sacct -j 66941805
+Efficiency:
+seff 66941805
+****************************************************************
