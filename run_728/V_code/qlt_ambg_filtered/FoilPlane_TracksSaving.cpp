@@ -19,6 +19,8 @@ const    int Z_BINS = 468;     //20;
 const    int N_ROWS = 7;
 const    int N_COLS = 2;
 
+int event_selection(TKEvent* event, double low_qlt, double high_qlt, int ambg_mode); 
+int choose_ambg_track(TKEvent* event);
 
 void FoilPlane_TracksSaving()
 {
@@ -40,7 +42,7 @@ void FoilPlane_TracksSaving()
 	double D_Tree[2][N_SRCPLN];
 
 	
-
+	
 	for(int NSOR = 0; NSOR<N_SRCPLN; NSOR++)
 	{
 		stringstream ss0, ss1;
@@ -71,93 +73,27 @@ void FoilPlane_TracksSaving()
 		Eve->set_r("Manchester", "distance");
 		Eve->set_h();
 		Eve->reconstruct_ML(0);		
-
-		if (Eve->get_no_tracks() == 1)
+		
+		int event_choice = event_selection(Eve, 0.6, 0.98, 1);
+		if (event_choice)
 		{	
-			if (Eve->get_track(0)->get_quality() > 0.6 && Eve->get_track(0)->get_quality() < 0.96){
-			double Y = Eve->get_track(0)->get_b();
-			double Z = Eve->get_track(0)->get_d();
+			int track_num = event_choice - 1;
+			double Y = Eve->get_track(track_num)->get_b();
+			double Z = Eve->get_track(track_num)->get_d();
 
 			if(Z!=0 && Z > Z_MIN && Z < Z_MAX && Y > Y_MIN && Y < Y_MAX)
 			{
 				int NSOR = N_COLS * ((int)(Z_MAX - Z) / 468) + (int)(Y - Y_MIN) / 833;	
-				if(Eve->get_track(0)->get_side() == 0)
-				{
-					A_Tree[0][NSOR] = Eve->get_track(0)->get_a();
-					B_Tree[0][NSOR] = Eve->get_track(0)->get_b();
-					C_Tree[0][NSOR] = Eve->get_track(0)->get_c();
-					D_Tree[0][NSOR] = Eve->get_track(0)->get_d();
+				int side = Eve->get_track(track_num)->get_side() == 0;
+				
+				A_Tree[side][NSOR] = Eve->get_track(track_num)->get_a();
+				B_Tree[side][NSOR] = Eve->get_track(track_num)->get_b();
+				C_Tree[side][NSOR] = Eve->get_track(track_num)->get_c();
+				D_Tree[side][NSOR] = Eve->get_track(0)->get_d();
 
-					Tree[0][NSOR]->Fill();
-				}
-					
-				else
-				{
-					A_Tree[1][NSOR] = Eve->get_track(0)->get_a();
-					B_Tree[1][NSOR] = Eve->get_track(0)->get_b();
-					C_Tree[1][NSOR] = Eve->get_track(0)->get_c();
-					D_Tree[1][NSOR] = Eve->get_track(0)->get_d();
-
-					Tree[1][NSOR]->Fill();
-				}
-			}
+				Tree[side][NSOR]->Fill();
 			}
 		}
-		else if (Eve->get_no_tracks() == 2)
-                {
-			if (Eve->get_track(0)->get_ambiguity_type() != 0 && Eve->get_track(0)->get_quality() > 0.6)
-			{
-                        double Y1 = Eve->get_track(0)->get_b();
-                        double Z1 = Eve->get_track(0)->get_d();
-
-			double Y2 = Eve->get_track(1)->get_b();
-                        double Z2 = Eve->get_track(1)->get_d();
-			
-			if (Z1!=0 && Z2!=0 && Z1 > Z_MIN && Z1 < Z_MAX && Y1 > Y_MIN && Y1 < Y_MAX && Z2 > Z_MIN && Z2 < Z_MAX && Y2 > Y_MIN && Y2 < Y_MAX)
-			{
-			int NSOR1 = N_COLS * ((int)(Z_MAX - Z1) / 468) + (int)(Y1 - Y_MIN) / 833;
-			int NSOR2 = N_COLS * ((int)(Z_MAX - Z2) / 468) + (int)(Y2 - Y_MIN) / 833;
-			
-			double Y_SOR1 = Y_MIN + (NSOR1 % N_COLS + 0.5) * 833;
-			double Z_SOR1 =	Z_MAX - (NSOR1 / N_COLS + 0.5) * 468;
-
-                        double Y_SOR2 =	Y_MIN + (NSOR2 % N_COLS + 0.5) * 833;
-                        double Z_SOR2 = Z_MAX - (NSOR2 / N_COLS + 0.5) * 468;
-
-			double DIST_1 = Sqrt(Power(Y1 - Y_SOR1, 2) + Power(Z1 - Z_SOR1, 2));
-			double DIST_2 = Sqrt(Power(Y2 -	Y_SOR2,	2) + Power(Z2 -	Z_SOR2,	2));
-			
-                        if((Z1 != 0) && (Z2 != 0))
-                        {
-                                int NSOR;
-				int true_track_num;
-				if (DIST_1 < DIST_2){NSOR = NSOR1; true_track_num = 0;}
-				else{NSOR = NSOR2; true_track_num = 1;}
-				
-					
-                                if(Eve->get_track(true_track_num)->get_side() == 0)
-                                {
-                                        A_Tree[0][NSOR] = Eve->get_track(true_track_num)->get_a();
-                                        B_Tree[0][NSOR] = Eve->get_track(true_track_num)->get_b();
-                                        C_Tree[0][NSOR] = Eve->get_track(true_track_num)->get_c();
-                                        D_Tree[0][NSOR] = Eve->get_track(true_track_num)->get_d();
-
-                                        Tree[0][NSOR]->Fill();
-                                }
-
-                                else
-                                {
-                                        A_Tree[1][NSOR] = Eve->get_track(true_track_num)->get_a();
-                                        B_Tree[1][NSOR] = Eve->get_track(true_track_num)->get_b();
-                                        C_Tree[1][NSOR] = Eve->get_track(true_track_num)->get_c();
-                                        D_Tree[1][NSOR] = Eve->get_track(true_track_num)->get_d();
-
-                                        Tree[1][NSOR]->Fill();
-                                }
-                        }
-			}
-			}
-                }
 		if (i % 10000 == 0) cout <<"Event No. " << i << " done!" <<endl;
 	}	
 
@@ -176,4 +112,69 @@ void FoilPlane_TracksSaving()
 
 	New_file->Close();
 	cout << "DONE!" << endl;
+}
+
+int event_selection(TKEvent* event, double low_qlt, double high_qlt, int ambg_mode)
+{
+	int choice;
+	if(event->get_no_tracks() == 0)
+	{
+		choice = 0;
+	}
+	else if(event->get_no_tracks() == 1 && event->get_track(0)->get_quality() > low_qlt && event->get_track(0)->get_quality() < high_qlt)
+	{
+		choice = 1;
+	}
+	else if(event->get_no_tracks() == 2 && event->get_track(0)->get_quality() > low_qlt && event->get_track(0)->get_quality() < high_qlt)
+	{
+		switch(ambg_mode)
+		{
+		case 0:
+			choice = 0;
+			break;
+		case 1:
+			choice = choose_ambg_track(event);
+			break;
+		}
+	}
+	else
+	{
+		choice = 0;
+	}	
+	return choice;
+}
+
+int choose_ambg_track(TKEvent* event)
+{
+	int track;
+	double Y1 = event->get_track(0)->get_b();
+        double Z1 = event->get_track(0)->get_d();
+
+        double Y2 = event->get_track(1)->get_b();
+        double Z2 = event->get_track(1)->get_d();
+
+        if (Z1!=0 && Z2!=0 && Z1 > Z_MIN && Z1 < Z_MAX && Y1 > Y_MIN && Y1 < Y_MAX && Z2 > Z_MIN && Z2 < Z_MAX && Y2 > Y_MIN && Y2 < Y_MAX)
+        {
+        	int NSOR1 = N_COLS * ((int)(Z_MAX - Z1) / 468) + (int)(Y1 - Y_MIN) / 833;
+                int NSOR2 = N_COLS * ((int)(Z_MAX - Z2) / 468) + (int)(Y2 - Y_MIN) / 833;
+
+                double Y_SOR1 = Y_MIN + (NSOR1 % N_COLS + 0.5) * 833;
+                double Z_SOR1 = Z_MAX - (NSOR1 / N_COLS + 0.5) * 468;
+
+                double Y_SOR2 = Y_MIN + (NSOR2 % N_COLS + 0.5) * 833;
+                double Z_SOR2 = Z_MAX - (NSOR2 / N_COLS + 0.5) * 468;
+
+                double DIST_1 = Sqrt(Power(Y1 - Y_SOR1, 2) + Power(Z1 - Z_SOR1, 2));
+                double DIST_2 = Sqrt(Power(Y2 - Y_SOR2, 2) + Power(Z2 - Z_SOR2, 2));
+		
+
+		if(DIST_1 < DIST_2) {track = 1;}
+		else {track = 2;}
+	}
+	else
+	{
+		track = 0;
+	}
+	
+	return track;
 }
