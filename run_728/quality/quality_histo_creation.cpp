@@ -12,8 +12,22 @@ void quality_histo_creation(){
         TFile* f = new TFile("quality_file.root");
 	
         TTree* Tree[NBINS];
+        TTree* Tree_r[NBINS];
+        TTree* Tree_z[NBINS];
         int e_number[NBINS];
+        int e_number_r[NBINS];
+        int e_number_z[NBINS];
         double quality[NBINS];
+        double r_quality[NBINS];
+        double z_quality[NBINS];
+
+        TCanvas *C = new TCanvas("C", "Histogram of tracks quality", 1200, 1000);
+
+	TPad *pad1 = new TPad("pad1", "pad1", 0, 0.66, 1, 1.0);
+	pad1->Draw();
+	pad1->cd();
+
+	pad1->SetBottomMargin(0);
 
         for(int BIN = 0; BIN < NBINS; BIN++)
         {
@@ -26,8 +40,6 @@ void quality_histo_creation(){
 		Tree[BIN]->SetBranchAddress("quality", &quality[BIN]);                
         }
 
-        TCanvas *C = new TCanvas("C", "Histogram of tracks quality", 800, 600);
-
         TH1D *h = new TH1D("h", "Histogram of tracks quality", NBINS, 0, 1);	
 
 	for(int BIN = 0; BIN < NBINS; BIN++)
@@ -38,8 +50,77 @@ void quality_histo_creation(){
 			h->Fill(quality[BIN]);
 		}
 	}
-
+	
+	h->SetStats(0);
+	h->GetYaxis()->SetTitle("N");
 	h->Draw();
+
+
+        TPad *pad_r = new TPad("pad_r", "pad_r", 0, 0.33, 1, 0.66);
+        pad_r->Draw();
+        pad_r->cd();
+
+        pad_r->SetBottomMargin(0);
+
+        for(int BIN = 0; BIN < NBINS; BIN++)
+        {
+                stringstream treename;
+                treename << "Events with r_quality from " << STEP*BIN << " to " << (BIN + 1) * STEP;
+		
+		Tree_r[BIN] = (TTree*) f->Get(treename.str().c_str());
+		
+		Tree_r[BIN]->SetBranchAddress("e_number_r", &e_number_r[BIN]);
+		Tree_r[BIN]->SetBranchAddress("r_quality", &r_quality[BIN]);                
+        }
+
+        TH1D *h_r = new TH1D("h_r", "Histogram of tracks r_quality", NBINS, 0, 1);	
+
+	for(int BIN = 0; BIN < NBINS; BIN++)
+	{
+		for(int Entry=0; Entry < Tree_r[BIN]->GetEntries(); Entry++)
+		{
+			Tree_r[BIN]->GetEntry(Entry);
+			h->Fill(r_quality[BIN]);
+		}
+	}
+	
+	h_r->SetStats(0);
+	h_r->GetYaxis()->SetTitle("N");
+	h_r->Draw();
+
+
+
+        TPad *pad_z = new TPad("pad_z", "pad_z", 0, 0.0, 1, 0.33);
+        pad_z->Draw();
+        pad_z->cd();
+
+        for(int BIN = 0; BIN < NBINS; BIN++)
+        {
+                stringstream treename;
+                treename << "Events with z_quality from " << STEP*BIN << " to " << (BIN + 1) * STEP;
+		
+		Tree_z[BIN] = (TTree*) f->Get(treename.str().c_str());
+		
+		Tree_z[BIN]->SetBranchAddress("e_number_z", &e_number_z[BIN]);
+		Tree_z[BIN]->SetBranchAddress("z_quality", &z_quality[BIN]);                
+        }
+
+        TH1D *h_z = new TH1D("h_z", "Histogram of tracks z_quality", NBINS, 0, 1);	
+
+	for(int BIN = 0; BIN < NBINS; BIN++)
+	{
+		for(int Entry=0; Entry < Tree_z[BIN]->GetEntries(); Entry++)
+		{
+			Tree_z[BIN]->GetEntry(Entry);
+			h->Fill(z_quality[BIN]);
+		}
+	}
+	
+	h_z->SetStats(0);
+	h_z->GetYaxis()->SetTitle("N");
+	h_z->GetXaxis()->SetTitle("quality");
+	h_z->Draw();
+
 	
 	C->Print("Tracks_quality_histogram.png");
 

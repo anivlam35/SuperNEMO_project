@@ -11,26 +11,33 @@ void high_quality_events_listing()
 {
 	TFile* f = new TFile("quality_file.root");
 	
-	double input_quality;
+	double input_lower_quality;
 	cout << "Enter lower boundary of quality: ";
 	cin >> input_quality;
 
-	int START_BIN = input_quality / STEP;
+        double input_upper_quality;
+        cout << "Enter upper boundary of quality: ";
+        cin >> input_upper_quality;
+
+	int START_BIN = input_lower_quality / STEP;
 	double l_qual = START_BIN * STEP;
 
-        TFile *output_file = new TFile(Form("events_with_quality_more_%3.2lf.root", l_qual), "RECREATE");
+        int END_BIN = input_upper_quality / STEP;
+        double u_qual = END_BIN * STEP;
+
+        TFile *output_file = new TFile(Form("events_with_quality_from_%3.2lf_to_%3.2lf.root", l_qual, u_qual), "RECREATE");
 	
 	TTree* Out_Tree;
 	int e_number;
 	double quality;
 
-	string treename = Form("Events with quality more than %3.2lf", l_qual);
+	string treename = Form("Events with quality from %3.2lf to %3.2lf", l_qual, u_qual);
 	Out_Tree = new TTree(treename.c_str(), treename.c_str());
 
 	TBranch* branch1 = Out_Tree->Branch("e_number", &e_number, "event_number/I");
 	TBranch* branch2 = Out_Tree->Branch("quality", &quality, "quality/D");
 	
-        for(int BIN = START_BIN; BIN < NBINS; BIN++)
+        for(int BIN = START_BIN; BIN < END_BIN; BIN++)
         {
                 stringstream treename;
                 treename << "Events with quality from " << STEP*BIN << " to " << (BIN + 1) * STEP;

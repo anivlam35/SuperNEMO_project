@@ -84,7 +84,7 @@ void FoilPlane_TracksSaving()
 			if(Z!=0 && Z > Z_MIN && Z < Z_MAX && Y > Y_MIN && Y < Y_MAX)
 			{
 				int NSOR = N_COLS * ((int)(Z_MAX - Z) / 468) + (int)(Y - Y_MIN) / 833;	
-				int side = Eve->get_track(track_num)->get_side() == 0;
+				int side = Eve->get_track(track_num)->get_side();
 				
 				A_Tree[side][NSOR] = Eve->get_track(track_num)->get_a();
 				B_Tree[side][NSOR] = Eve->get_track(track_num)->get_b();

@@ -9,7 +9,7 @@ const int NBINS = int(1 / STEP);
 
 void quality_events_search()
 {
-	TFile* f = new TFile("/sps/nemo/scratch/ikovalen/TKEvent/runs/Run-974.root");
+	TFile* f = new TFile("/sps/nemo/scratch/ikovalen/TKEvent/runs/Run-988.root");
 	TTree* s = (TTree*) f->Get("Event");
 
 	TKEvent* event = new TKEvent(-1,-1);

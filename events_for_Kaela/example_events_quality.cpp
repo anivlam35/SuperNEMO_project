@@ -8,14 +8,15 @@ const double STEP = 0.01;
 const int NBINS = int(1 / STEP);
 
 void example_events_quality(){
-	int BIN_number = 5;
-        cout << "In this configuration there are " << NBINS << " bins. \nEnter the bin to make examples: ";
-	cin >> BIN_number;
+//	int BIN_number = 5;
+//        cout << "In this configuration there are " << NBINS << " bins. \nEnter the bin to make examples: ";
+//	cin >> BIN_number;
 	
-	int num_examples = 2;
-	cout << "Enter the number of examples: ";
- 	cin >> num_examples;
+//	int num_examples = 2;
+//	cout << "Enter the number of examples: ";
+//	cin >> num_examples;
 
+	int num_examples = 15;
 
 	TFile* f = new TFile("quality_file.root");
 	
@@ -34,7 +35,7 @@ void example_events_quality(){
 		Tree[BIN]->SetBranchAddress("quality", &quality[BIN]);                
         }
 
-	TFile* rf = new TFile("/sps/nemo/scratch/ikovalen/TKEvent/runs/Run-974.root");	
+	TFile* rf = new TFile("/sps/nemo/scratch/ikovalen/TKEvent/runs/Run-988.root");	
 	TTree* s = (TTree*) rf->Get("Event");
 
 	TKEvent* eve = new TKEvent();	
@@ -44,6 +45,9 @@ void example_events_quality(){
 	TRandom3* r = new TRandom3();
         r->SetSeed(42);
 	
+	for(double q = 0.1; q <= 1; q += 0.1)
+	{
+	int BIN_number = (q / STEP);
 	
 	char dir_name[50];
 	strcpy(dir_name, Form("quality_%.3lf_example", double(BIN_number) / double(NBINS)));
@@ -59,10 +63,10 @@ void example_events_quality(){
 		eve->set_h();
 		eve->reconstruct_ML(0);
 
-		eve->make_top_projection(2, dir_name);
+		eve->make_top_projection(2);
 		
 	}
-
+	}
 
 	
 	return 0;

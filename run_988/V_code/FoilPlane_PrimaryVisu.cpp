@@ -15,9 +15,9 @@ const int  X_BasePlane = 0;
 const int X_OBSERV_MIN = -20;
 const int X_OBSERV_MAX = 20;
 const int     X_OBSERV = 0;
-const int     N_SRCPLN = 14;
+const int     N_SRCPLN = 42;
 const int	N_ROWS = 7;
-const int 	N_COLS = 2;
+const int 	N_COLS = 6;
 
 void FoilPlane_PrimaryVisu()
 {
@@ -41,6 +41,7 @@ void FoilPlane_PrimaryVisu()
 
 		tr_name << "Tracks for " << X_BasePlane << " mm x < 0 Source " << NSOR;
 		TTree* tr = (TTree*) file->Get(tr_name.str().c_str());
+		tr->Print();
 
 		double parA, parB, parC, parD;
 		tr->SetBranchAddress("A", &parA);
@@ -87,7 +88,7 @@ void FoilPlane_PrimaryVisu()
 
 		for(int iX = X_OBSERV_MIN; iX < X_OBSERV_MAX+1; iX+=10)
 		{
-			TCanvas* C0 = new TCanvas("Canvas", "Canvas");
+			TCanvas* C0 = new TCanvas("Canvas", "Canvas", 800, 800);
 			h_vert_real[iX + X_OBSERV_MAX]->Draw("COLZ");
 
 			C0->Update();

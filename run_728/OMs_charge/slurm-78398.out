@@ -1,0 +1,111 @@
+****************************************************************
+*                      SLURM Batch System                      *
+*           IN2P3 Computing Centre, Villeurbanne FR            *
+****************************************************************
+* Date:                 Thu Feb 29 09:31:04 CET 2024
+* Job name:             stc.sh
+* Job id:               78398
+* User:                 ikovalen
+* Account:              nemo
+* Submit host:          cca011
+* Partition:            htc
+* Quality of service:   normal
+* Nodelist:             ccwslurm0202
+****************************************************************
+   ------------------------------------------------------------
+  | Welcome to ROOT 6.16/00                  https://root.cern |
+  |                               (c) 1995-2018, The ROOT Team |
+  | Built for linuxx8664gcc on Jan 23 2019, 09:06:13           |
+  | From tags/v6-16-00@v6-16-00                                |
+  | Try '.help', '.demo', '.license', '.credits', '.quit'/'.q' |
+   ------------------------------------------------------------
+
+
+Processing /sps/nemo/scratch/ikovalen/SuperNEMO_project/run_728/OMs_charge/extract_OMs_charges.cpp...
+In file included from input_line_10:1:
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_728/OMs_charge/extract_OMs_charges.cpp:114:36: error: use of undeclared identifier 'Z_MIN'
+        if (Z1!=0 && Z2!=0 && Z1 > Z_MIN && Z1 < Z_MAX && Y1 > Y_MIN && Y1 < Y_MAX && Z2 > Z_MIN && Z2 < Z_MAX && Y2 > Y_MIN && Y2 < Y_MAX)
+                                   ^
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_728/OMs_charge/extract_OMs_charges.cpp:114:50: error: use of undeclared identifier 'Z_MAX'
+        if (Z1!=0 && Z2!=0 && Z1 > Z_MIN && Z1 < Z_MAX && Y1 > Y_MIN && Y1 < Y_MAX && Z2 > Z_MIN && Z2 < Z_MAX && Y2 > Y_MIN && Y2 < Y_MAX)
+                                                 ^
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_728/OMs_charge/extract_OMs_charges.cpp:114:64: error: use of undeclared identifier 'Y_MIN'
+        if (Z1!=0 && Z2!=0 && Z1 > Z_MIN && Z1 < Z_MAX && Y1 > Y_MIN && Y1 < Y_MAX && Z2 > Z_MIN && Z2 < Z_MAX && Y2 > Y_MIN && Y2 < Y_MAX)
+                                                               ^
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_728/OMs_charge/extract_OMs_charges.cpp:114:78: error: use of undeclared identifier 'Y_MAX'
+        if (Z1!=0 && Z2!=0 && Z1 > Z_MIN && Z1 < Z_MAX && Y1 > Y_MIN && Y1 < Y_MAX && Z2 > Z_MIN && Z2 < Z_MAX && Y2 > Y_MIN && Y2 < Y_MAX)
+                                                                             ^
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_728/OMs_charge/extract_OMs_charges.cpp:114:92: error: use of undeclared identifier 'Z_MIN'
+        if (Z1!=0 && Z2!=0 && Z1 > Z_MIN && Z1 < Z_MAX && Y1 > Y_MIN && Y1 < Y_MAX && Z2 > Z_MIN && Z2 < Z_MAX && Y2 > Y_MIN && Y2 < Y_MAX)
+                                                                                           ^
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_728/OMs_charge/extract_OMs_charges.cpp:114:106: error: use of undeclared identifier 'Z_MAX'
+        if (Z1!=0 && Z2!=0 && Z1 > Z_MIN && Z1 < Z_MAX && Y1 > Y_MIN && Y1 < Y_MAX && Z2 > Z_MIN && Z2 < Z_MAX && Y2 > Y_MIN && Y2 < Y_MAX)
+                                                                                                         ^
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_728/OMs_charge/extract_OMs_charges.cpp:114:120: error: use of undeclared identifier 'Y_MIN'
+        if (Z1!=0 && Z2!=0 && Z1 > Z_MIN && Z1 < Z_MAX && Y1 > Y_MIN && Y1 < Y_MAX && Z2 > Z_MIN && Z2 < Z_MAX && Y2 > Y_MIN && Y2 < Y_MAX)
+                                                                                                                       ^
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_728/OMs_charge/extract_OMs_charges.cpp:114:134: error: use of undeclared identifier 'Y_MAX'
+        if (Z1!=0 && Z2!=0 && Z1 > Z_MIN && Z1 < Z_MAX && Y1 > Y_MIN && Y1 < Y_MAX && Z2 > Z_MIN && Z2 < Z_MAX && Y2 > Y_MIN && Y2 < Y_MAX)
+                                                                                                                                     ^
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_728/OMs_charge/extract_OMs_charges.cpp:116:22: error: use of undeclared identifier 'N_COLS'
+                int NSOR1 = N_COLS * ((int)(Z_MAX - Z1) / 468) + (int)(Y1 - Y_MIN) / 833;
+                            ^
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_728/OMs_charge/extract_OMs_charges.cpp:116:38: error: use of undeclared identifier 'Z_MAX'
+                int NSOR1 = N_COLS * ((int)(Z_MAX - Z1) / 468) + (int)(Y1 - Y_MIN) / 833;
+                                            ^
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_728/OMs_charge/extract_OMs_charges.cpp:116:70: error: use of undeclared identifier 'Y_MIN'
+                int NSOR1 = N_COLS * ((int)(Z_MAX - Z1) / 468) + (int)(Y1 - Y_MIN) / 833;
+                                                                            ^
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_728/OMs_charge/extract_OMs_charges.cpp:117:29: error: use of undeclared identifier 'N_COLS'
+                int NSOR2 = N_COLS * ((int)(Z_MAX - Z2) / 468) + (int)(Y2 - Y_MIN) / 833;
+                            ^
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_728/OMs_charge/extract_OMs_charges.cpp:117:45: error: use of undeclared identifier 'Z_MAX'
+                int NSOR2 = N_COLS * ((int)(Z_MAX - Z2) / 468) + (int)(Y2 - Y_MIN) / 833;
+                                            ^
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_728/OMs_charge/extract_OMs_charges.cpp:117:77: error: use of undeclared identifier 'Y_MIN'
+                int NSOR2 = N_COLS * ((int)(Z_MAX - Z2) / 468) + (int)(Y2 - Y_MIN) / 833;
+                                                                            ^
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_728/OMs_charge/extract_OMs_charges.cpp:119:33: error: use of undeclared identifier 'Y_MIN'
+                double Y_SOR1 = Y_MIN + (NSOR1 % N_COLS + 0.5) * 833;
+                                ^
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_728/OMs_charge/extract_OMs_charges.cpp:119:50: error: use of undeclared identifier 'N_COLS'
+                double Y_SOR1 = Y_MIN + (NSOR1 % N_COLS + 0.5) * 833;
+                                                 ^
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_728/OMs_charge/extract_OMs_charges.cpp:120:33: error: use of undeclared identifier 'Z_MAX'
+                double Z_SOR1 = Z_MAX - (NSOR1 / N_COLS + 0.5) * 468;
+                                ^
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_728/OMs_charge/extract_OMs_charges.cpp:120:50: error: use of undeclared identifier 'N_COLS'
+                double Z_SOR1 = Z_MAX - (NSOR1 / N_COLS + 0.5) * 468;
+                                                 ^
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_728/OMs_charge/extract_OMs_charges.cpp:122:33: error: use of undeclared identifier 'Y_MIN'
+                double Y_SOR2 = Y_MIN + (NSOR2 % N_COLS + 0.5) * 833;
+                                ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+   ------------------------------------------------------------
+  | Welcome to ROOT 6.16/00                  https://root.cern |
+  |                               (c) 1995-2018, The ROOT Team |
+  | Built for linuxx8664gcc on Jan 23 2019, 09:06:13           |
+  | From tags/v6-16-00@v6-16-00                                |
+  | Try '.help', '.demo', '.license', '.credits', '.quit'/'.q' |
+   ------------------------------------------------------------
+
+
+Processing /sps/nemo/scratch/ikovalen/SuperNEMO_project/run_728/OMs_charge/visu_OMs_charges.cpp...
+Error in <TFile::TFile>: file OMs_charges_cutted.root does not exist
+Error in <HandleInterpreterException>: Trying to dereference null pointer or trying to call routine taking non-null arguments.
+Execution of your code was aborted.
+In file included from input_line_10:1:
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_728/OMs_charge/visu_OMs_charges.cpp:25:3: warning: null passed to a callee that requires a non-null argument [-Wnonnull]
+                tr->SetBranchAddress("CHRG", &dc);
+                ^~
+****************************************************************
+*                      SLURM Batch System                      *
+*           IN2P3 Computing Centre, Villeurbanne FR            *
+****************************************************************
+Date: Thu Feb 29 09:31:13 CET 2024
+Job informations can be found using these commands:
+Accounting:
+sacct -j 78398
+Efficiency:
+seff 78398
+****************************************************************

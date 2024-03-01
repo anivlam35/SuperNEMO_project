@@ -44,7 +44,7 @@ void FoilPlane_Visualization()
 
 		// Fill histogram of undistorted vertices, and calculate coordinates of mode and the sigmas in both directions
 
-		TFile *New_file = new TFile("Visual_Histos.root","RECREATE");
+		//TFile *New_file = new TFile("Visual_Histos.root","RECREATE");
 
 		double YMIN  = tr->GetMinimum("B") - 20.0;
 		double YMAX  = tr->GetMaximum("B") + 20.0;

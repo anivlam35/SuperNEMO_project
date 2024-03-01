@@ -24,10 +24,10 @@ void FoilPlane_Visualization()
 	int N_Point = X_OBSERV_MAX - X_OBSERV_MIN + 1;
 	double Arr_X[N_Point], Arr_Y[N_Point], Arr_Z[N_Point];
 	
-	TGraph* grY[42];
-	TGraph* grZ[42];
+	TGraph* grY[14];
+	TGraph* grZ[14];
 
-	for(int SRC_NO_i=0; SRC_NO_i<42; SRC_NO_i++)
+	for(int SRC_NO_i=0; SRC_NO_i<14; SRC_NO_i++)
 	{
 		stringstream tr_name;
 
@@ -44,7 +44,7 @@ void FoilPlane_Visualization()
 
 		// Fill histogram of undistorted vertices, and calculate coordinates of mode and the sigmas in both directions
 
-		TFile *New_file = new TFile("Visual_Histos.root","RECREATE");
+		//TFile *New_file = new TFile("Visual_Histos.root","RECREATE");
 
 		double YMIN  = tr->GetMinimum("B") - 20.0;
 		double YMAX  = tr->GetMaximum("B") + 20.0;
@@ -118,7 +118,7 @@ void FoilPlane_Visualization()
 	grY[0]->SetName("Src 0");
 	grY[0]->SetMarkerColor(1);
 	grY[0]->SetMarkerStyle(20);
-	grY[0]->SetMarkerSize(1.5);
+	grY[0]->SetMarkerSize(1);
 	grY[0]->SetLineColor(1);
 	grY[0]->SetLineWidth(3);
 	grY[0]->Draw("APL");
@@ -139,7 +139,7 @@ void FoilPlane_Visualization()
 	grY[0]->GetXaxis()->SetTitleSize(20);
 	grY[0]->GetXaxis()->SetTitle("x [mm]");
 
-	for(int SRC_NO_i=1; SRC_NO_i<42; SRC_NO_i++)
+	for(int SRC_NO_i=1; SRC_NO_i<14; SRC_NO_i++)
 	{
 	    	char nm[7];
 	    	sprintf(nm,"Src %i", SRC_NO_i);
@@ -186,7 +186,7 @@ void FoilPlane_Visualization()
 	hY->GetXaxis()->SetTitleOffset(3);
 	hY->GetXaxis()->SetTitle("x [mm]");
 
-	for(int SRC_NO_i=0; SRC_NO_i<42; SRC_NO_i++)
+	for(int SRC_NO_i=0; SRC_NO_i<14; SRC_NO_i++)
 	{
 	    // Get the graph's X and Y arrays
 	    const double* xValues = grY[SRC_NO_i]->GetX();
@@ -253,7 +253,7 @@ void FoilPlane_Visualization()
         grZ[0]->GetXaxis()->SetTitleSize(20);
         grZ[0]->GetXaxis()->SetTitle("x [mm]");
 
-        for(int SRC_NO_i=1; SRC_NO_i<42; SRC_NO_i++)
+        for(int SRC_NO_i=1; SRC_NO_i<14; SRC_NO_i++)
         {
                 char nm[7];
                 sprintf(nm,"Src %i", SRC_NO_i);
@@ -299,7 +299,7 @@ void FoilPlane_Visualization()
         hZ->GetXaxis()->SetTitleOffset(3);
         hZ->GetXaxis()->SetTitle("x [mm]");
 
-        for(int SRC_NO_i=0; SRC_NO_i<42; SRC_NO_i++)
+        for(int SRC_NO_i=0; SRC_NO_i<14; SRC_NO_i++)
         {
             // Get the graph's X and Y arrays
             const double* xValues = grZ[SRC_NO_i]->GetX();
@@ -329,7 +329,7 @@ void FoilPlane_Visualization()
 
         CZ->Print("vZ.png");
 
-	for(int SRC_NO_i=0; SRC_NO_i<42; SRC_NO_i++)
+	for(int SRC_NO_i=0; SRC_NO_i<14; SRC_NO_i++)
 	{	
 		char print_name_RMS_Y[50];
 		sprintf(print_name_RMS_Y,"RMS_ALL_SOURCE/RMS_Y_Source_%i.png", SRC_NO_i);

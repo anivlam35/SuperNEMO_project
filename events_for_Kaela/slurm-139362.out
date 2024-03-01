@@ -1,0 +1,37 @@
+****************************************************************
+*                      SLURM Batch System                      *
+*           IN2P3 Computing Centre, Villeurbanne FR            *
+****************************************************************
+* Date:                 Fri Mar  1 08:32:28 CET 2024
+* Job name:             stc.sh
+* Job id:               139362
+* User:                 ikovalen
+* Account:              nemo
+* Submit host:          cca001
+* Partition:            htc
+* Quality of service:   normal
+* Nodelist:             ccwslurm0339
+****************************************************************
+   ------------------------------------------------------------
+  | Welcome to ROOT 6.16/00                  https://root.cern |
+  |                               (c) 1995-2018, The ROOT Team |
+  | Built for linuxx8664gcc on Jan 23 2019, 09:06:13           |
+  | From tags/v6-16-00@v6-16-00                                |
+  | Try '.help', '.demo', '.license', '.credits', '.quit'/'.q' |
+   ------------------------------------------------------------
+
+
+Processing /sps/nemo/scratch/ikovalen/SuperNEMO_project/events_for_Kaela/quality_events_search.cpp...
+Event 0/14391969 is DONE!
+slurmstepd: error: *** JOB 139362 ON ccwslurm0339 CANCELLED AT 2024-03-01T08:32:37 ***
+****************************************************************
+*                      SLURM Batch System                      *
+*           IN2P3 Computing Centre, Villeurbanne FR            *
+****************************************************************
+Date: Fri Mar  1 08:32:37 CET 2024
+Job informations can be found using these commands:
+Accounting:
+sacct -j 139362
+Efficiency:
+seff 139362
+****************************************************************

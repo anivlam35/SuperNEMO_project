@@ -35,6 +35,8 @@ void FoilPlane_PrimaryVisu()
 	TGraph* grY[N_SRCPLN];
 	TGraph* grZ[N_SRCPLN];
 
+	TFile* pr_hist_file = new TFile("Primary_Histos.root", "RECREATE");
+
 	for(int NSOR=0; NSOR<N_SRCPLN; NSOR++)
 	{
 		stringstream tr_name;
@@ -50,12 +52,12 @@ void FoilPlane_PrimaryVisu()
 
 		double verY, verZ;
 
-		double YMIN  = Y_MIN + (NSOR % N_COLS + 0.5) * 833 - 120;
-		double YMAX  = Y_MIN + (NSOR % N_COLS + 0.5) * 833 + 120;
+		double YMIN  = Y_MIN + (NSOR % N_COLS + 0.5) * 833 - 140;
+		double YMAX  = Y_MIN + (NSOR % N_COLS + 0.5) * 833 + 140;
 		int    YBINS = (YMAX - YMIN) / 4.0;
 
-		double ZMIN  = Z_MAX - (NSOR / N_COLS + 0.5) * 468 - 120;
-		double ZMAX  = Z_MAX - (NSOR / N_COLS + 0.5) * 468 + 120;
+		double ZMIN  = Z_MAX - (NSOR / N_COLS + 0.5) * 468 - 200;
+		double ZMAX  = Z_MAX - (NSOR / N_COLS + 0.5) * 468 + 200;
 		int    ZBINS = (ZMAX - ZMIN) / 4.0;
 
 		TH2D* h_vert_real[2*X_OBSERV_MAX+1];  
@@ -87,14 +89,14 @@ void FoilPlane_PrimaryVisu()
 
 		for(int iX = X_OBSERV_MIN; iX < X_OBSERV_MAX+1; iX+=10)
 		{
-			TCanvas* C0 = new TCanvas("Canvas", "Canvas");
+			TCanvas* C0 = new TCanvas("Canvas", "Canvas", 1000, 700);
 			h_vert_real[iX + X_OBSERV_MAX]->Draw("COLZ");
 
 			C0->Update();
 			TPaveStats *st = (TPaveStats*)h_vert_real[iX + X_OBSERV_MAX]->FindObject("stats");
-			st->SetX1NDC(0.75);			
+			st->SetX1NDC(0.7);			
 			st->SetX2NDC(0.9);
-                        st->SetY1NDC(0.78);
+                        st->SetY1NDC(0.72);
                         st->SetY2NDC(0.9);
 
 			stringstream hnm;
@@ -103,7 +105,9 @@ void FoilPlane_PrimaryVisu()
 			
 			cout << "X = " << iX << "  " << h_vert_real[iX + X_OBSERV_MAX]->ProjectionX()->GetRMS() << "   " << h_vert_real[iX + X_OBSERV_MAX]->ProjectionY()->GetRMS() <<endl;
 		}
+		h_vert_real[0]->Write();
 	}
+	pr_hist_file->Close();
 }
 
 

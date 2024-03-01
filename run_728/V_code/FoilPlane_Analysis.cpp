@@ -423,7 +423,7 @@ vector<double> best_par(TTree* _t, int _iX, int _SRC_NO_i, int Draw_opt = 1)
 	for(int i = 0; i < _t->GetEntries(); i++)
 	{
 		_t->GetEntry(i);
-		cout << " PARAMETERS: " << parA << "  " << parB << endl;
+		//cout << " PARAMETERS: " << parA << "  " << parB << endl;
 		verY = parA*_iX + parB;
 		verZ = parC*_iX + parD;
 
