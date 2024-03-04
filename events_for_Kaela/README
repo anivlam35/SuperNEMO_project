@@ -1,0 +1,16 @@
+First of all: paths to be changed in all *.cpp files.
+
+#### quality_evets_search.cp ####
+Extracts event numbers from $PATH_TO_TKEVENT$/TKEvent/runs/Run-*.root to the quality histogram (quality_file.root).
+You need to run it first. It is better to send to the cluster.
+
+#### high_quality_events_listing.cpp ####
+Creates a file (events_with_quality_from_$LOWER_Q$_to_$UPPER_Q$.root) with event numbers that are within the 
+specified quality range (the user enters the lower and upper quality limits).
+
+Other:
+## quality_histo_creation.cpp ##
+Visualize the histogram of event quality.
+
+## example_events_quality.cpp ##
+Visualization of example events from some quality bin. Must be modified for each use case.

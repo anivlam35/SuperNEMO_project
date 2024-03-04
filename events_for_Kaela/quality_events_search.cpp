@@ -34,8 +34,8 @@ void quality_events_search()
 	//TCanvas *C = new TCanvas("C", "Histogram of tracks quality", 800, 600);	
 
 	//TH1D *h = new TH1D("h", "Histogram of tracks quality", NBINS, 0, 1);
-	//for(int event_number = 0; event_number < s->GetEntries(); event_number++)
-	for(int event_number = 0; event_number < 100000; event_number++)
+	for(int event_number = 0; event_number < s->GetEntries(); event_number++)
+	//for(int event_number = 0; event_number < 100000; event_number++)
 	{	
 		s->GetEntry(event_number);
 		event->set_r("Manchester", "distance");

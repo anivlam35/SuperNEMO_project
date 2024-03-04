@@ -13,7 +13,7 @@ void high_quality_events_listing()
 	
 	double input_lower_quality;
 	cout << "Enter lower boundary of quality: ";
-	cin >> input_quality;
+	cin >> input_lower_quality;
 
         double input_upper_quality;
         cout << "Enter upper boundary of quality: ";
@@ -51,20 +51,10 @@ void high_quality_events_listing()
 			Tree->GetEntry(Entry);
 			Out_Tree->Fill();		
 		}                
-    		cout << "BIN " << BIN - START_BIN + 1  << "/" << NBINS - START_BIN << " is DONE!" << endl;
+    		cout << "BIN " << BIN - START_BIN + 1  << "/" << END_BIN - START_BIN << " is DONE!" << endl;
 	}
 	
 	Out_Tree->Write(treename.c_str());	
 
 	output_file->Close();
-	
-//	output_file = new TFile(Form("events_with_quality_more_%3.2lf.root", l_qual));
-//	TTree* Tree = (TTree*)output_file->Get(Form("Events with quality more than %3.2lf", l_qual));
-//      Tree->SetBranchAddress("e_number", &e_number);
-//      Tree->SetBranchAddress("quality", &quality);
-//	for(int Entry = 100000; Entry < 101000; Entry++)
-//	{
-//		Tree->GetEntry(Entry);
-//		cout << "Event number: " << e_number << ". Quality: " << quality << "." << endl; 	
-//	}
 }

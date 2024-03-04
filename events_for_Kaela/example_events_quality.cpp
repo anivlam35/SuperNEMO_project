@@ -57,7 +57,7 @@ void example_events_quality(){
 		eve->set_h();
 		eve->reconstruct_ML(0);
 
-		eve->make_top_projection(2);
+		eve->make_top_projection(2, "examples");
 		
 	}
 
