@@ -10,7 +10,9 @@ const int NBINS = int(1 / STEP);
 
 void quality_histo_creation(){
         TFile* f = new TFile("quality_file.root");
-	
+	int N_q = 0;
+	int N_r_q = 0;
+	int N_z_q = 0;
         TTree* Tree[NBINS];
         TTree* Tree_r[NBINS];
         TTree* Tree_z[NBINS];
@@ -48,25 +50,29 @@ void quality_histo_creation(){
 		{
 			Tree[BIN]->GetEntry(Entry);
 			h->Fill(quality[BIN]);
+			N_q++;
 		}
 	}
 	
+	h->GetYaxis()->SetRangeUser(0, 100000);
 	h->SetStats(0);
 	h->GetYaxis()->SetTitle("N");
 	h->Draw();
-
+	
+	C->cd();
 
         TPad *pad_r = new TPad("pad_r", "pad_r", 0, 0.33, 1, 0.66);
         pad_r->Draw();
         pad_r->cd();
 
+        pad_r->SetTopMargin(0);
         pad_r->SetBottomMargin(0);
 
         for(int BIN = 0; BIN < NBINS; BIN++)
         {
                 stringstream treename;
                 treename << "Events with r_quality from " << STEP*BIN << " to " << (BIN + 1) * STEP;
-		
+				
 		Tree_r[BIN] = (TTree*) f->Get(treename.str().c_str());
 		
 		Tree_r[BIN]->SetBranchAddress("e_number_r", &e_number_r[BIN]);
@@ -80,19 +86,23 @@ void quality_histo_creation(){
 		for(int Entry=0; Entry < Tree_r[BIN]->GetEntries(); Entry++)
 		{
 			Tree_r[BIN]->GetEntry(Entry);
-			h->Fill(r_quality[BIN]);
+			h_r->Fill(r_quality[BIN]);
+			N_r_q++;
 		}
 	}
-	
+
+	h_r->GetYaxis()->SetRangeUser(0, 100000);
+	h_r->SetTitle("");	
 	h_r->SetStats(0);
 	h_r->GetYaxis()->SetTitle("N");
 	h_r->Draw();
 
-
+	C->cd();
 
         TPad *pad_z = new TPad("pad_z", "pad_z", 0, 0.0, 1, 0.33);
         pad_z->Draw();
         pad_z->cd();
+        pad_z->SetTopMargin(0);
 
         for(int BIN = 0; BIN < NBINS; BIN++)
         {
@@ -112,10 +122,13 @@ void quality_histo_creation(){
 		for(int Entry=0; Entry < Tree_z[BIN]->GetEntries(); Entry++)
 		{
 			Tree_z[BIN]->GetEntry(Entry);
-			h->Fill(z_quality[BIN]);
+			h_z->Fill(z_quality[BIN]);
+			N_z_q++;
 		}
 	}
-	
+
+	h_z->GetYaxis()->SetRangeUser(0, 100000);
+	h_z->SetTitle("");		
 	h_z->SetStats(0);
 	h_z->GetYaxis()->SetTitle("N");
 	h_z->GetXaxis()->SetTitle("quality");
@@ -123,7 +136,9 @@ void quality_histo_creation(){
 
 	
 	C->Print("Tracks_quality_histogram.png");
-
+	cout << "N_q = " << N_q << endl;
+	cout << "N_r_q = " << N_r_q << endl;
+	cout << "N_z_q = " << N_z_q << endl;
 	
 	return 0;
 }

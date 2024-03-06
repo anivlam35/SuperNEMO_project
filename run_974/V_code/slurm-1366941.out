@@ -1,0 +1,107 @@
+****************************************************************
+*                      SLURM Batch System                      *
+*           IN2P3 Computing Centre, Villeurbanne FR            *
+****************************************************************
+* Date:                 Wed Mar  6 15:10:32 CET 2024
+* Job name:             sending_to_cluster.sh
+* Job id:               1366941
+* User:                 ikovalen
+* Account:              nemo
+* Submit host:          cca013
+* Partition:            htc
+* Quality of service:   normal
+* Nodelist:             ccwslurm0055
+****************************************************************
+   ------------------------------------------------------------
+  | Welcome to ROOT 6.16/00                  https://root.cern |
+  |                               (c) 1995-2018, The ROOT Team |
+  | Built for linuxx8664gcc on Jan 23 2019, 09:06:13           |
+  | From tags/v6-16-00@v6-16-00                                |
+  | Try '.help', '.demo', '.license', '.credits', '.quit'/'.q' |
+   ------------------------------------------------------------
+
+
+Processing /sps/nemo/scratch/ikovalen/SuperNEMO_project/run_974/V_code/Tracks_Saving.cpp...
+Event No. 0 done!
+Event No. 10000 done!
+Event No. 20000 done!
+Event No. 30000 done!
+Event No. 40000 done!
+Event No. 50000 done!
+Event No. 60000 done!
+Event No. 70000 done!
+Event No. 80000 done!
+Event No. 90000 done!
+Event No. 100000 done!
+Event No. 110000 done!
+Event No. 120000 done!
+Event No. 130000 done!
+Event No. 140000 done!
+Event No. 150000 done!
+Event No. 160000 done!
+Error in <HandleInterpreterException>: Trying to access a pointer that points to an invalid memory address..
+Execution of your code was aborted.
+In file included from input_line_10:1:
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_974/V_code/Tracks_Saving.cpp:85:5: warning: invalid memory pointer passed to a callee:
+                                Tree[side][NSOR]->Fill();
+                                ^~~~~~~~~~~~~~~~
+   ------------------------------------------------------------
+  | Welcome to ROOT 6.16/00                  https://root.cern |
+  |                               (c) 1995-2018, The ROOT Team |
+  | Built for linuxx8664gcc on Jan 23 2019, 09:06:13           |
+  | From tags/v6-16-00@v6-16-00                                |
+  | Try '.help', '.demo', '.license', '.credits', '.quit'/'.q' |
+   ------------------------------------------------------------
+
+
+Processing /sps/nemo/scratch/ikovalen/SuperNEMO_project/run_974/V_code/Spaghetti_Analysis.cpp...
+Error in <HandleInterpreterException>: Trying to dereference null pointer or trying to call routine taking non-null arguments.
+Execution of your code was aborted.
+In file included from input_line_10:1:
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_974/V_code/Spaghetti_Analysis.cpp:405:2: warning: null passed to a callee that requires a non-null argument [-Wnonnull]
+        _t->Print();
+        ^~
+   ------------------------------------------------------------
+  | Welcome to ROOT 6.16/00                  https://root.cern |
+  |                               (c) 1995-2018, The ROOT Team |
+  | Built for linuxx8664gcc on Jan 23 2019, 09:06:13           |
+  | From tags/v6-16-00@v6-16-00                                |
+  | Try '.help', '.demo', '.license', '.credits', '.quit'/'.q' |
+   ------------------------------------------------------------
+
+
+Processing /sps/nemo/scratch/ikovalen/SuperNEMO_project/run_974/V_code/Final_Visualization.cpp...
+Error in <HandleInterpreterException>: Trying to dereference null pointer or trying to call routine taking non-null arguments.
+Execution of your code was aborted.
+In file included from input_line_10:1:
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_974/V_code/Final_Visualization.cpp:31:3: warning: null passed to a callee that requires a non-null argument [-Wnonnull]
+                tr->SetBranchAddress("A", &parA);
+                ^~
+   ------------------------------------------------------------
+  | Welcome to ROOT 6.16/00                  https://root.cern |
+  |                               (c) 1995-2018, The ROOT Team |
+  | Built for linuxx8664gcc on Jan 23 2019, 09:06:13           |
+  | From tags/v6-16-00@v6-16-00                                |
+  | Try '.help', '.demo', '.license', '.credits', '.quit'/'.q' |
+   ------------------------------------------------------------
+
+
+Processing /sps/nemo/scratch/ikovalen/SuperNEMO_project/run_974/V_code/Primary_Visualization.cpp...
+Error in <TFile::TFile>: file FoilPlane_Tracks_Run-974.root does not exist
+Error in <HandleInterpreterException>: Trying to dereference null pointer or trying to call routine taking non-null arguments.
+Execution of your code was aborted.
+In file included from input_line_10:1:
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_974/V_code/Primary_Visualization.cpp:34:3: warning: null passed to a callee that requires a non-null argument [-Wnonnull]
+                tr->SetBranchAddress("A", &parA);
+                ^~
+****************************************************************
+*                      SLURM Batch System                      *
+*           IN2P3 Computing Centre, Villeurbanne FR            *
+****************************************************************
+Date: Wed Mar  6 15:20:20 CET 2024
+Job informations can be found using these commands:
+Accounting:
+sacct -j 1366941
+Efficiency:
+seff 1366941
+****************************************************************

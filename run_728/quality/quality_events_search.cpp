@@ -60,6 +60,7 @@ void quality_events_search()
         }
 
 
+//	for(int event_number = 0; event_number < 10000; event_number++)
 	for(int event_number = 0; event_number < s->GetEntries(); event_number++)
 	{	
 		s->GetEntry(event_number);
@@ -68,28 +69,34 @@ void quality_events_search()
 		event->reconstruct_ML(0);
 
 		if (event->get_no_tracks() == 0){continue;}
-		else if (event->get_no_tracks() == 1 or (event->get_no_tracks() == 2 && event->get_track(0)->get_ambiguity_type() != 0))
+		else if ((event->get_no_tracks() == 1) || 
+			 (event->get_no_tracks() == 2 && event->get_track(0)->get_ambiguity_type() != 0))
 		{	
-			double q = event->get_tracks()[0]->get_quality();
+			double q = event->get_track(0)->get_quality();
 			int bin = int(q / STEP);
+			if ( bin == 100 ) bin = 99;
 			e_number[bin] = event_number;
 			quality[bin] = q;
 			Tree[bin]->Fill();
 	
-			double r_q = event->get_tracks()[0]->get_quality_R();
+			double r_q = event->get_track(0)->get_quality_R();
 			int r_bin = int(r_q / STEP);
+			if ( r_bin == 100 ) r_bin = 99; 
 			e_number_r[r_bin] = event_number;
 			r_quality[r_bin] = r_q;
 			Tree_r[r_bin]->Fill();
 						
-			double z_q = event->get_tracks()[0]->get_quality_Z();
-			if (z_q != -1)
+			double z_q = event->get_track(0)->get_quality_Z();
+			if (z_q == -1)
 			{
-				int z_bin = int(z_q / STEP);
-				e_number_z[z_bin] = event_number;
-				z_quality[z_bin] = z_q;
-				Tree_z[z_bin]->Fill();
+				z_q = 0;
 			}	
+			int z_bin = int(z_q / STEP);
+			if ( z_bin == 100 ) z_bin = 99;
+			e_number_z[z_bin] = event_number;
+			z_quality[z_bin] = z_q;
+			Tree_z[z_bin]->Fill();
+			
 		// h->Fill();
 		}
 		if (event_number % 10000 == 0) cout << "Event " << event_number << "/" << s->GetEntries() << " is DONE!" << endl; 

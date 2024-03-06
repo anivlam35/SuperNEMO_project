@@ -1,0 +1,34 @@
+****************************************************************
+*                      SLURM Batch System                      *
+*           IN2P3 Computing Centre, Villeurbanne FR            *
+****************************************************************
+* Date:                 Tue Mar  5 10:15:18 CET 2024
+* Job name:             stc.sh
+* Job id:               426110
+* User:                 ikovalen
+* Account:              nemo
+* Submit host:          cca010
+* Partition:            htc
+* Quality of service:   normal
+* Nodelist:             ccwslurm0336
+****************************************************************
+Warning in <TApplication::GetOptions>: macro /sps/nemo/scratch/ikovalen/run_988/OM_geometries/Tracks_Saving.cpp not found
+   ------------------------------------------------------------
+  | Welcome to ROOT 6.16/00                  https://root.cern |
+  |                               (c) 1995-2018, The ROOT Team |
+  | Built for linuxx8664gcc on Jan 23 2019, 09:06:13           |
+  | From tags/v6-16-00@v6-16-00                                |
+  | Try '.help', '.demo', '.license', '.credits', '.quit'/'.q' |
+   ------------------------------------------------------------
+
+****************************************************************
+*                      SLURM Batch System                      *
+*           IN2P3 Computing Centre, Villeurbanne FR            *
+****************************************************************
+Date: Tue Mar  5 10:15:21 CET 2024
+Job informations can be found using these commands:
+Accounting:
+sacct -j 426110
+Efficiency:
+seff 426110
+****************************************************************

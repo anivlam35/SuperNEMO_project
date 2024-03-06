@@ -1,0 +1,39 @@
+****************************************************************
+*                      SLURM Batch System                      *
+*           IN2P3 Computing Centre, Villeurbanne FR            *
+****************************************************************
+* Date:                 Wed Mar  6 18:50:04 CET 2024
+* Job name:             stc.sh
+* Job id:               1390914
+* User:                 ikovalen
+* Account:              nemo
+* Submit host:          cca020
+* Partition:            htc
+* Quality of service:   normal
+* Nodelist:             ccwslurm0314
+****************************************************************
+   ------------------------------------------------------------
+  | Welcome to ROOT 6.16/00                  https://root.cern |
+  |                               (c) 1995-2018, The ROOT Team |
+  | Built for linuxx8664gcc on Jan 23 2019, 09:06:13           |
+  | From tags/v6-16-00@v6-16-00                                |
+  | Try '.help', '.demo', '.license', '.credits', '.quit'/'.q' |
+   ------------------------------------------------------------
+
+
+Processing /sps/nemo/scratch/ikovalen/SuperNEMO_project/run_728/quality/quality_events_search_2dh.cpp...
+In file included from input_line_10:1:
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_728/quality/quality_events_search_2dh.cpp:56:9: error: use of undeclared identifier 'bin'
+                        Tree[bin]->Fill();
+                             ^
+****************************************************************
+*                      SLURM Batch System                      *
+*           IN2P3 Computing Centre, Villeurbanne FR            *
+****************************************************************
+Date: Wed Mar  6 18:50:15 CET 2024
+Job informations can be found using these commands:
+Accounting:
+sacct -j 1390914
+Efficiency:
+seff 1390914
+****************************************************************
