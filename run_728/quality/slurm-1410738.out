@@ -1,0 +1,36 @@
+****************************************************************
+*                      SLURM Batch System                      *
+*           IN2P3 Computing Centre, Villeurbanne FR            *
+****************************************************************
+* Date:                 Wed Mar  6 20:06:39 CET 2024
+* Job name:             stc.sh
+* Job id:               1410738
+* User:                 ikovalen
+* Account:              nemo
+* Submit host:          cca020
+* Partition:            htc
+* Quality of service:   normal
+* Nodelist:             ccwslurm0331
+****************************************************************
+   ------------------------------------------------------------
+  | Welcome to ROOT 6.16/00                  https://root.cern |
+  |                               (c) 1995-2018, The ROOT Team |
+  | Built for linuxx8664gcc on Jan 23 2019, 09:06:13           |
+  | From tags/v6-16-00@v6-16-00                                |
+  | Try '.help', '.demo', '.license', '.credits', '.quit'/'.q' |
+   ------------------------------------------------------------
+
+
+Processing /sps/nemo/scratch/ikovalen/SuperNEMO_project/run_728/quality/quality_events_search_2dh.cpp...
+warning: cannot find function 'quality_events_search_2dh()'; falling back to .L
+****************************************************************
+*                      SLURM Batch System                      *
+*           IN2P3 Computing Centre, Villeurbanne FR            *
+****************************************************************
+Date: Wed Mar  6 20:06:53 CET 2024
+Job informations can be found using these commands:
+Accounting:
+sacct -j 1410738
+Efficiency:
+seff 1410738
+****************************************************************

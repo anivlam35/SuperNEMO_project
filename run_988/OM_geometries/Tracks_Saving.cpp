@@ -40,7 +40,7 @@ void Tracks_Saving()
 
 	// Filling Tree
 	// Use s->GetEntries() for all entries in Run
-	//for(UInt_t i=0; i < 10000; i++)	// Loop over events
+	//for(UInt_t i=0; i < 1000000; i++)	// Loop over events
 	for(UInt_t i=0; i < s->GetEntries(); i++)	// Loop over events
 	{
 		s->GetEntry(i);
@@ -66,7 +66,7 @@ void Tracks_Saving()
 				Tree[OM_num]->Fill(); 
 			}
 		}
-		if (i % 10000 == 0) cout <<"Event No. " << i << " done!" <<endl;
+		if (i % 100000 == 0) cout <<"Event No. " << i << " done!" <<endl;
 	}	
 
 

@@ -1,0 +1,46 @@
+****************************************************************
+*                      SLURM Batch System                      *
+*           IN2P3 Computing Centre, Villeurbanne FR            *
+****************************************************************
+* Date:                 Thu Mar  7 08:37:25 CET 2024
+* Job name:             stc.sh
+* Job id:               1780489
+* User:                 ikovalen
+* Account:              nemo
+* Submit host:          cca001
+* Partition:            htc
+* Quality of service:   normal
+* Nodelist:             ccwslurm0180
+****************************************************************
+   ------------------------------------------------------------
+  | Welcome to ROOT 6.16/00                  https://root.cern |
+  |                               (c) 1995-2018, The ROOT Team |
+  | Built for linuxx8664gcc on Jan 23 2019, 09:06:13           |
+  | From tags/v6-16-00@v6-16-00                                |
+  | Try '.help', '.demo', '.license', '.credits', '.quit'/'.q' |
+   ------------------------------------------------------------
+
+
+Processing /sps/nemo/scratch/ikovalen/SuperNEMO_project/run_988/OM_geometries/Tracks_Saving.cpp...
+Event No. 0 done!
+Event No. 100000 done!
+Event No. 200000 done!
+Event No. 300000 done!
+Event No. 400000 done!
+Event No. 500000 done!
+Event No. 600000 done!
+Event No. 700000 done!
+Event No. 800000 done!
+Event No. 900000 done!
+DONE!
+****************************************************************
+*                      SLURM Batch System                      *
+*           IN2P3 Computing Centre, Villeurbanne FR            *
+****************************************************************
+Date: Thu Mar  7 09:37:18 CET 2024
+Job informations can be found using these commands:
+Accounting:
+sacct -j 1780489
+Efficiency:
+seff 1780489
+****************************************************************

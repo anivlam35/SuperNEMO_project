@@ -1,11 +1,24 @@
-
-#include "/sps/nemo/scratch/ikovalen/TKEvent/TKEvent/include/TKEvent.h" 
-#include "config.h"
+#include "/sps/nemo/scratch/ikovalen//TKEvent/TKEvent/include/TKEvent.h" 
 
 R__LOAD_LIBRARY(/sps/nemo/scratch/ikovalen/TKEvent/TKEvent/lib/libTKEvent.so);
 
 using namespace std;
 using namespace TMath;
+
+const int    RUN_N        = 974;
+const double Y_MIN        = -2500.0;
+const double Y_MAX        = 2500.0;
+const int    Y_BINS	  = 833;
+const double Z_MIN        = -1638.0;
+const double Z_MAX        = 1638.0;
+const int    Z_BINS	  = 468;
+const int    X_BasePlane  = 0;
+const int    X_OBSERV_MIN = -20;
+const int    X_OBSERV_MAX = 20;
+const int    X_OBSERV     = 0;
+const int    N_SRCPLN     = 42;
+const int    N_ROWS	  = 7;
+const int    N_COLS	  = 6;
 
 const    int ABS_X_MAX = 10;
 const    int ABS_X_MIN = 10;
@@ -85,7 +98,7 @@ void Tracks_Saving()
 				Tree[side][NSOR]->Fill();
 			}
 		}
-		if (i % 100000 == 0) cout <<"Event No. " << i << " done!" <<endl;
+		if (i % 10000 == 0) cout <<"Event No. " << i << " done!" <<endl;
 	}	
 
 

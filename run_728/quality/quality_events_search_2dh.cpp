@@ -7,7 +7,7 @@ using namespace std;
 const double STEP = 0.01;
 const int NBINS = int(1 / STEP);
 
-void quality_events_search()
+void quality_events_search_2dh()
 {
 	TFile* f = new TFile("/sps/nemo/scratch/ikovalen/TKEvent_old/runs/Run-728.root");
 	TTree* s = (TTree*) f->Get("Event");
@@ -53,7 +53,7 @@ void quality_events_search()
 			z_quality = event->get_track(0)->get_quality_Z();
 			if (z_quality == -1) z_quality = 0;
 			
-			Tree[bin]->Fill();
+			Tree->Fill();
 	
 
 		// h->Fill();

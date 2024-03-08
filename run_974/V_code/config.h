@@ -4,7 +4,7 @@
 const int    RUN_N        = 974;
 const double Y_MIN        = -2500.0;
 const double Y_MAX        = 2500.0;
-const int    Y_BINS	  = 833;
+const int    Y_BINS	  = 1638;
 const double Z_MIN        = -1638.0;
 const double Z_MAX        = 1638.0;
 const int    Z_BINS	  = 468;

@@ -91,7 +91,8 @@ void Primary_Visualization()
 		{
 			TCanvas* C0 = new TCanvas("Canvas", "Canvas", 1000, 700);
 			h_vert_real[iX + X_OBSERV_MAX]->Draw("COLZ");
-
+			
+			C0->SetLogz();
 			C0->Update();
 			TPaveStats *st = (TPaveStats*)h_vert_real[iX + X_OBSERV_MAX]->FindObject("stats");
 			st->SetX1NDC(0.7);			
