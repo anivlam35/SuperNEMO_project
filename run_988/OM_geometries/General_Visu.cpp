@@ -8,7 +8,7 @@ R__LOAD_LIBRARY(/sps/nemo/scratch/ikovalen/TKEvent_old/TKEvent/lib/libTKEvent.so
 void OM_xyz_swcr(int OM_num);
 
 void General_Visu(){
-	TFile* f = new TFile(Form("OMs_Tracks_Run-%d.root", RUN_N));
+	TFile* f = new TFile(Form("OMs_Tracks_cutted_Run-%d.root", RUN_N));
 	
 	TTree*   Tree[N_OMs];
 	double A_Tree[N_OMs];

@@ -1,4 +1,5 @@
 #include "/sps/nemo/scratch/ikovalen//TKEvent/TKEvent/include/TKEvent.h" 
+//#include "config.h"
 
 R__LOAD_LIBRARY(/sps/nemo/scratch/ikovalen/TKEvent/TKEvent/lib/libTKEvent.so);
 
@@ -30,7 +31,6 @@ void Tracks_Saving()
 {
 	TFile* f = new TFile(Form("/sps/nemo/scratch/ikovalen/TKEvent/runs/Run-%d.root", RUN_N));
 	TTree* s = (TTree*) f->Get("Event");
-//	s->Print();
 
 	TKEvent* Eve = new TKEvent(-1,-1);
 	s->SetBranchAddress("Eventdata", &Eve);
@@ -45,7 +45,6 @@ void Tracks_Saving()
 	double C_Tree[2][N_SRCPLN];
 	double D_Tree[2][N_SRCPLN];
 
-	
 	
 	for(int NSOR = 0; NSOR<N_SRCPLN; NSOR++)
 	{
@@ -71,31 +70,59 @@ void Tracks_Saving()
 
 	// Filling Tree
 	// Use s->GetEntries() for all entries in Run
-	for(UInt_t i=0; i < s->GetEntries(); i++)	// Loop over events
+//	for(UInt_t i=0; i < s->GetEntries(); i++)	// Loop over events
+
+	for(UInt_t i=7620000; i < 7630000; i++)	// Loop over events
 	{
 		s->GetEntry(i);
 		Eve->set_r("Manchester", "distance");
 		Eve->set_h();
 		Eve->reconstruct_ML(0);		
-		
-		int event_choice = event_selection(Eve, 0.6, 0.98, 1);
+		cout << "Event number: " << i << endl;
+		int event_choice = event_selection(Eve, 0.6, 0.98, 0);
 		if (event_choice)
 		{	
 			int track_num = event_choice - 1;
 			double Y = Eve->get_track(track_num)->get_b();
 			double Z = Eve->get_track(track_num)->get_d();
+		
+			Tree[0][0]->Print();	
 
 			if(Z!=0 && Z > Z_MIN && Z < Z_MAX && Y > Y_MIN && Y < Y_MAX)
 			{
 				int NSOR = N_COLS * ((int)(Z_MAX - Z) / 468) + (int)(Y - Y_MIN) / 833;	
-				int side = Eve->get_track(track_num)->get_side();
-				
-				A_Tree[side][NSOR] = Eve->get_track(track_num)->get_a();
-				B_Tree[side][NSOR] = Eve->get_track(track_num)->get_b();
-				C_Tree[side][NSOR] = Eve->get_track(track_num)->get_c();
-				D_Tree[side][NSOR] = Eve->get_track(track_num)->get_d();
 
-				Tree[side][NSOR]->Fill();
+				if(Eve->get_track(track_num)->get_side()==0)
+				{
+					A_Tree[0][NSOR] = Eve->get_track(track_num)->get_a();
+					B_Tree[0][NSOR] = Eve->get_track(track_num)->get_b();
+					C_Tree[0][NSOR] = Eve->get_track(track_num)->get_c();
+					D_Tree[0][NSOR] = Eve->get_track(track_num)->get_d();
+					cout << "NSOR: " << NSOR << endl;
+					cout << Form("A = %lf, B = %lf, C = %lf, D = %lf", A_Tree[0][NSOR], B_Tree[0][NSOR], C_Tree[0][NSOR], D_Tree[0][NSOR]) << endl; 
+
+					Tree[0][NSOR]->Fill();
+				}
+						
+				else
+				{
+					A_Tree[1][NSOR] = Eve->get_track(track_num)->get_a();
+					B_Tree[1][NSOR] = Eve->get_track(track_num)->get_b();
+					C_Tree[1][NSOR] = Eve->get_track(track_num)->get_c();
+					D_Tree[1][NSOR] = Eve->get_track(track_num)->get_d();
+
+					Tree[1][NSOR]->Fill();
+				}
+
+				//int side = Eve->get_track(track_num)->get_side();
+				
+				//A_Tree[side][NSOR] = Eve->get_track(track_num)->get_a();
+				//B_Tree[side][NSOR] = Eve->get_track(track_num)->get_b();
+				//C_Tree[side][NSOR] = Eve->get_track(track_num)->get_c();
+				//D_Tree[side][NSOR] = Eve->get_track(track_num)->get_d();
+				
+				//cout << "NSOR: " << NSOR << ", side: " << side << endl;
+				//Tree[side][NSOR]->Fill();
 			}
 		}
 		if (i % 10000 == 0) cout <<"Event No. " << i << " done!" <<endl;

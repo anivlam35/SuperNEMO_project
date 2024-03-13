@@ -1,23 +1,9 @@
 #include "/sps/nemo/scratch/ikovalen/TKEvent_old/TKEvent/include/TKEvent.h" 
+#include "config.h"
 
 R__LOAD_LIBRARY(/sps/nemo/scratch/ikovalen/TKEvent_old/TKEvent/lib/libTKEvent.so);
 
 using namespace std;
-
-const int    RUN_N        = 988;
-const double Y_MIN        = -2500.0;
-const double Y_MAX        = 2500.0;
-const int    Y_BINS	  = 833;
-const double Z_MIN        = -1638.0;
-const double Z_MAX        = 1638.0;
-const int    Z_BINS	  = 468;
-const int    X_BasePlane  = 0;
-const int    X_OBSERV_MIN = -20;
-const int    X_OBSERV_MAX = 20;
-const int    X_OBSERV     = 0;
-const int    N_SRCPLN     = 42;
-const int    N_ROWS	  = 7;
-const int    N_COLS	  = 6;
 
 void Primary_Visualization()
 {
@@ -35,7 +21,7 @@ void Primary_Visualization()
 	TGraph* grY[N_SRCPLN];
 	TGraph* grZ[N_SRCPLN];
 
-	TFile* pr_hist_file = new TFile(Form("Primary_Histos_Run-%d.root", RUN_N), "RECREATE");
+	//TFile* pr_hist_file = new TFile(Form("Primary_Histos_Run-%d.root", RUN_N), "RECREATE");
 
 	for(int NSOR=0; NSOR<N_SRCPLN; NSOR++)
 	{
@@ -104,9 +90,9 @@ void Primary_Visualization()
 			
 			cout << "X = " << iX << "  " << h_vert_real[iX + X_OBSERV_MAX]->ProjectionX()->GetRMS() << "   " << h_vert_real[iX + X_OBSERV_MAX]->ProjectionY()->GetRMS() <<endl;
 		}
-		h_vert_real[0]->Write();
+		//h_vert_real[0]->Write();
 	}
-	pr_hist_file->Close();
+	//pr_hist_file->Close();
 }
 
 

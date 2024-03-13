@@ -18,7 +18,7 @@ void Tracks_Saving()
 	TKEvent* Eve = new TKEvent(-1,-1);
 	s->SetBranchAddress("Eventdata", &Eve);
 
-	TFile *New_file = new TFile(Form("OMs_Tracks_Run-%d.root", RUN_N),"RECREATE"); // new root file for received histograms
+	TFile *New_file = new TFile(Form("OMs_Tracks_cutted_Run-%d.root", RUN_N),"RECREATE"); // new root file for received histograms
 	
 	// Define Tree and Arrays
 	TTree*   Tree[N_OMs];
@@ -48,7 +48,7 @@ void Tracks_Saving()
 		Eve->set_h();
 		Eve->reconstruct_ML(0);		
 	
-		int event_choice = event_selection(Eve, 0, 1, 0);
+		int event_choice = event_selection(Eve, 0.6, 0.98, 1);
 		if (event_choice)
 		{	
 			int track_num = event_choice - 1;
