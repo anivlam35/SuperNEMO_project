@@ -35,7 +35,7 @@ void Primary_Visualization()
 	TGraph* grY[N_SRCPLN];
 	TGraph* grZ[N_SRCPLN];
 
-	TFile* pr_hist_file = new TFile(Form("Primary_Histos_Run-%d.root", RUN_N), "RECREATE");
+//	TFile* pr_hist_file = new TFile(Form("Primary_Histos_Run-%d.root", RUN_N), "RECREATE");
 
 	for(int NSOR=0; NSOR<N_SRCPLN; NSOR++)
 	{
@@ -106,7 +106,7 @@ void Primary_Visualization()
 		}
 		h_vert_real[0]->Write();
 	}
-	pr_hist_file->Close();
+//	pr_hist_file->Close();
 }
 
 

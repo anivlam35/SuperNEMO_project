@@ -32,8 +32,6 @@ void Tracks_Saving()
 	TTree* s = (TTree*) f->Get("Event");
 //	s->Print();
 
-	TKEvent* Eve = new TKEvent(-1,-1);
-	s->SetBranchAddress("Eventdata", &Eve);
 	// MIRO: ADD RUN NUMBER TO FILENAME
 	TFile *New_file = new TFile(Form("Tracks_Run-%d.root", RUN_N),"RECREATE"); // new root file for received histograms
 	
@@ -73,6 +71,9 @@ void Tracks_Saving()
 	// Use s->GetEntries() for all entries in Run
 	for(UInt_t i=0; i < s->GetEntries(); i++)	// Loop over events
 	{
+		TKEvent* Eve = new TKEvent(-1,-1);
+		s->SetBranchAddress("Eventdata", &Eve);
+
 		s->GetEntry(i);
 		Eve->set_r("Manchester", "distance");
 		Eve->set_h();
@@ -99,6 +100,7 @@ void Tracks_Saving()
 			}
 		}
 		if (i % 10000 == 0) cout <<"Event No. " << i << " done!" <<endl;
+		Eve->~TKEvent();
 	}	
 
 

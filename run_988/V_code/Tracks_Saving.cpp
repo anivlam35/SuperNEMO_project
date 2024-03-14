@@ -1,5 +1,4 @@
-#include "/sps/nemo/scratch/ikovalen//TKEvent/TKEvent/include/TKEvent.h" 
-//#include "config.h"
+#include "/sps/nemo/scratch/ikovalen/TKEvent/TKEvent/include/TKEvent.h" 
 
 R__LOAD_LIBRARY(/sps/nemo/scratch/ikovalen/TKEvent/TKEvent/lib/libTKEvent.so);
 
@@ -9,10 +8,10 @@ using namespace TMath;
 const int    RUN_N        = 988;
 const double Y_MIN        = -2500.0;
 const double Y_MAX        = 2500.0;
-const int    Y_BINS	  = 833;
+const double Y_RECT_SIZE  = 833.34;
 const double Z_MIN        = -1638.0;
 const double Z_MAX        = 1638.0;
-const int    Z_BINS	  = 468;
+const double Z_RECT_SIZE  = 468;
 const int    X_BasePlane  = 0;
 const int    X_OBSERV_MIN = -20;
 const int    X_OBSERV_MAX = 20;
@@ -32,8 +31,6 @@ void Tracks_Saving()
 	TFile* f = new TFile(Form("/sps/nemo/scratch/ikovalen/TKEvent/runs/Run-%d.root", RUN_N));
 	TTree* s = (TTree*) f->Get("Event");
 
-	TKEvent* Eve = new TKEvent(-1,-1);
-	s->SetBranchAddress("Eventdata", &Eve);
 	// MIRO: ADD RUN NUMBER TO FILENAME
 	TFile *New_file = new TFile(Form("Tracks_Run-%d.root", RUN_N),"RECREATE"); // new root file for received histograms
 	
@@ -70,15 +67,18 @@ void Tracks_Saving()
 
 	// Filling Tree
 	// Use s->GetEntries() for all entries in Run
-//	for(UInt_t i=0; i < s->GetEntries(); i++)	// Loop over events
+	for(UInt_t i=0; i < s->GetEntries(); i++)	// Loop over events
 
-	for(UInt_t i=7620000; i < 7630000; i++)	// Loop over events
+//	for(UInt_t i=7620000; i < 7630000; i++)	// Loop over events
 	{
+		TKEvent* Eve = new TKEvent(-1,-1);
+		s->SetBranchAddress("Eventdata", &Eve);
+
 		s->GetEntry(i);
 		Eve->set_r("Manchester", "distance");
 		Eve->set_h();
 		Eve->reconstruct_ML(0);		
-		cout << "Event number: " << i << endl;
+//		cout << "Event number: " << i << endl;
 		int event_choice = event_selection(Eve, 0.6, 0.98, 0);
 		if (event_choice)
 		{	
@@ -86,46 +86,47 @@ void Tracks_Saving()
 			double Y = Eve->get_track(track_num)->get_b();
 			double Z = Eve->get_track(track_num)->get_d();
 		
-			Tree[0][0]->Print();	
-
 			if(Z!=0 && Z > Z_MIN && Z < Z_MAX && Y > Y_MIN && Y < Y_MAX)
 			{
-				int NSOR = N_COLS * ((int)(Z_MAX - Z) / 468) + (int)(Y - Y_MIN) / 833;	
-
-				if(Eve->get_track(track_num)->get_side()==0)
-				{
-					A_Tree[0][NSOR] = Eve->get_track(track_num)->get_a();
-					B_Tree[0][NSOR] = Eve->get_track(track_num)->get_b();
-					C_Tree[0][NSOR] = Eve->get_track(track_num)->get_c();
-					D_Tree[0][NSOR] = Eve->get_track(track_num)->get_d();
-					cout << "NSOR: " << NSOR << endl;
-					cout << Form("A = %lf, B = %lf, C = %lf, D = %lf", A_Tree[0][NSOR], B_Tree[0][NSOR], C_Tree[0][NSOR], D_Tree[0][NSOR]) << endl; 
-
-					Tree[0][NSOR]->Fill();
-				}
-						
-				else
-				{
-					A_Tree[1][NSOR] = Eve->get_track(track_num)->get_a();
-					B_Tree[1][NSOR] = Eve->get_track(track_num)->get_b();
-					C_Tree[1][NSOR] = Eve->get_track(track_num)->get_c();
-					D_Tree[1][NSOR] = Eve->get_track(track_num)->get_d();
-
-					Tree[1][NSOR]->Fill();
-				}
-
-				//int side = Eve->get_track(track_num)->get_side();
+				int NSOR = N_COLS * int((Z_MAX - Z) / Z_RECT_SIZE) + int((Y - Y_MIN) / Y_RECT_SIZE);	
+//				cout << "Y = " << Y << ", Z = " << Z << ", NSOR: " << NSOR << endl;
+//				if(Eve->get_track(track_num)->get_side()==0)
+//				{
+//					A_Tree[0][NSOR] = Eve->get_track(track_num)->get_a();
+//					B_Tree[0][NSOR] = Eve->get_track(track_num)->get_b();
+//					C_Tree[0][NSOR] = Eve->get_track(track_num)->get_c();
+//					D_Tree[0][NSOR] = Eve->get_track(track_num)->get_d();
+//					//cout << "NSOR: " << NSOR << endl;
+//					//cout << Form("A = %lf, B = %lf, C = %lf, D = %lf", A_Tree[0][NSOR], B_Tree[0][NSOR], C_Tree[0][NSOR], D_Tree[0][NSOR]) << endl; 
+//
+//					Tree[0][NSOR]->Fill();
+//				}
+//						
+//				else
+//				{
+//					A_Tree[1][NSOR] = Eve->get_track(track_num)->get_a();
+//					B_Tree[1][NSOR] = Eve->get_track(track_num)->get_b();
+//					C_Tree[1][NSOR] = Eve->get_track(track_num)->get_c();
+//					D_Tree[1][NSOR] = Eve->get_track(track_num)->get_d();
+//					//cout << "NSOR: " << NSOR << endl;
+//					//cout << Form("A = %lf, B = %lf, C = %lf, D = %lf", A_Tree[1][NSOR], B_Tree[1][NSOR], C_Tree[1][NSOR], D_Tree[1][NSOR]) << endl;
+//
+//					Tree[1][NSOR]->Fill();
+//				}
+//	
+				int side = Eve->get_track(track_num)->get_side();
 				
-				//A_Tree[side][NSOR] = Eve->get_track(track_num)->get_a();
-				//B_Tree[side][NSOR] = Eve->get_track(track_num)->get_b();
-				//C_Tree[side][NSOR] = Eve->get_track(track_num)->get_c();
-				//D_Tree[side][NSOR] = Eve->get_track(track_num)->get_d();
+				A_Tree[side][NSOR] = Eve->get_track(track_num)->get_a();
+				B_Tree[side][NSOR] = Eve->get_track(track_num)->get_b();
+				C_Tree[side][NSOR] = Eve->get_track(track_num)->get_c();
+				D_Tree[side][NSOR] = Eve->get_track(track_num)->get_d();
 				
 				//cout << "NSOR: " << NSOR << ", side: " << side << endl;
-				//Tree[side][NSOR]->Fill();
+				Tree[side][NSOR]->Fill();
 			}
 		}
 		if (i % 10000 == 0) cout <<"Event No. " << i << " done!" <<endl;
+		Eve->~TKEvent();
 	}	
 
 
@@ -200,14 +201,14 @@ int choose_ambg_track(TKEvent* _event)
 	    Y2 >  Y_MIN && 
 	    Y2 <  Y_MAX)
         {
-        	int NSOR1 = N_COLS * ((int)(Z_MAX - Z1) / 468) + (int)(Y1 - Y_MIN) / 833;
-                int NSOR2 = N_COLS * ((int)(Z_MAX - Z2) / 468) + (int)(Y2 - Y_MIN) / 833;
+        	int NSOR1 = N_COLS * ((int)(Z_MAX - Z1) / Z_RECT_SIZE) + (int)(Y1 - Y_MIN) / Y_RECT_SIZE;
+                int NSOR2 = N_COLS * ((int)(Z_MAX - Z2) / Z_RECT_SIZE) + (int)(Y2 - Y_MIN) / Y_RECT_SIZE;
 
-                double Y_SOR1 = Y_MIN + (NSOR1 % N_COLS + 0.5) * 833;
-                double Z_SOR1 = Z_MAX - (NSOR1 / N_COLS + 0.5) * 468;
+                double Y_SOR1 = Y_MIN + (NSOR1 % N_COLS + 0.5) * Y_RECT_SIZE;
+                double Z_SOR1 = Z_MAX - (NSOR1 / N_COLS + 0.5) * Z_RECT_SIZE;
 
-                double Y_SOR2 = Y_MIN + (NSOR2 % N_COLS + 0.5) * 833;
-                double Z_SOR2 = Z_MAX - (NSOR2 / N_COLS + 0.5) * 468;
+                double Y_SOR2 = Y_MIN + (NSOR2 % N_COLS + 0.5) * Y_RECT_SIZE;
+                double Z_SOR2 = Z_MAX - (NSOR2 / N_COLS + 0.5) * Z_RECT_SIZE;
 
                 double DIST_1 = Sqrt(Power(Y1 - Y_SOR1, 2) + Power(Z1 - Z_SOR1, 2));
                 double DIST_2 = Sqrt(Power(Y2 - Y_SOR2, 2) + Power(Z2 - Z_SOR2, 2));

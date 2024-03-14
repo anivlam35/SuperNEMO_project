@@ -8,20 +8,5 @@ using namespace TMath;
 
 void test()
 {
-	TFile* f = new TFile(Form("/sps/nemo/scratch/ikovalen/TKEvent/runs/Run-%d.root", RUN_N));
-	TTree* s = (TTree*) f->Get("Event");
-//	s->Print();
-
-	TKEvent* Eve = new TKEvent(-1,-1);
-	s->SetBranchAddress("Eventdata", &Eve);
-	
-	s->GetEntry(7623708);
-	
-	Eve->set_r("Manchester", "distance");
-	Eve->set_h();
-	Eve->reconstruct_ML(0);
-
-	Eve->print();
-	Eve->make_top_projection(2, "test_folder");
-
+	cout << (int)3.999999 / 2 << endl;
 }
