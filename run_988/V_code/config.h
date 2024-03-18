@@ -4,10 +4,10 @@
 const int    RUN_N        = 988;
 const double Y_MIN        = -2500.0;
 const double Y_MAX        = 2500.0;
-const int    Y_BINS	  = 833;
-const double Z_MIN        = -1638.0;
-const double Z_MAX        = 1638.0;
-const int    Z_BINS	  = 468;
+const double Y_RECT_SIZE  = 833.34;
+const double Z_MIN        = -1487.5;
+const double Z_MAX        = 1487.5;
+const double Z_RECT_SIZE  = 425;
 const int    X_BasePlane  = 0;
 const int    X_OBSERV_MIN = -20;
 const int    X_OBSERV_MAX = 20;

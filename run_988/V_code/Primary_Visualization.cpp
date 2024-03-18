@@ -12,8 +12,7 @@ void Primary_Visualization()
 	// 0000000000000000000000000000
 	// Build the RMS_Y(x) and RMS_Z(x) for selection ellipses from code Analysis
 
-	TFile* file = new TFile(Form("FoilPlane_Tracks_Run-%d.root", RUN_N));
-	// TFile* file = new TFile("Clear_data.root");
+	TFile* file = new TFile(Form("Tracks_Run-%d.root", RUN_N));
 
 	int N_Point = X_OBSERV_MAX - X_OBSERV_MIN + 1;
 	double Arr_X[N_Point], Arr_Y[N_Point], Arr_Z[N_Point];
@@ -38,12 +37,12 @@ void Primary_Visualization()
 
 		double verY, verZ;
 
-		double YMIN  = Y_MIN + (NSOR % N_COLS + 0.5) * 833 - 200;
-		double YMAX  = Y_MIN + (NSOR % N_COLS + 0.5) * 833 + 200;
+		double YMIN  = Y_MIN + (NSOR % N_COLS + 0.5) * Y_RECT_SIZE - 200;
+		double YMAX  = Y_MIN + (NSOR % N_COLS + 0.5) * Y_RECT_SIZE + 200;
 		int    YBINS = (YMAX - YMIN) / 2.0;
 
-		double ZMIN  = Z_MAX - (NSOR / N_COLS + 0.5) * 468 - 140;
-		double ZMAX  = Z_MAX - (NSOR / N_COLS + 0.5) * 468 + 140;
+		double ZMIN  = Z_MAX - (NSOR / N_COLS + 0.5) * Z_RECT_SIZE - 140;
+		double ZMAX  = Z_MAX - (NSOR / N_COLS + 0.5) * Z_RECT_SIZE + 140;
 		int    ZBINS = (ZMAX - ZMIN) / 2.0;
 
 		TH2D* h_vert_real[2*X_OBSERV_MAX+1];  

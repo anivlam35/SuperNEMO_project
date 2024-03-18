@@ -1,4 +1,4 @@
-#include "/sps/nemo/scratch/ikovalen/TKEvent_old/TKEvent/include/TKEvent.h" 
+#include "/sps/nemo/scratch/ikovalen/TKEvent/TKEvent/include/TKEvent.h" 
 #include "config.h"
 
 R__LOAD_LIBRARY(/sps/nemo/scratch/ikovalen/TKEvent_old/TKEvent/lib/libTKEvent.so);
@@ -9,7 +9,7 @@ void Projections_Processing()
 {
 	gROOT->SetBatch(kTRUE);
 
-	TFile* file = new TFile("FoilPlane_Tracks.root");
+	TFile* file = new TFile(Form("Tracks_Run-%d.root", RUN_N));
 
 	for(int NSOR=0; NSOR<N_SRCPLN; NSOR++)
 	{
@@ -26,13 +26,13 @@ void Projections_Processing()
 
 		double verY, verZ;
 
-		double YMIN  = Y_MIN + (NSOR % N_COLS + 0.5) * 833 - 140;
-		double YMAX  = Y_MIN + (NSOR % N_COLS + 0.5) * 833 + 140;
-		int    YBINS = (YMAX - YMIN) / 4.0 + 42;
+		double YMIN  = Y_MIN + (NSOR % N_COLS + 0.5) * Y_RECT_SIZE - 140;
+		double YMAX  = Y_MIN + (NSOR % N_COLS + 0.5) * Y_RECT_SIZE + 140;
+		int    YBINS = (YMAX - YMIN) / 3;
 
-		double ZMIN  = Z_MAX - (NSOR / N_COLS + 0.5) * 468 - 140;
-		double ZMAX  = Z_MAX - (NSOR / N_COLS + 0.5) * 468 + 140;
-		int    ZBINS = (ZMAX - ZMIN) / 4.0 + 42;
+		double ZMIN  = Z_MAX - (NSOR / N_COLS + 0.5) * Z_RECT_SIZE - 140;
+		double ZMAX  = Z_MAX - (NSOR / N_COLS + 0.5) * Z_RECT_SIZE + 140;
+		int    ZBINS = (ZMAX - ZMIN) / 3;
 
 		TH1* Y_pr;
 		TH1* Z_pr;
@@ -65,8 +65,8 @@ void Projections_Processing()
 
 		}
 		
-		Y_pr->Fit("gaus");
-		Z_pr->Fit("gaus");
+		Y_pr->Fit("gaus(0)*gaus(3)");
+		Z_pr->Fit("gaus(0)*gaus(3)");
 		
 		Y_pr->GetFunction("gaus")->SetNpx(1000);
 
@@ -80,9 +80,7 @@ void Projections_Processing()
                 stY->SetY1NDC(0.77);
                 stY->SetY2NDC(0.95);
 
-		stringstream hnmY;
-		hnmY << "Projections/Y_PR_SRC" << NSOR << ".png" ;
-		CY->SaveAs(hnmY.str().c_str());
+		CY->SaveAs(Form("Projections/Y_PR_SRC%02d.png", NSOR));
 		
                 TCanvas* CZ = new TCanvas("Canvas", "Canvas", 800, 600);
                 Z_pr->Draw();
@@ -94,8 +92,6 @@ void Projections_Processing()
                 stZ->SetY1NDC(0.77);
                 stZ->SetY2NDC(0.95);
 
-                stringstream hnmZ;
-                hnmZ << "Projections/Z_PR_SRC" << NSOR << ".png" ;
-                CZ->SaveAs(hnmZ.str().c_str());
+                CZ->SaveAs(Form("Projections/Z_PR_SRC%02d.png", NSOR));
 	}
 }

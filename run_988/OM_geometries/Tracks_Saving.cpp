@@ -1,7 +1,7 @@
-#include "/sps/nemo/scratch/ikovalen/TKEvent_old/TKEvent/include/TKEvent.h" 
+#include "/sps/nemo/scratch/ikovalen/TKEvent/TKEvent/include/TKEvent.h" 
 #include "config.h"
 
-R__LOAD_LIBRARY(/sps/nemo/scratch/ikovalen/TKEvent_old/TKEvent/lib/libTKEvent.so);
+R__LOAD_LIBRARY(/sps/nemo/scratch/ikovalen/TKEvent/TKEvent/lib/libTKEvent.so);
 
 using namespace std;
 using namespace TMath;
@@ -18,7 +18,7 @@ void Tracks_Saving()
 	TKEvent* Eve = new TKEvent(-1,-1);
 	s->SetBranchAddress("Eventdata", &Eve);
 
-	TFile *New_file = new TFile(Form("OMs_Tracks_cutted_Run-%d.root", RUN_N),"RECREATE"); // new root file for received histograms
+	TFile *New_file = new TFile(Form("%sOMs_Tracks_Run-%d.root", PATH, RUN_N),"RECREATE"); // new root file for received histograms
 	
 	// Define Tree and Arrays
 	TTree*   Tree[N_OMs];
@@ -45,7 +45,7 @@ void Tracks_Saving()
 	{
 		s->GetEntry(i);
 		Eve->set_r("Manchester", "distance");
-		Eve->set_h();
+		Eve->set_h(eff_len);
 		Eve->reconstruct_ML(0);		
 	
 		int event_choice = event_selection(Eve, 0.6, 0.98, 1);

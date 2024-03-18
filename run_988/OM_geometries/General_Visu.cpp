@@ -2,13 +2,14 @@
 #include "config.h"
 
 using namespace std;
+using namespace TMath;
 
 R__LOAD_LIBRARY(/sps/nemo/scratch/ikovalen/TKEvent_old/TKEvent/lib/libTKEvent.so);
 
 void OM_xyz_swcr(int OM_num);
 
 void General_Visu(){
-	TFile* f = new TFile(Form("OMs_Tracks_cutted_Run-%d.root", RUN_N));
+	TFile* f = new TFile(Form("%sOMs_Tracks_Run-%d.root", PATH, RUN_N));
 	
 	TTree*   Tree[N_OMs];
 	double A_Tree[N_OMs];
@@ -71,7 +72,7 @@ void General_Visu(){
                 v_line->SetLineColor(2);
                 v_line->Draw("Same");
         }
-        C0->SaveAs("hist_OMs_tracks_ital.png");
+        C0->SaveAs(Form("%shist_OMs_tracks_ital.png", PATH));
 
 ///////////////////////////////////////////// FRENCH SIDE //////////////////////////////////////////////////////
 
@@ -113,7 +114,103 @@ void General_Visu(){
                 v_line->SetLineColor(2);
                 v_line->Draw("Same");
         }
-	C1->SaveAs("hist_OMs_tracks_fren.png");
+	C1->SaveAs(Form("%shist_OMs_tracks_fren.png", PATH));
+
+////////////////////////////// VECTOR FIELD ITALIAN SIDE //////////////////////////////////////////////////////
+	
+	TArrow* arrows0[260];
+	X_zero_plane = -532 + mw_sizex / 2;
+
+	for(int OM_num = 0; OM_num < 260; OM_num++)
+	{
+		OM_xyz_swcr(OM_num);
+		
+		double sum_Y = 0;
+		double sum_Z = 0;
+
+		for(int i = 0; i < Tree[OM_num]->GetEntries(); i++)
+		{
+			Tree[OM_num]->GetEntry(i);
+			sum_Y += A_Tree[OM_num] * X_zero_plane + B_Tree[OM_num];
+			sum_Z += C_Tree[OM_num] * X_zero_plane + D_Tree[OM_num];
+		}
+		
+		double mean_Y = sum_Y / Tree[OM_num]->GetEntries();
+		double mean_Z = sum_Z / Tree[OM_num]->GetEntries();
+
+		arrows0[OM_num] = new TArrow(xyz[1], xyz[2], mean_Y, mean_Z, 0.005, "|>");
+		//float arrow_l = Sqrt(Power(mean_Y - xyz[1], 2) + Power(mean_Z - xyz[2], 2)) / 300;
+		//TColor* color;
+		//color->SetRGB(arrow_l, 1 - arrow_l, 0);
+		arrows0[OM_num]->SetLineWidth(2);
+		//arrow->SetLineColor(color);
+	}
+        TCanvas* C2 = new TCanvas("Canvas", "Canvas", 2000, 1300);
+
+        TString hname2 = "Vector Field of Main Wall OMs (x < 0)";
+        TH2D* h2 = new TH2D(hname2, hname2, Y_bins, Y_MIN, Y_MAX, Z_bins, Z_MIN, Z_MAX);
+
+        h2->SetStats(0);
+        h2->GetXaxis()->SetTitle("y[mm]");
+        h2->GetYaxis()->SetTitle("z[mm]");
+
+        h2->Draw();
+
+	for(int OM_num = 0; OM_num < 260; OM_num++)
+	{
+		arrows0[OM_num]->Draw();
+	}
+
+
+	C2->SaveAs(Form("%svect_field_OMs_displ_ital.png", PATH));
+
+////////////////////////////// VECTOR FIELD FRENCH SIDE //////////////////////////////////////////////////////
+
+	TArrow* arrows1[260];
+	X_zero_plane = 532 - mw_sizex / 2;
+
+	for(int OM_num = 260; OM_num < 520; OM_num++)
+	{
+		OM_xyz_swcr(OM_num);
+		
+		double sum_Y = 0;
+		double sum_Z = 0;
+
+		for(int i = 0; i < Tree[OM_num]->GetEntries(); i++)
+		{
+			Tree[OM_num]->GetEntry(i);
+			sum_Y += A_Tree[OM_num] * X_zero_plane + B_Tree[OM_num];
+			sum_Z += C_Tree[OM_num] * X_zero_plane + D_Tree[OM_num];
+		}
+		
+		double mean_Y = sum_Y / Tree[OM_num]->GetEntries();
+		double mean_Z = sum_Z / Tree[OM_num]->GetEntries();
+
+		arrows1[OM_num - 260] = new TArrow(xyz[1], xyz[2], mean_Y, mean_Z, 0.005, "|>");
+		//float arrow_l = Sqrt(Power(mean_Y - xyz[1], 2) + Power(mean_Z - xyz[2], 2)) / 300;
+		//TColor* color;
+		//color->SetRGB(arrow_l, 1 - arrow_l, 0);
+		arrows1[OM_num - 260]->SetLineWidth(2);
+		//arrow->SetLineColor(color);
+	}
+        TCanvas* C3 = new TCanvas("Canvas", "Canvas", 2000, 1300);
+
+        TString hname3 = "Vector Field of Main Wall OMs (x < 0)";
+        TH2D* h3 = new TH2D(hname3, hname3, Y_bins, Y_MIN, Y_MAX, Z_bins, Z_MIN, Z_MAX);
+
+        h3->SetStats(0);
+        h3->GetXaxis()->SetTitle("y[mm]");
+        h3->GetYaxis()->SetTitle("z[mm]");
+
+        h3->Draw();
+
+	for(int OM_num = 260; OM_num < 520; OM_num++)
+	{
+		arrows1[OM_num - 260]->Draw();
+	}
+
+
+	C3->SaveAs(Form("%svect_field_OMs_displ_french.png", PATH));
 
 }
 

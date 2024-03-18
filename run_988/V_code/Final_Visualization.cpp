@@ -17,15 +17,17 @@ void Final_Visualization()
 	int N_Point = X_OBSERV_MAX - X_OBSERV_MIN + 1;
 	double Arr_X[N_Point], Arr_Y[N_Point], Arr_Z[N_Point];
 	
-	TGraph* grY[14];
-	TGraph* grZ[14];
+	TGraph* grY[N_SRCPLN];
+	TGraph* grZ[N_SRCPLN];
 
-	for(int SRC_NO_i=0; SRC_NO_i<14; SRC_NO_i++)
+	for(int SRC_NO_i=0; SRC_NO_i < N_SRCPLN; SRC_NO_i++)
 	{
 		stringstream tr_name;
 
 		tr_name << "Tracks for " << X_BasePlane << " mm x < 0 Source " << SRC_NO_i;
 		TTree* tr = (TTree*) file->Get(tr_name.str().c_str());
+
+		cout << tr_name.str() << endl;		
 
 		double parA, parB, parC, parD;
 		tr->SetBranchAddress("A", &parA);
@@ -41,11 +43,11 @@ void Final_Visualization()
 
 		double YMIN  = tr->GetMinimum("B") - 20.0;
 		double YMAX  = tr->GetMaximum("B") + 20.0;
-		int    YBINS = int( (YMAX - YMIN) / 5.0 );
+		int    YBINS = int( (YMAX - YMIN) / 2.0 );
 
 		double ZMIN = tr->GetMinimum("D") - 20.0;
 		double ZMAX = tr->GetMaximum("D") + 20.0;
-		int    ZBINS = int( (ZMAX - ZMIN) / 5.0 );
+		int    ZBINS = int( (ZMAX - ZMIN) / 2.0 );
 
 		TH2D* h_vert_real[2*X_OBSERV_MAX+1];  
 
@@ -55,7 +57,7 @@ void Final_Visualization()
 
 			h_name << "Hist for " << iX << " mm x < 0 Source " << SRC_NO_i;						   
 			h_vert_real[iX + X_OBSERV_MAX] = new TH2D(h_name.str().c_str(), h_name.str().c_str(), YBINS, YMIN, YMAX, ZBINS, ZMIN, ZMAX);
-			h_vert_real[iX + X_OBSERV_MAX]->SetMaximum(tr->GetEntries()/30.0);
+			h_vert_real[iX + X_OBSERV_MAX]->SetMaximum(750);
 			h_vert_real[iX + X_OBSERV_MAX]->GetXaxis()->SetRangeUser(YMIN, YMAX);
 			h_vert_real[iX + X_OBSERV_MAX]->GetYaxis()->SetRangeUser(ZMIN, ZMAX);
 			h_vert_real[iX + X_OBSERV_MAX]->GetXaxis()->SetTitle("y[mm]");
@@ -79,6 +81,14 @@ void Final_Visualization()
 			TCanvas* C0 = new TCanvas("Canvas", "Canvas");
 			h_vert_real[iX + X_OBSERV_MAX]->Draw("COLZ"); 
 			//h_vert_real[iX + X_OBSERV_MAX]->Write(h_name.str().c_str());
+
+			C0->SetLogz();
+			C0->Update();
+			TPaveStats *st = (TPaveStats*)h_vert_real[iX + X_OBSERV_MAX]->FindObject("stats");
+			st->SetX1NDC(0.7);			
+			st->SetX2NDC(0.9);
+                        st->SetY1NDC(0.72);
+                        st->SetY2NDC(0.9);
 
 			stringstream hnm;
 			hnm << "CUTS/SRC" << SRC_NO_i << "X" << iX - X_OBSERV_MIN << "NEG.png" ;
@@ -132,7 +142,7 @@ void Final_Visualization()
 	grY[0]->GetXaxis()->SetTitleSize(20);
 	grY[0]->GetXaxis()->SetTitle("x [mm]");
 
-	for(int SRC_NO_i=1; SRC_NO_i<14; SRC_NO_i++)
+	for(int SRC_NO_i=1; SRC_NO_i<N_SRCPLN; SRC_NO_i++)
 	{
 	    	char nm[7];
 	    	sprintf(nm,"Src %i", SRC_NO_i);
@@ -179,7 +189,7 @@ void Final_Visualization()
 	hY->GetXaxis()->SetTitleOffset(3);
 	hY->GetXaxis()->SetTitle("x [mm]");
 
-	for(int SRC_NO_i=0; SRC_NO_i<14; SRC_NO_i++)
+	for(int SRC_NO_i=0; SRC_NO_i<N_SRCPLN; SRC_NO_i++)
 	{
 	    // Get the graph's X and Y arrays
 	    const double* xValues = grY[SRC_NO_i]->GetX();
@@ -246,7 +256,7 @@ void Final_Visualization()
         grZ[0]->GetXaxis()->SetTitleSize(20);
         grZ[0]->GetXaxis()->SetTitle("x [mm]");
 
-        for(int SRC_NO_i=1; SRC_NO_i<14; SRC_NO_i++)
+        for(int SRC_NO_i=1; SRC_NO_i<N_SRCPLN; SRC_NO_i++)
         {
                 char nm[7];
                 sprintf(nm,"Src %i", SRC_NO_i);
@@ -292,7 +302,7 @@ void Final_Visualization()
         hZ->GetXaxis()->SetTitleOffset(3);
         hZ->GetXaxis()->SetTitle("x [mm]");
 
-        for(int SRC_NO_i=0; SRC_NO_i<14; SRC_NO_i++)
+        for(int SRC_NO_i=0; SRC_NO_i<N_SRCPLN; SRC_NO_i++)
         {
             // Get the graph's X and Y arrays
             const double* xValues = grZ[SRC_NO_i]->GetX();
@@ -322,7 +332,7 @@ void Final_Visualization()
 
         CZ->Print("vZ.png");
 
-	for(int SRC_NO_i=0; SRC_NO_i<14; SRC_NO_i++)
+	for(int SRC_NO_i=0; SRC_NO_i<N_SRCPLN; SRC_NO_i++)
 	{	
 		char print_name_RMS_Y[50];
 		sprintf(print_name_RMS_Y,"RMS_ALL_SOURCE/RMS_Y_Source_%i.png", SRC_NO_i);

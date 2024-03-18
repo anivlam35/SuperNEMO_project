@@ -1,7 +1,7 @@
-#include "/sps/nemo/scratch/ikovalen/TKEvent/TKEvent/include/TKEvent.h" 
+#include "/sps/nemo/scratch/ikovalen/TKEvent_old/TKEvent/include/TKEvent.h" 
 #include "config.h"
 
-R__LOAD_LIBRARY(/sps/nemo/scratch/ikovalen/TKEvent/TKEvent/lib/libTKEvent.so);
+R__LOAD_LIBRARY(/sps/nemo/scratch/ikovalen/TKEvent_old/TKEvent/lib/libTKEvent.so);
 
 using namespace std;
 
@@ -77,7 +77,8 @@ void Primary_Visualization()
 		{
 			TCanvas* C0 = new TCanvas("Canvas", "Canvas", 1000, 700);
 			h_vert_real[iX + X_OBSERV_MAX]->Draw("COLZ");
-
+			
+			C0->SetLogz();
 			C0->Update();
 			TPaveStats *st = (TPaveStats*)h_vert_real[iX + X_OBSERV_MAX]->FindObject("stats");
 			st->SetX1NDC(0.7);			
@@ -89,7 +90,7 @@ void Primary_Visualization()
 			
 			cout << "X = " << iX << "  " << h_vert_real[iX + X_OBSERV_MAX]->ProjectionX()->GetRMS() << "   " << h_vert_real[iX + X_OBSERV_MAX]->ProjectionY()->GetRMS() <<endl;
 		}
-		h_vert_real[0]->Write();
+		//h_vert_real[0]->Write();
 	}
 	//pr_hist_file->Close();
 }

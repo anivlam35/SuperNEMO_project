@@ -1,24 +1,10 @@
 #include "/sps/nemo/scratch/ikovalen/TKEvent/TKEvent/include/TKEvent.h" 
+#include "config.h"
 
 R__LOAD_LIBRARY(/sps/nemo/scratch/ikovalen/TKEvent/TKEvent/lib/libTKEvent.so);
 
 using namespace std;
 using namespace TMath;
-
-const int    RUN_N        = 988;
-const double Y_MIN        = -2500.0;
-const double Y_MAX        = 2500.0;
-const double Y_RECT_SIZE  = 833.34;
-const double Z_MIN        = -1638.0;
-const double Z_MAX        = 1638.0;
-const double Z_RECT_SIZE  = 468;
-const int    X_BasePlane  = 0;
-const int    X_OBSERV_MIN = -20;
-const int    X_OBSERV_MAX = 20;
-const int    X_OBSERV     = 0;
-const int    N_SRCPLN     = 42;
-const int    N_ROWS	  = 7;
-const int    N_COLS	  = 6;
 
 const    int ABS_X_MAX = 10;
 const    int ABS_X_MIN = 10;
@@ -76,7 +62,7 @@ void Tracks_Saving()
 
 		s->GetEntry(i);
 		Eve->set_r("Manchester", "distance");
-		Eve->set_h();
+		Eve->set_h(2770.0);
 		Eve->reconstruct_ML(0);		
 //		cout << "Event number: " << i << endl;
 		int event_choice = event_selection(Eve, 0.6, 0.98, 0);
@@ -89,7 +75,7 @@ void Tracks_Saving()
 			if(Z!=0 && Z > Z_MIN && Z < Z_MAX && Y > Y_MIN && Y < Y_MAX)
 			{
 				int NSOR = N_COLS * int((Z_MAX - Z) / Z_RECT_SIZE) + int((Y - Y_MIN) / Y_RECT_SIZE);	
-//				cout << "Y = " << Y << ", Z = " << Z << ", NSOR: " << NSOR << endl;
+				//cout << "Y = " << Y << ", Z = " << Z << ", NSOR: " << NSOR << endl;
 //				if(Eve->get_track(track_num)->get_side()==0)
 //				{
 //					A_Tree[0][NSOR] = Eve->get_track(track_num)->get_a();

@@ -1,7 +1,7 @@
-#include "/sps/nemo/scratch/ikovalen/TKEvent/TKEvent/include/TKEvent.h" 
+#include "/sps/nemo/scratch/ikovalen/TKEvent_old/TKEvent/include/TKEvent.h" 
 #include "config.h"
 
-R__LOAD_LIBRARY(/sps/nemo/scratch/ikovalen/TKEvent/TKEvent/lib/libTKEvent.so);
+R__LOAD_LIBRARY(/sps/nemo/scratch/ikovalen/TKEvent_old/TKEvent/lib/libTKEvent.so);
 
 vector<double> get_guess(TH1D* _hpy, TH1D* _hpz);
 vector<double> find_yz(TTree* _t,                       double _ymin, double _ymax, double _zmin, double _zmax, int _iX, int _iter);
@@ -27,26 +27,16 @@ void Spaghetti_Analysis()
 	TFile* file = new TFile(Form("Tracks_Run-%d.root", RUN_N));
 	// TFile* file = new TFile("Clear_data.root");
 	
-	TFile *New_file = new TFile(Form("Clear_data_Run-%d.root", RUN_N),"RECREATE"); // MIRO: TO RENAME AND PLAN BETTER THE CONTENTS!new root file for received histograms
+	TFile *New_file = new TFile(Form("Clear_data_Run-%d.root", RUN_N),"RECREATE");
 	// Load the data for one source (x<0)
 
-	for(int SRC_NO_i=0; SRC_NO_i<14; SRC_NO_i++)
+	for(int SRC_NO_i=0; SRC_NO_i < N_SRCPLN; SRC_NO_i++)
 	{
 		stringstream tr_name;
 
 		tr_name << "Tracks for " << X_BasePlane << " mm x < 0 Source " << SRC_NO_i;
 		TTree* tr = (TTree*) file->Get(tr_name.str().c_str());
-		// 000000000000000000000000000000000000000
-		// Find the best parameter
 
-		// for(int iX=X_MIN; iX<=X_MAX; iX++)
-		// {
-		// 	vector<double> Best_yzab = best_par(tr, iX, SRC_NO_i);
-		// }
-		
-		// 000000000000000000000000000000000000000
-		// Cleaning part
-		
 		char Newtr_name[50];
 		sprintf(Newtr_name,"Tracks for %i mm x < 0 Source %i", X_BasePlane, SRC_NO_i);
 
@@ -55,49 +45,17 @@ void Spaghetti_Analysis()
 		Clean_yzab[1] = best_par(tr, X_Cl[1], SRC_NO_i, 0);
 
 		TTree* Newtr = CleanTree(tr, Clean_yzab, Newtr_name);
-		// TTree* Newtr = CleanTree(tr, {{Clean_yzab[0][0], Clean_yzab[0][1], 5, 10}, 
-		// 							  {Clean_yzab[1][0], Clean_yzab[1][1], 5, 10}}, Newtr_name);
 
 		Newtr->Write(Newtr_name);
-		// New_file->Close();
 
 		cout<<endl;
 		cout<<"Done for "<<SRC_NO_i<<" Source"<<endl;
 		cout<<endl;
-		// 000000000000000000000000000000000000000
-		// Part for ellipses from small to large a_par
-
-		// TFile *New_file_1 = new TFile("EllipsesSave.root","RECREATE"); // MIRO: TO RENAME AND PLAN BETTER THE CONTENTS!new root file for received histograms
-		
-		// vector<vector<double>> Clean_yzab_1(2);
-		// Clean_yzab_1[0] = best_par(tr, X_Cl[0], SRC_NO_i, 0);
-		// Clean_yzab_1[1] = best_par(tr, X_Cl[1], SRC_NO_i, 0);
-
-		// for(int a_par_ii = 2; a_par_ii<50; a_par_ii++)
-		// {
-		// 	double a_par_i = 2.0 + double(a_par_ii-2)*0.5;
-		// 	char Newtr_name_1[50];
-		// 	sprintf(Newtr_name_1,"Tracks for %i mm x < 0 Source %i par a = %2.1f", X_BasePlane, SRC_NO_i, a_par_i);
-
-		// 	// TTree* Newtr_1 = CleanTree(tr, Clean_yzab, Newtr_name_1);
-		// 	TTree* Newtr_1 = CleanTree(tr, {{Clean_yzab_1[0][0], Clean_yzab_1[0][1], a_par_i, a_par_i*Clean_yzab_1[0][3]/Clean_yzab_1[0][2]}, 
-		// 									{Clean_yzab_1[1][0], Clean_yzab_1[1][1], a_par_i, a_par_i*Clean_yzab_1[1][3]/Clean_yzab_1[1][2]}}, Newtr_name_1);
-
-		// 	Newtr_1->Write(Newtr_name_1);
-		// 	cout<<"Final for a = "<<a_par_i<<endl;
-		// }
 	}
-	// 000000000000000000000000000000000000000
-	// New_file_1->Close();
-
-	// for browsing
-	// TBrowser* tb = new TBrowser();
 }
 
 vector<double> get_guess(TH1D* _hpy, TH1D* _hpz)
 {
- 	// g[0] = mode_Y, g[1] = mode_Z, g[2] = sigma_Y, g[3] = sigma_Z 
-
 	vector<double> g(4);
 
 	g[0] = _hpy->GetBinCenter(_hpy->GetMaximumBin()); 
@@ -109,16 +67,6 @@ vector<double> get_guess(TH1D* _hpy, TH1D* _hpz)
 	g[2] = (res[1] - res[0]) / 2.0/*_hpy->GetStdDev()*/; 
 	_hpz->GetQuantiles(2, res, quant);
 	g[3] = (res[1] - res[0]) / 2.0/*_hpz->GetStdDev()*/; 
-
-	// TCanvas* cy = new TCanvas("Cy", "Cy");
- 	// _hpy->GetXaxis()->SetRangeUser(g[0] - 5.0*g[3], g[0] + 5.0*g[3]); // maybe g[2]?
- 	// _hpy->GetXaxis()->SetTitle("y[mm]");
-	// _hpy->Draw();
-
-	// TCanvas* cz = new TCanvas("Cz", "Cz");
- 	// _hpz->GetXaxis()->SetRangeUser(g[1] - 5.0*g[3], g[1] + 5.0*g[3]);
- 	// _hpz->GetXaxis()->SetTitle("z[mm]");
-	// _hpz->Draw();
 
 	cout << "GUESS: Y: " << g[0] << " +- " << g[2] << ", Z: " << g[1] << " +- " << g[3] << endl;
 	

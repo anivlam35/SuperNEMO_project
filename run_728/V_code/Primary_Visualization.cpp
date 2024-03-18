@@ -26,7 +26,7 @@ void Primary_Visualization()
 	// 0000000000000000000000000000
 	// Build the RMS_Y(x) and RMS_Z(x) for selection ellipses from code Analysis
 
-	TFile* file = new TFile(Form("FoilPlane_Tracks_Run-%d.root", RUN_N));
+	TFile* file = new TFile(Form("Tracks_Run-%d.root", RUN_N));
 	// TFile* file = new TFile("Clear_data.root");
 
 	int N_Point = X_OBSERV_MAX - X_OBSERV_MIN + 1;

@@ -1,0 +1,63 @@
+****************************************************************
+*                      SLURM Batch System                      *
+*           IN2P3 Computing Centre, Villeurbanne FR            *
+****************************************************************
+* Date:                 Sun Mar 17 14:48:44 CET 2024
+* Job name:             sending_to_cluster.sh
+* Job id:               3688114
+* User:                 ikovalen
+* Account:              nemo
+* Submit host:          cca014
+* Partition:            htc
+* Quality of service:   normal
+* Nodelist:             ccwslurm0366
+****************************************************************
+
+Processing /sps/nemo/scratch/ikovalen/SuperNEMO_project/run_988/V_code/Tracks_Saving.cpp...
+In file included from input_line_10:1:
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_988/V_code/Tracks_Saving.cpp:65:14: error: too few arguments to function call, single argument 'custom_tc_sizez' was not specified
+                Eve->set_h();
+                ~~~~~~~~~~ ^
+/sps/nemo/scratch/ikovalen/TKEvent/TKEvent/include/TKEvent.h:101:3: note: 'set_h' declared here
+                void set_h(double custom_tc_sizez);
+                ^
+
+Processing /sps/nemo/scratch/ikovalen/SuperNEMO_project/run_988/V_code/Spaghetti_Analysis.cpp...
+Error in <TFile::ReadBuffer>: error reading all requested bytes from file Tracks_Run-988.root, got 234 of 300
+Error in <TFile::Init>: Tracks_Run-988.root failed to read the file type data.
+Error in <HandleInterpreterException>: Trying to dereference null pointer or trying to call routine taking non-null arguments.
+Execution of your code was aborted.
+In file included from input_line_10:1:
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_988/V_code/Spaghetti_Analysis.cpp:353:2: warning: null passed to a callee that requires a non-null argument [-Wnonnull]
+        _t->Print();
+        ^~
+
+Processing /sps/nemo/scratch/ikovalen/SuperNEMO_project/run_988/V_code/Final_Visualization.cpp...
+Tracks for 0 mm x < 0 Source 0
+Error in <HandleInterpreterException>: Trying to dereference null pointer or trying to call routine taking non-null arguments.
+Execution of your code was aborted.
+In file included from input_line_10:1:
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_988/V_code/Final_Visualization.cpp:33:3: warning: null passed to a callee that requires a non-null argument [-Wnonnull]
+                tr->SetBranchAddress("A", &parA);
+                ^~
+
+Processing /sps/nemo/scratch/ikovalen/SuperNEMO_project/run_988/V_code/Primary_Visualization.cpp...
+Error in <TFile::ReadBuffer>: error reading all requested bytes from file Tracks_Run-988.root, got 234 of 300
+Error in <TFile::Init>: Tracks_Run-988.root failed to read the file type data.
+Error in <HandleInterpreterException>: Trying to dereference null pointer or trying to call routine taking non-null arguments.
+Execution of your code was aborted.
+In file included from input_line_10:1:
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_988/V_code/Primary_Visualization.cpp:33:3: warning: null passed to a callee that requires a non-null argument [-Wnonnull]
+                tr->SetBranchAddress("A", &parA);
+                ^~
+****************************************************************
+*                      SLURM Batch System                      *
+*           IN2P3 Computing Centre, Villeurbanne FR            *
+****************************************************************
+Date: Sun Mar 17 14:48:51 CET 2024
+Job informations can be found using these commands:
+Accounting:
+sacct -j 3688114
+Efficiency:
+seff 3688114
+****************************************************************

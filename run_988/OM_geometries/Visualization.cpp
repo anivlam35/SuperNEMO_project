@@ -8,13 +8,16 @@ R__LOAD_LIBRARY(/sps/nemo/scratch/ikovalen/TKEvent_old/TKEvent/lib/libTKEvent.so
 void OM_xyz_swcr(int OM_num);
 
 void Visualization(){
-	TFile* f = new TFile(Form("OMs_Tracks_Run-%d.root", RUN_N));
+	TFile* f = new TFile(Form("%sOMs_Tracks_Run-%d.root", PATH, RUN_N));
 	
 	TTree*   Tree[N_OMs];
 	double A_Tree[N_OMs];
 	double B_Tree[N_OMs];
 	double C_Tree[N_OMs];
 	double D_Tree[N_OMs];
+
+        int    Y_bins_general = int(Y_MAX - Y_MIN) / 3;
+        int    Z_bins_general = int(Z_MAX - Z_MIN) / 3;
 		
 	for(int OM_num = 0; OM_num < N_OMs; OM_num++)
 	{
@@ -66,20 +69,67 @@ void Visualization(){
 		}
 		h->Draw("COLZ");
 
-		auto h_line = new TLine(Y_hmin, xyz[2], Y_hmax, xyz[2]);
-		auto v_line = new TLine(xyz[1], Z_hmin, xyz[1], Z_hmax);
+		auto h_line1 = new TLine(Y_hmin, xyz[2] - mw_sizey / 2, Y_hmax, xyz[2] - mw_sizey / 2);
+		auto h_line2 = new TLine(Y_hmin, xyz[2] + mw_sizey / 2, Y_hmax, xyz[2] + mw_sizey / 2);
+		auto v_line1 = new TLine(xyz[1] - mw_sizez / 2, Z_hmin, xyz[1] - mw_sizez / 2, Z_hmax);
+		auto v_line2 = new TLine(xyz[1] + mw_sizez / 2, Z_hmin, xyz[1] + mw_sizez / 2, Z_hmax);
 		
-		h_line->SetLineWidth(3);
-		v_line->SetLineWidth(3);
-		
-		h_line->SetLineColor(2);
-		v_line->SetLineColor(2);
+		h_line1->SetLineWidth(3);
+		h_line2->SetLineWidth(3);
+		v_line1->SetLineWidth(3);
+		v_line2->SetLineWidth(3);
+				
+		h_line1->SetLineColor(2);
+		h_line2->SetLineColor(2);
+		v_line1->SetLineColor(2);
+		v_line2->SetLineColor(2);
 
-		h_line->Draw("Same");
-		v_line->Draw("Same");
+		h_line1->Draw("Same");
+		h_line2->Draw("Same");
+		v_line1->Draw("Same");
+		v_line2->Draw("Same");
 		
-		hname = Form("./visu_OMs_tracks/OM%03d_tracks_Run-%d.png", OM_num, RUN_N);
+		hname = Form("%svisu_OMs_tracks/OM%03d_tracks_Run-%d.png", PATH, OM_num, RUN_N);
 		C->SaveAs(hname);
+
+///////////////////////////// GENERAL VIEW ///////////////////////////
+
+		TCanvas* C2 = new TCanvas("Canvas", "Canvas", 2000, 1300);
+		
+		TString hname2 = Form("Tracks of OM#%03d (x < 0). General view.", OM_num);
+        	TH2D* h2 = new TH2D(hname2, hname2, Y_bins_general, Y_MIN, Y_MAX, Z_bins_general, Z_MIN, Z_MAX);
+
+		h2->SetStats(0);
+		h2->GetXaxis()->SetTitle("y[mm]");
+		h2->GetYaxis()->SetTitle("z[mm]");
+
+                for(int entry = 0; entry < Tree[OM_num]->GetEntries(); entry++)
+                {
+                        Tree[OM_num]->GetEntry(entry);
+
+                        double Y = A_Tree[OM_num] * X_zero_plane + B_Tree[OM_num];
+                        double Z = C_Tree[OM_num] * X_zero_plane + D_Tree[OM_num];
+                        h2->Fill(Y, Z);
+                }
+                h2->Draw("COLZ");
+
+		for(int i = 0; i <= 13; i++)
+		{
+			auto h_line = new TLine(Y_MIN, Z_MIN + i * mw_sizez, Y_MAX, Z_MIN + i * mw_sizez);
+			h_line->SetLineWidth(1);
+			h_line->SetLineColor(2);
+			h_line->Draw("Same");
+		}
+        	for(int	i = 0; i <= 20; i++)
+        	{
+                	auto v_line = new TLine(Y_MIN + i * mw_sizey, Z_MIN, Y_MIN + i * mw_sizey, Z_MAX);
+                	v_line->SetLineWidth(1);
+                	v_line->SetLineColor(2);
+                	v_line->Draw("Same");
+        	}
+
+		hname2 = Form("%svisu_OMs_tracks/OM%03d_tracks_general_Run-%d.png", PATH, OM_num, RUN_N);
+                C2->SaveAs(hname2);
 
 		cout << Form("OM %d is done!", OM_num) << endl;
 	}
