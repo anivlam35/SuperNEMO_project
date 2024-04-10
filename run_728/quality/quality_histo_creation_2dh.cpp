@@ -1,11 +1,11 @@
 
-#include "/sps/nemo/scratch/ikovalen/TKEvent/TKEvent/include/TKEvent.h"
+#include "/home/anivlam/science/SuperNEMO/TKEvent/TKEvent/include/TKEvent.h"
 
-R__LOAD_LIBRARY(/sps/nemo/scratch/ikovalen/TKEvent/TKEvent/lib/libTKEvent.so);
+R__LOAD_LIBRARY(/home/anivlam/science/SuperNEMO/TKEvent/TKEvent/lib/libTKEvent.so);
 
 using namespace std;
 
-const int   RUN_N = 988;
+const int   RUN_N = 728;
 const double STEP = 0.01;
 const int   NBINS = int(1 / STEP);
 
@@ -37,7 +37,7 @@ void quality_histo_creation_2dh(){
         }
 	
 	h->SetMaximum(350);
-	h->SetTitle("Correlation of r- and z- quality of track");
+	h->SetTitle("Correlation of r- and z- quality of tracks");
 	h->GetXaxis()->SetTitle("r_quality");
 	h->GetYaxis()->SetTitle("z_quality");
 	h->SetStats(0);
