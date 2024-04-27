@@ -47,17 +47,17 @@ void example_events_quality(){
 	strcpy(dir_name, Form("quality_%.3lf_example", double(BIN_number) / double(NBINS)));
 	cout << dir_name << endl;
 
-	for(int i = 0; i < num_examples; i++)
+	for(int i = 0; i < Tree[BIN_number]->GetEntries(); i++)
 	{
 		Tree[BIN_number]->GetEntry(r->Integer(Tree[BIN_number]->GetEntries()));
 		
 		s->GetEntry(e_number[BIN_number]);
 		
 		eve->set_r("Manchester", "distance");
-		eve->set_h();
+		eve->set_h(2770);
 		eve->reconstruct_ML(0);
 
-		eve->make_top_projection(2, "examples");
+		eve->make_top_projection(2);
 		
 	}
 

@@ -24,25 +24,26 @@ const double   R = 30.0;
 
 void Spaghetti_Analysis()
 {
-	TFile* file = new TFile(Form("Tracks_Run-%d.root", RUN_N));
+	TFile* file = new TFile(Form("%sTracks_Run-%d.root", PATH, RUN_N));
 	// TFile* file = new TFile("Clear_data.root");
 	
-	TFile *New_file = new TFile(Form("Clear_data_Run-%d.root", RUN_N),"RECREATE");
+	TFile *New_file = new TFile(Form("%sClear_data_Run-%d.root", PATH, RUN_N),"RECREATE");
 	// Load the data for one source (x<0)
 
 	for(int SRC_NO_i=0; SRC_NO_i < N_SRCPLN; SRC_NO_i++)
 	{
-		stringstream tr_name;
+		//stringstream tr_name;
 
-		tr_name << "Tracks for " << X_BasePlane << " mm x < 0 Source " << SRC_NO_i;
-		TTree* tr = (TTree*) file->Get(tr_name.str().c_str());
+		//tr_name << "Tracks for " << X_BasePlane << " mm %s Source " << SRC_NO_i;
+		TString tr_name = Form("Tracks for %d mm %s Source %d", X_BasePlane, SIDE, SRC_NO_i);
+		TTree* tr = (TTree*) file->Get(tr_name);
 
 		char Newtr_name[50];
-		sprintf(Newtr_name,"Tracks for %i mm x < 0 Source %i", X_BasePlane, SRC_NO_i);
+		sprintf(Newtr_name,"Tracks for %i mm %s Source %i", X_BasePlane, SIDE, SRC_NO_i);
 
 		vector<vector<double>> Clean_yzab(2);
-		Clean_yzab[0] = best_par(tr, X_Cl[0], SRC_NO_i, 0);
-		Clean_yzab[1] = best_par(tr, X_Cl[1], SRC_NO_i, 0);
+		Clean_yzab[0] = best_par(tr, X_Cl[0], SRC_NO_i, 1);
+		Clean_yzab[1] = best_par(tr, X_Cl[1], SRC_NO_i, 1);
 
 		TTree* Newtr = CleanTree(tr, Clean_yzab, Newtr_name);
 
@@ -51,6 +52,7 @@ void Spaghetti_Analysis()
 		cout<<endl;
 		cout<<"Done for "<<SRC_NO_i<<" Source"<<endl;
 		cout<<endl;
+		delete tr;
 	}
 }
 
@@ -68,7 +70,7 @@ vector<double> get_guess(TH1D* _hpy, TH1D* _hpz)
 	_hpz->GetQuantiles(2, res, quant);
 	g[3] = (res[1] - res[0]) / 2.0/*_hpz->GetStdDev()*/; 
 
-	cout << "GUESS: Y: " << g[0] << " +- " << g[2] << ", Z: " << g[1] << " +- " << g[3] << endl;
+	//cout << "GUESS: Y: " << g[0] << " +- " << g[2] << ", Z: " << g[1] << " +- " << g[3] << endl;
 	
 	return g;
 }
@@ -82,9 +84,9 @@ vector<double> find_yz(TTree* _t, double _ymin, double _ymax, double _zmin, doub
 
 	if (_iter <= 5) 
 	{	
-		cout << "Iteration " << _iter << ", R = " << R << ", searching in the yz region:" << endl;
-		cout << _ymin << " < y < " << _ymax << endl;
-		cout << _zmin << " < z < " << _zmax << endl;	
+		//cout << "Iteration " << _iter << ", R = " << R << ", searching in the yz region:" << endl;
+		//cout << _ymin << " < y < " << _ymax << endl;
+		//cout << _zmin << " < z < " << _zmax << endl;	
 		
 		double parA, parB, parC, parD;
 		_t->SetBranchAddress("A", &parA);
@@ -181,7 +183,7 @@ vector<double> find_yz(TTree* _t, double _ymin, double _ymax, double _zmin, doub
 					  Z_bst = cZ;
 					Xi2_bst  = Xi2;
 					
-					cout << "Y_bst = " << Y_bst << "  Z_bst = " << Z_bst << " Xi2_bst / NDF = " << Xi2_bst / (NSEC - 1.0) <<endl;
+					//cout << "Y_bst = " << Y_bst << "  Z_bst = " << Z_bst << " Xi2_bst / NDF = " << Xi2_bst / (NSEC - 1.0) <<endl;
 				}
 				
 				//HistXi2[iB]->Fill(cY, cZ, Xi2);
@@ -344,13 +346,14 @@ vector<double> find_ab(TTree* _t, double _y, double _z, double _amin, double _am
 	ab[0] = a_bst;
 	ab[1] = b_bst;
 
+	delete hXi2_ndf;
 	return ab;
 }
 
 vector<double> best_par(TTree* _t, int _iX, int _SRC_NO_i, int Draw_opt = 1)
 {
 	vector<double> Best_yzab(4);
-	_t->Print();
+	//_t->Print();
 	double parA, parB, parC, parD;
 	_t->SetBranchAddress("A", &parA);
 	_t->SetBranchAddress("B", &parB);
@@ -360,11 +363,11 @@ vector<double> best_par(TTree* _t, int _iX, int _SRC_NO_i, int Draw_opt = 1)
 	double verY = 0, verZ = 0;
 	
 	// Fill histogram of undistorted vertices, and calculate coordinates of mode and the sigmas in both directions
-	stringstream h_name;
+	TString h_name = Form("Hist for %d mm %s Source %d", _iX, SIDE, _SRC_NO_i);
 
-	h_name << "Hist for " << _iX << " mm x < 0 Source " << _SRC_NO_i;
+	//h_name << "Hist for " << _iX << " mm x < 0 Source " << _SRC_NO_i;
 
-	TH2D* h_vert_real = new TH2D(h_name.str().c_str(), h_name.str().c_str(), int(_t->GetMaximum("B") - _t->GetMinimum("B")), _t->GetMinimum("B"), _t->GetMaximum("B"), 
+	TH2D* h_vert_real = new TH2D(h_name, h_name, int(_t->GetMaximum("B") - _t->GetMinimum("B")), _t->GetMinimum("B"), _t->GetMaximum("B"), 
 										int(_t->GetMaximum("D") - _t->GetMinimum("D")), _t->GetMinimum("D"), _t->GetMaximum("D")); 						   
 
 	for(int i = 0; i < _t->GetEntries(); i++)
@@ -393,11 +396,12 @@ vector<double> best_par(TTree* _t, int _iX, int _SRC_NO_i, int Draw_opt = 1)
 	
 	if(Draw_opt != 0)
 	{
-		TCanvas* C0 = new TCanvas(h_name.str().c_str(), h_name.str().c_str());
+		TCanvas* C0 = new TCanvas(h_name, h_name, 800, 800);
 		h_vert_real->GetXaxis()->SetRangeUser(yz[0] - 3.0*guess[3], yz[0] + 3.0*guess[3]);
 		h_vert_real->GetYaxis()->SetRangeUser(yz[1] - 3.0*guess[3], yz[1] + 3.0*guess[3]);
 		h_vert_real->GetXaxis()->SetTitle("y[mm]");
 		h_vert_real->GetYaxis()->SetTitle("z[mm]");
+		h_vert_real->SetStats(0);
 		h_vert_real->Draw("COLZ"); 
 
 		TEllipse* el = new TEllipse(yz[0], yz[1], ab[0], ab[1]);
@@ -408,10 +412,15 @@ vector<double> best_par(TTree* _t, int _iX, int _SRC_NO_i, int Draw_opt = 1)
 		el->SetLineWidth(4);
 		el->SetLineColor(2);
 		el->Draw("same");
-		cout<<_iX<<endl;
+
+		C0->SetLogz();
+		C0->SaveAs(Form("%sCENTERS/Source_%02d_center.png", PATH, _SRC_NO_i));
+		delete C0;
+		delete el;
+		delete bod;
 	}
 
-    return Best_yzab;
+	return Best_yzab;
 }
 
 TTree *CleanTree(TTree *_t, vector<vector<double>> _Best_yzab, char _Newtr_name[50])

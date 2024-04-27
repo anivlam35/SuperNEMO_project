@@ -25,12 +25,6 @@ void quality_histo_creation(){
 
         TCanvas *C = new TCanvas("C", "Histogram of tracks quality", 1200, 1000);
 
-	TPad *pad1 = new TPad("pad1", "pad1", 0, 0.66, 1, 1.0);
-	pad1->Draw();
-	pad1->cd();
-
-	pad1->SetBottomMargin(0);
-
         for(int BIN = 0; BIN < NBINS; BIN++)
         {
                 stringstream treename;
@@ -57,83 +51,8 @@ void quality_histo_creation(){
 	h->GetYaxis()->SetRangeUser(0, 100000);
 	h->SetStats(0);
 	h->GetYaxis()->SetTitle("N");
+	h->GetXaxis()->SetTitle("quality");
 	h->Draw();
-	
-	C->cd();
-
-        TPad *pad_r = new TPad("pad_r", "pad_r", 0, 0.33, 1, 0.66);
-        pad_r->Draw();
-        pad_r->cd();
-
-        pad_r->SetTopMargin(0);
-        pad_r->SetBottomMargin(0);
-
-        for(int BIN = 0; BIN < NBINS; BIN++)
-        {
-                stringstream treename;
-                treename << "Events with r_quality from " << STEP*BIN << " to " << (BIN + 1) * STEP;
-				
-		Tree_r[BIN] = (TTree*) f->Get(treename.str().c_str());
-		
-		Tree_r[BIN]->SetBranchAddress("e_number_r", &e_number_r[BIN]);
-		Tree_r[BIN]->SetBranchAddress("r_quality", &r_quality[BIN]);                
-        }
-
-        TH1D *h_r = new TH1D("h_r", "Histogram of tracks r_quality", NBINS, 0, 1);	
-
-	for(int BIN = 0; BIN < NBINS; BIN++)
-	{
-		for(int Entry=0; Entry < Tree_r[BIN]->GetEntries(); Entry++)
-		{
-			Tree_r[BIN]->GetEntry(Entry);
-			h_r->Fill(r_quality[BIN]);
-			N_r_q++;
-		}
-	}
-
-	h_r->GetYaxis()->SetRangeUser(0, 100000);
-	h_r->SetTitle("");	
-	h_r->SetStats(0);
-	h_r->GetYaxis()->SetTitle("N");
-	h_r->Draw();
-
-	C->cd();
-
-        TPad *pad_z = new TPad("pad_z", "pad_z", 0, 0.0, 1, 0.33);
-        pad_z->Draw();
-        pad_z->cd();
-        pad_z->SetTopMargin(0);
-
-        for(int BIN = 0; BIN < NBINS; BIN++)
-        {
-                stringstream treename;
-                treename << "Events with z_quality from " << STEP*BIN << " to " << (BIN + 1) * STEP;
-		
-		Tree_z[BIN] = (TTree*) f->Get(treename.str().c_str());
-		
-		Tree_z[BIN]->SetBranchAddress("e_number_z", &e_number_z[BIN]);
-		Tree_z[BIN]->SetBranchAddress("z_quality", &z_quality[BIN]);                
-        }
-
-        TH1D *h_z = new TH1D("h_z", "Histogram of tracks z_quality", NBINS, 0, 1);	
-
-	for(int BIN = 0; BIN < NBINS; BIN++)
-	{
-		for(int Entry=0; Entry < Tree_z[BIN]->GetEntries(); Entry++)
-		{
-			Tree_z[BIN]->GetEntry(Entry);
-			h_z->Fill(z_quality[BIN]);
-			N_z_q++;
-		}
-	}
-
-	h_z->GetYaxis()->SetRangeUser(0, 100000);
-	h_z->SetTitle("");		
-	h_z->SetStats(0);
-	h_z->GetYaxis()->SetTitle("N");
-	h_z->GetXaxis()->SetTitle("quality");
-	h_z->Draw();
-
 	
 	C->Print("Tracks_quality_histogram.png");
 	cout << "N_q = " << N_q << endl;

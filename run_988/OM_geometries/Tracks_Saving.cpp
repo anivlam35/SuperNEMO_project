@@ -48,7 +48,7 @@ void Tracks_Saving()
 		Eve->set_h(eff_len);
 		Eve->reconstruct_ML(0);		
 	
-		int event_choice = event_selection(Eve, 0.6, 0.98, 1);
+		int event_choice = event_selection(Eve, LOW_Q, UP_Q, AMBG_MODE);
 		if (event_choice)
 		{	
 			int track_num = event_choice - 1;

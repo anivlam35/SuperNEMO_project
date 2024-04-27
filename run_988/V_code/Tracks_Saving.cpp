@@ -9,7 +9,8 @@ using namespace TMath;
 const    int ABS_X_MAX = 10;
 const    int ABS_X_MIN = 10;
 
-int event_selection(TKEvent* _event, double _low_qlt, double _high_qlt, int _ambg_mode); 
+int event_selection(TKEvent* _event, double _low_qlt, double _high_qlt, int _ambg_mode);
+int event_selection(TKEvent* _event, double _low_qlt_r, double _high_qlt_r, double _low_qlt_z, double _high_qlt_z, int _ambg_mode); 
 int choose_ambg_track(TKEvent* _event);
 
 void Tracks_Saving()
@@ -18,7 +19,7 @@ void Tracks_Saving()
 	TTree* s = (TTree*) f->Get("Event");
 
 	// MIRO: ADD RUN NUMBER TO FILENAME
-	TFile *New_file = new TFile(Form("Tracks_Run-%d.root", RUN_N),"RECREATE"); // new root file for received histograms
+	TFile *New_file = new TFile(Form("%sTracks_Run-%d.root", PATH, RUN_N), "RECREATE"); // new root file for received histograms
 	
 
 	// Define Tree and Arrays
@@ -54,8 +55,6 @@ void Tracks_Saving()
 	// Filling Tree
 	// Use s->GetEntries() for all entries in Run
 	for(UInt_t i=0; i < s->GetEntries(); i++)	// Loop over events
-
-//	for(UInt_t i=7620000; i < 7630000; i++)	// Loop over events
 	{
 		TKEvent* Eve = new TKEvent(-1,-1);
 		s->SetBranchAddress("Eventdata", &Eve);
@@ -64,8 +63,8 @@ void Tracks_Saving()
 		Eve->set_r("Manchester", "distance");
 		Eve->set_h(2770.0);
 		Eve->reconstruct_ML(0);		
-//		cout << "Event number: " << i << endl;
-		int event_choice = event_selection(Eve, 0.6, 0.98, 0);
+
+		int event_choice = event_selection(Eve, LOW_Q, UP_Q, AMBG_MODE);
 		if (event_choice)
 		{	
 			int track_num = event_choice - 1;
@@ -75,31 +74,6 @@ void Tracks_Saving()
 			if(Z!=0 && Z > Z_MIN && Z < Z_MAX && Y > Y_MIN && Y < Y_MAX)
 			{
 				int NSOR = N_COLS * int((Z_MAX - Z) / Z_RECT_SIZE) + int((Y - Y_MIN) / Y_RECT_SIZE);	
-				//cout << "Y = " << Y << ", Z = " << Z << ", NSOR: " << NSOR << endl;
-//				if(Eve->get_track(track_num)->get_side()==0)
-//				{
-//					A_Tree[0][NSOR] = Eve->get_track(track_num)->get_a();
-//					B_Tree[0][NSOR] = Eve->get_track(track_num)->get_b();
-//					C_Tree[0][NSOR] = Eve->get_track(track_num)->get_c();
-//					D_Tree[0][NSOR] = Eve->get_track(track_num)->get_d();
-//					//cout << "NSOR: " << NSOR << endl;
-//					//cout << Form("A = %lf, B = %lf, C = %lf, D = %lf", A_Tree[0][NSOR], B_Tree[0][NSOR], C_Tree[0][NSOR], D_Tree[0][NSOR]) << endl; 
-//
-//					Tree[0][NSOR]->Fill();
-//				}
-//						
-//				else
-//				{
-//					A_Tree[1][NSOR] = Eve->get_track(track_num)->get_a();
-//					B_Tree[1][NSOR] = Eve->get_track(track_num)->get_b();
-//					C_Tree[1][NSOR] = Eve->get_track(track_num)->get_c();
-//					D_Tree[1][NSOR] = Eve->get_track(track_num)->get_d();
-//					//cout << "NSOR: " << NSOR << endl;
-//					//cout << Form("A = %lf, B = %lf, C = %lf, D = %lf", A_Tree[1][NSOR], B_Tree[1][NSOR], C_Tree[1][NSOR], D_Tree[1][NSOR]) << endl;
-//
-//					Tree[1][NSOR]->Fill();
-//				}
-//	
 				int side = Eve->get_track(track_num)->get_side();
 				
 				A_Tree[side][NSOR] = Eve->get_track(track_num)->get_a();
@@ -107,7 +81,6 @@ void Tracks_Saving()
 				C_Tree[side][NSOR] = Eve->get_track(track_num)->get_c();
 				D_Tree[side][NSOR] = Eve->get_track(track_num)->get_d();
 				
-				//cout << "NSOR: " << NSOR << ", side: " << side << endl;
 				Tree[side][NSOR]->Fill();
 			}
 		}
@@ -166,6 +139,46 @@ int event_selection(TKEvent* _event, double _low_qlt, double _high_qlt, int _amb
 	}	
 	return choice;
 }
+
+int event_selection(TKEvent* _event, double _low_qlt_r, double _high_qlt_r, double _low_qlt_z, double _high_qlt_z, int _ambg_mode)
+{
+        int choice;
+        if(_event->get_no_tracks() == 0)
+        {
+                choice = 0;
+        }
+        else if(_event->get_no_tracks()             == 1             &&
+                _event->get_track(0)->get_quality_R() >  _low_qlt_r  &&
+                _event->get_track(0)->get_quality_R() <  _high_qlt_r &&
+                _event->get_track(0)->get_quality_Z() >  _low_qlt_z  &&
+                _event->get_track(0)->get_quality_Z() <  _high_qlt_z)
+	{
+                choice = 1;
+        }
+        else if(_event->get_no_tracks()                    == 2      &&
+                _event->get_track(0)->get_ambiguity_type() != 0      &&
+                _event->get_track(0)->get_quality_R() >  _low_qlt_r  &&
+                _event->get_track(0)->get_quality_R() <  _high_qlt_r &&
+                _event->get_track(0)->get_quality_Z() >  _low_qlt_z  &&
+                _event->get_track(0)->get_quality_Z() <  _high_qlt_z)
+        {
+                switch(_ambg_mode)
+                {
+                case 0:
+                       	choice = 0;
+                        break;
+                case 1:
+                       	choice = choose_ambg_track(_event);
+                        break;
+                }
+        }
+	else
+	{
+                choice = 0;
+        }
+	return choice;
+}
+
 
 int choose_ambg_track(TKEvent* _event)
 {

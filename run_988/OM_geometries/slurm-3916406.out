@@ -1,0 +1,39 @@
+****************************************************************
+*                      SLURM Batch System                      *
+*           IN2P3 Computing Centre, Villeurbanne FR            *
+****************************************************************
+* Date:                 Tue Mar 19 08:29:54 CET 2024
+* Job name:             stc.sh
+* Job id:               3916406
+* User:                 ikovalen
+* Account:              nemo
+* Submit host:          cca011
+* Partition:            htc
+* Quality of service:   normal
+* Nodelist:             ccwslurm0315
+****************************************************************
+   ------------------------------------------------------------
+  | Welcome to ROOT 6.16/00                  https://root.cern |
+  |                               (c) 1995-2018, The ROOT Team |
+  | Built for linuxx8664gcc on Jan 23 2019, 09:06:13           |
+  | From tags/v6-16-00@v6-16-00                                |
+  | Try '.help', '.demo', '.license', '.credits', '.quit'/'.q' |
+   ------------------------------------------------------------
+
+
+Processing /sps/nemo/scratch/ikovalen/SuperNEMO_project/run_988/OM_geometries/Visualization.cpp...
+In file included from input_line_10:1:
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_988/OM_geometries/Visualization.cpp:79:36: error: expected expression
+                            Z < xyz[2] + mw_sizez / 2 &&) N_succs++;
+                                                        ^
+****************************************************************
+*                      SLURM Batch System                      *
+*           IN2P3 Computing Centre, Villeurbanne FR            *
+****************************************************************
+Date: Tue Mar 19 08:29:57 CET 2024
+Job informations can be found using these commands:
+Accounting:
+sacct -j 3916406
+Efficiency:
+seff 3916406
+****************************************************************

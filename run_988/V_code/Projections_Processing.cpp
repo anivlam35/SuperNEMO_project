@@ -4,19 +4,20 @@
 R__LOAD_LIBRARY(/sps/nemo/scratch/ikovalen/TKEvent_old/TKEvent/lib/libTKEvent.so);
 
 using namespace std;
+using namespace TMath;
+
+Double_t MiroF(Double_t *x, Double_t *par);
 
 void Projections_Processing()
 {
 	gROOT->SetBatch(kTRUE);
 
-	TFile* file = new TFile(Form("Tracks_Run-%d.root", RUN_N));
+	TFile* file = new TFile(Form("%sTracks_Run-%d.root", PATH, RUN_N));
 
 	for(int NSOR=0; NSOR<N_SRCPLN; NSOR++)
 	{
-		stringstream tr_name;
-
-		tr_name << "Tracks for " << X_BasePlane << " mm x < 0 Source " << NSOR;
-		TTree* tr = (TTree*) file->Get(tr_name.str().c_str());
+		TString tr_name = Form("Tracks for %d mm x < 0 Source %d", X_BasePlane, NSOR);
+		TTree* tr = (TTree*) file->Get(tr_name);
 
 		double parA, parB, parC, parD;
 		tr->SetBranchAddress("A", &parA);
@@ -57,16 +58,29 @@ void Projections_Processing()
 		for(int i = 0; i < tr->GetEntries(); i++)
 		{
 			tr->GetEntry(i);
-
+			
+			//if (ACos(parC / Sqrt(1 + parA * parA + parC * parC)) > Pi() / 3)
+			//{ 
 			verY = parA * X_BasePlane + parB;
-			Y_pr->Fill(verY);
 			verZ = parC * X_BasePlane + parD;
-			Z_pr->Fill(verZ);
 
+			Y_pr->Fill(verY);
+			Z_pr->Fill(verZ);
+			//}
 		}
 		
-		Y_pr->Fit("gaus(0)*gaus(3)");
-		Z_pr->Fit("gaus(0)*gaus(3)");
+		TF1* MiFunc = new TF1("MiFunc", MiroF, YMIN, Y_MAX, 4); 
+		MiFunc->SetParNames("N", "x0", "G", "p");
+		double G0 = 20;
+		double p0 = 1.1;		
+		MiFunc->SetParameters(2500 * Power(G0, p0), (ZMIN + ZMAX) / 2, G0, p0);		
+		MiFunc->SetParLimits(0, 1, 1000000000);
+		MiFunc->SetParLimits(2, 0.001, 1000000);
+		MiFunc->SetParLimits(0, 0.001, 20);
+				
+
+		Y_pr->Fit("gaus");
+		Z_pr->Fit("MiFunc");
 		
 		Y_pr->GetFunction("gaus")->SetNpx(1000);
 
@@ -80,8 +94,10 @@ void Projections_Processing()
                 stY->SetY1NDC(0.77);
                 stY->SetY2NDC(0.95);
 
-		CY->SaveAs(Form("Projections/Y_PR_SRC%02d.png", NSOR));
+		CY->SaveAs(Form("%sProjections/Y_PR_SRC%02d.png", PATH, NSOR));
 		
+		Z_pr->GetFunction("MiFunc")->SetNpx(1000);
+
                 TCanvas* CZ = new TCanvas("Canvas", "Canvas", 800, 600);
                 Z_pr->Draw();
 
@@ -92,6 +108,11 @@ void Projections_Processing()
                 stZ->SetY1NDC(0.77);
                 stZ->SetY2NDC(0.95);
 
-                CZ->SaveAs(Form("Projections/Z_PR_SRC%02d.png", NSOR));
+                CZ->SaveAs(Form("%sProjections/Z_PR_SRC%02d.png", PATH, NSOR));
 	}
 }
+
+Double_t MiroF(Double_t *x, Double_t *par){
+	return par[0] / Power((Power(x[0] - par[1], 2) + par[2]), par[3]);
+};
+

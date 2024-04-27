@@ -24,7 +24,7 @@ const   double  Z_MIN       = -13 * mw_sizez / 2; //-100.0;
 const   double  Z_MAX       = 13 * mw_sizez / 2;  //100.0;
 
 const   char    PATH[]      = "./cutted_data_2770mm/";
-const   double  eff_len     = 2770.0;
+const   double  eff_len     = 2950.0;
 
         int     SWCR[4];
         double  xyz[3];
@@ -38,5 +38,14 @@ const   double  X_OBSERV_MIN = -40.0;
 const   double  X_OBSERV_MAX = 40.0;
 const   double  STEP         = 10.0;
 
+const int    N_SRCPLN     = 42;
+const int    N_ROWS	  = 7;
+const int    N_COLS	  = 6;
+
+const double LOW_Q        = 0.6;
+const double UP_Q         = 0.98;
+const double LOW_QZ	  = 0.7;
+const double UP_QZ        = 0.98;
+const int    AMBG_MODE    = 0;
 
 #endif

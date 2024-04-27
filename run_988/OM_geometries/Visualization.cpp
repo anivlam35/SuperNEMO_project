@@ -10,6 +10,10 @@ void OM_xyz_swcr(int OM_num);
 void Visualization(){
 	TFile* f = new TFile(Form("%sOMs_Tracks_Run-%d.root", PATH, RUN_N));
 	
+	int N_total, N_succs;
+	N_total = 0;
+	N_succs = 0;
+
 	TTree*   Tree[N_OMs];
 	double A_Tree[N_OMs];
 	double B_Tree[N_OMs];
@@ -28,6 +32,8 @@ void Visualization(){
 		Tree[OM_num]->SetBranchAddress("B", &B_Tree[OM_num]);
 		Tree[OM_num]->SetBranchAddress("C", &C_Tree[OM_num]);
 		Tree[OM_num]->SetBranchAddress("D", &D_Tree[OM_num]);
+
+		N_total += Tree[OM_num]->GetEntries();
 	}
 
 	for(int OM_num = 0; OM_num < 520; OM_num++)
@@ -66,13 +72,18 @@ void Visualization(){
 			double Y = A_Tree[OM_num] * X_zero_plane + B_Tree[OM_num];
 			double Z = C_Tree[OM_num] * X_zero_plane + D_Tree[OM_num];  
 			h->Fill(Y, Z);
+
+			if (Y > xyz[1] - mw_sizey / 2 &&
+			    Y < xyz[1] + mw_sizey / 2 &&
+			    Z > xyz[2] - mw_sizez / 2 &&
+			    Z < xyz[2] + mw_sizez / 2 ) N_succs++;
 		}
 		h->Draw("COLZ");
 
-		auto h_line1 = new TLine(Y_hmin, xyz[2] - mw_sizey / 2, Y_hmax, xyz[2] - mw_sizey / 2);
-		auto h_line2 = new TLine(Y_hmin, xyz[2] + mw_sizey / 2, Y_hmax, xyz[2] + mw_sizey / 2);
-		auto v_line1 = new TLine(xyz[1] - mw_sizez / 2, Z_hmin, xyz[1] - mw_sizez / 2, Z_hmax);
-		auto v_line2 = new TLine(xyz[1] + mw_sizez / 2, Z_hmin, xyz[1] + mw_sizez / 2, Z_hmax);
+		auto h_line1 = new TLine(Y_hmin, xyz[2] - mw_sizez / 2, Y_hmax, xyz[2] - mw_sizez / 2);
+		auto h_line2 = new TLine(Y_hmin, xyz[2] + mw_sizez / 2, Y_hmax, xyz[2] + mw_sizez / 2);
+		auto v_line1 = new TLine(xyz[1] - mw_sizey / 2, Z_hmin, xyz[1] - mw_sizey / 2, Z_hmax);
+		auto v_line2 = new TLine(xyz[1] + mw_sizey / 2, Z_hmin, xyz[1] + mw_sizey / 2, Z_hmax);
 		
 		h_line1->SetLineWidth(3);
 		h_line2->SetLineWidth(3);
@@ -133,7 +144,8 @@ void Visualization(){
 
 		cout << Form("OM %d is done!", OM_num) << endl;
 	}
-
+	
+	cout << Form("Total score of the geometry pars is %.3lf.", (double)N_succs / (double)N_total) << endl;
 
 }
 

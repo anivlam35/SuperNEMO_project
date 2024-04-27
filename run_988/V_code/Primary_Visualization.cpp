@@ -12,7 +12,7 @@ void Primary_Visualization()
 	// 0000000000000000000000000000
 	// Build the RMS_Y(x) and RMS_Z(x) for selection ellipses from code Analysis
 
-	TFile* file = new TFile(Form("Tracks_Run-%d.root", RUN_N));
+	TFile* file = new TFile(Form("%sTracks_Run-%d.root", PATH, RUN_N));
 
 	int N_Point = X_OBSERV_MAX - X_OBSERV_MIN + 1;
 	double Arr_X[N_Point], Arr_Y[N_Point], Arr_Z[N_Point];
@@ -58,6 +58,7 @@ void Primary_Visualization()
 			h_vert_real[iX + X_OBSERV_MAX]->GetYaxis()->SetRangeUser(ZMIN, ZMAX);
 			h_vert_real[iX + X_OBSERV_MAX]->GetXaxis()->SetTitle("y[mm]");
 			h_vert_real[iX + X_OBSERV_MAX]->GetYaxis()->SetTitle("z[mm]");
+			h_vert_real[iX + X_OBSERV_MAX]->GetZaxis()->SetTitle("N of events / 4 mm^{2}");
 		}
 
 		for(int i = 0; i < tr->GetEntries(); i++)
@@ -85,9 +86,9 @@ void Primary_Visualization()
                         st->SetY1NDC(0.72);
                         st->SetY2NDC(0.9);
 
-			C0->SaveAs(Form("HISTOS/SRC%02dX%02d.png", NSOR, iX - X_OBSERV_MIN));
+			C0->SaveAs(Form("%sHISTOS/SRC%02dX%02d.png", PATH, NSOR, iX - X_OBSERV_MIN));
 			
-			cout << "X = " << iX << "  " << h_vert_real[iX + X_OBSERV_MAX]->ProjectionX()->GetRMS() << "   " << h_vert_real[iX + X_OBSERV_MAX]->ProjectionY()->GetRMS() <<endl;
+			//cout << "X = " << iX << "  " << h_vert_real[iX + X_OBSERV_MAX]->ProjectionX()->GetRMS() << "   " << h_vert_real[iX + X_OBSERV_MAX]->ProjectionY()->GetRMS() <<endl;
 		}
 		//h_vert_real[0]->Write();
 	}

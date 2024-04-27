@@ -1,0 +1,290 @@
+****************************************************************
+*                      SLURM Batch System                      *
+*           IN2P3 Computing Centre, Villeurbanne FR            *
+****************************************************************
+* Date:                 Sat Apr 27 10:14:37 CEST 2024
+* Job name:             sending_to_cluster.sh
+* Job id:               10029697
+* User:                 ikovalen
+* Account:              nemo
+* Submit host:          cca020
+* Partition:            htc
+* Quality of service:   normal
+* Nodelist:             ccwslurm0360
+****************************************************************
+
+Processing /sps/nemo/scratch/ikovalen/SuperNEMO_project/run_988/V_code/Final_Visualization.cpp...
+In file included from input_line_10:1:
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_988/V_code/Final_Visualization.cpp:119:3: error: cannot delete expression of type 'TH2D *[N_Point]'
+                delete h_vert_real;
+                ^      ~~~~~~~~~~~
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_988/V_code/Final_Visualization.cpp:126:11: warning: result of comparison against a string literal is unspecified (use strncmp instead) [-Wstring-compare]
+        if (SIDE == "x > 0")
+                 ^  ~~~~~~~
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_988/V_code/Final_Visualization.cpp:373:60: error: use of undeclared identifier 'yValues'
+            SD_file << "Source " << SRC_NO_i << " SD_Y_0mm = " << yValues[(int)grY[SRC_NO_i]->GetN() / 2 + 1] << "\n";
+                                                                  ^
+
+Processing /sps/nemo/scratch/ikovalen/SuperNEMO_project/run_988/V_code/Primary_Visualization.cpp...
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC00X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC00X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC00X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC01X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC01X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC01X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC02X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC02X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC02X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC03X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC03X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC03X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC04X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC04X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC04X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC05X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC05X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC05X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC06X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC06X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC06X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC07X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC07X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC07X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC08X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC08X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC08X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC09X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC09X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC09X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC10X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC10X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC10X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC11X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC11X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC11X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC12X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC12X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC12X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC13X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC13X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC13X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC14X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC14X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC14X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC15X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC15X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC15X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC16X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC16X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC16X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC17X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC17X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC17X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC18X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC18X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC18X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC19X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC19X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC19X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC20X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC20X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC20X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC21X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC21X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC21X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC22X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC22X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC22X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC23X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC23X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC23X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC24X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC24X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC24X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC25X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC25X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC25X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC26X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC26X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC26X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC27X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC27X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC27X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC28X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC28X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC28X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC29X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC29X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC29X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC30X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC30X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC30X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC31X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC31X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC31X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC32X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC32X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC32X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC33X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC33X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC33X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC34X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC34X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC34X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC35X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC35X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC35X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC36X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC36X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC36X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC37X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC37X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC37X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC38X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC38X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC38X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC39X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC39X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC39X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC40X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC40X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC40X20.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC41X00.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC41X10.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: Canvas
+Info in <TCanvas::Print>: png file ./2770mm_q_0.6_0.98_ambg_0_french/HISTOS/SRC41X20.png has been created
+****************************************************************
+*                      SLURM Batch System                      *
+*           IN2P3 Computing Centre, Villeurbanne FR            *
+****************************************************************
+Date: Sat Apr 27 10:15:03 CEST 2024
+Job informations can be found using these commands:
+Accounting:
+sacct -j 10029697
+Efficiency:
+seff 10029697
+****************************************************************

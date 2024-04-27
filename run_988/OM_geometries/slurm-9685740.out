@@ -1,0 +1,63 @@
+****************************************************************
+*                      SLURM Batch System                      *
+*           IN2P3 Computing Centre, Villeurbanne FR            *
+****************************************************************
+* Date:                 Tue Apr 23 21:36:11 CEST 2024
+* Job name:             stc.sh
+* Job id:               9685740
+* User:                 ikovalen
+* Account:              nemo
+* Submit host:          cca001
+* Partition:            htc
+* Quality of service:   normal
+* Nodelist:             ccwslurm0346
+****************************************************************
+   ------------------------------------------------------------
+  | Welcome to ROOT 6.16/00                  https://root.cern |
+  |                               (c) 1995-2018, The ROOT Team |
+  | Built for linuxx8664gcc on Jan 23 2019, 09:06:13           |
+  | From tags/v6-16-00@v6-16-00                                |
+  | Try '.help', '.demo', '.license', '.credits', '.quit'/'.q' |
+   ------------------------------------------------------------
+
+
+Processing /sps/nemo/scratch/ikovalen/SuperNEMO_project/run_988/OM_geometries/Tracks_Saving.cpp...
+In file included from input_line_10:1:
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_988/OM_geometries/Tracks_Saving.cpp:51:43: error: use of undeclared identifier 'LOW_QLT'
+                int event_choice = event_selection(Eve, LOW_QLT, UP_QLT, AMBG_MODE);
+                                                        ^
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_988/OM_geometries/Tracks_Saving.cpp:51:52: error: use of undeclared identifier 'UP_QLT'
+                int event_choice = event_selection(Eve, LOW_QLT, UP_QLT, AMBG_MODE);
+                                                                 ^
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_988/OM_geometries/Tracks_Saving.cpp:51:60: error: use of undeclared identifier 'AMBG_MODE'
+                int event_choice = event_selection(Eve, LOW_QLT, UP_QLT, AMBG_MODE);
+                                                                         ^
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_988/OM_geometries/Tracks_Saving.cpp:140:29: error: use of undeclared identifier 'N_COLS'
+                int NSOR1 = N_COLS * ((int)(Z_MAX - Z1) / 468) + (int)(Y1 - Y_MIN) / 833;
+                            ^
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_988/OM_geometries/Tracks_Saving.cpp:141:29: error: use of undeclared identifier 'N_COLS'
+                int NSOR2 = N_COLS * ((int)(Z_MAX - Z2) / 468) + (int)(Y2 - Y_MIN) / 833;
+                            ^
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_988/OM_geometries/Tracks_Saving.cpp:143:50: error: use of undeclared identifier 'N_COLS'
+                double Y_SOR1 = Y_MIN + (NSOR1 % N_COLS + 0.5) * 833;
+                                                 ^
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_988/OM_geometries/Tracks_Saving.cpp:144:50: error: use of undeclared identifier 'N_COLS'
+                double Z_SOR1 = Z_MAX - (NSOR1 / N_COLS + 0.5) * 468;
+                                                 ^
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_988/OM_geometries/Tracks_Saving.cpp:146:50: error: use of undeclared identifier 'N_COLS'
+                double Y_SOR2 = Y_MIN + (NSOR2 % N_COLS + 0.5) * 833;
+                                                 ^
+/sps/nemo/scratch/ikovalen/SuperNEMO_project/run_988/OM_geometries/Tracks_Saving.cpp:147:50: error: use of undeclared identifier 'N_COLS'
+                double Z_SOR2 = Z_MAX - (NSOR2 / N_COLS + 0.5) * 468;
+                                                 ^
+****************************************************************
+*                      SLURM Batch System                      *
+*           IN2P3 Computing Centre, Villeurbanne FR            *
+****************************************************************
+Date: Tue Apr 23 21:36:19 CEST 2024
+Job informations can be found using these commands:
+Accounting:
+sacct -j 9685740
+Efficiency:
+seff 9685740
+****************************************************************
