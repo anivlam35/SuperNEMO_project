@@ -5,13 +5,16 @@ using namespace std;
 void OM_xyz_swcr(int OM_num);
 TH2D* create_histo(TTree* _t, int _OM_num, double _X_plane_shift);
 int mean_counts(TH1D* h_pr);
-double* find_YZ_bounds(TH2D* h, int _OM_num, int DrawOption = 0);
-void draw_projections(TH1D* h_pr_y, TH1D* h_pr_z, int mean_Y, int mean_Z, int _OM_num);
+double* find_YZ_bounds(TH2D* _h, int _OM_num, int _point, int _DrawOption = 0);
+void draw_projections(TH1D* _h_pr_y, TH1D* _h_pr_z, int _mean_Y, int _mean_Z, int _OM_num, int _point);
+void draw_projections(TGraph* _gr_y, TGraph* _gr_z, int _mean_Y, int _mean_Z, int _OM_num, int _point);
+TGraph* running_average(TH1D* _h, int _run_av_hwidth);
 TTree* filter_tree(TTree* _t, int _OM_num, double _bounds0[4], double _bounds1[4]);
+double find_intersection(TGraph* _gr, double mean_val, TString _option);
 
 
 void Filter_data(){
-    TFile* f = new TFile(Form("OMs_Tracks_Run-%d.root", RUN_N));
+    TFile* f = new TFile(Form("%sOMs_Tracks_Run-%d.root", PATH, RUN_N));
     TFile* clear_data_file = new TFile(Form("%sOMs_Clear_Tracks_Run-%d.root", PATH, RUN_N), "RECREATE");
 
 	TTree*   Tree[N_OMs];
@@ -36,16 +39,23 @@ void Filter_data(){
     OM_num_tree->Branch("OM_num", &OM_num);
 
     for(OM_num = 0; OM_num < 520; OM_num++)
-    {
+    {   
+        if (OM_num < 13             ||
+            OM_num > 246            ||
+            OM_num % 13 == 0        ||
+            (OM_num - 1) % 13 == 0  ||
+            (OM_num + 12) % 13 == 0 ||
+            (OM_num + 11) % 13 == 0)
+                continue;
         if (Tree[OM_num]->GetEntries() > 1000) 
         {
             OM_num_tree->Fill();
             cout << OM_num << endl;
         
             TH2D* h0 = create_histo(Tree[OM_num], OM_num, X_shifts[0]);
-            double* bounds0 = find_YZ_bounds(h0, OM_num, 1);
+            double* bounds0 = find_YZ_bounds(h0, OM_num, 0, 0);
             TH2D* h1 = create_histo(Tree[OM_num], OM_num, X_shifts[1]);
-            double* bounds1 = find_YZ_bounds(h1, OM_num);
+            double* bounds1 = find_YZ_bounds(h1, OM_num, 0, 0);
 
 
             TTree* clear_tree = filter_tree(Tree[OM_num], OM_num, bounds0, bounds1);
@@ -169,7 +179,7 @@ TH2D* create_histo(TTree* _t, int _OM_num, double _X_plane_shift){
     double Z_hmax = (xyz[2] + mw_sizez / 2) + 200;
     int    Z_bins = int(Z_hmax - Z_hmin) / 4;
 
-    TString hname = Form("Histo for %.2lf mm OM #%d", X, OM_num);
+    TString hname = Form("Histo for %.2lf mm OM #%d", X, _OM_num);
     TH2D* h = new TH2D(hname, hname, Y_bins, Y_hmin, Y_hmax, Z_bins, Z_hmin, Z_hmax);
     
     h->GetXaxis()->SetTitle("y[mm]");
@@ -197,83 +207,194 @@ int mean_counts(TH1D* h_pr){
     return count / h_pr->GetNbinsX();
 }
 
-double* find_YZ_bounds(TH2D* _h, int _OM_num, int _DrawOption = 0){
-    TH1D* h_pr_y = _h->ProjectionX();
-    TH1D* h_pr_z = _h->ProjectionY();
+double* find_YZ_bounds(TH2D* _h, int _OM_num, int _point, int _DrawOption = 0){
+        TH1D* h_pr_y = _h->ProjectionX();
+        TH1D* h_pr_z = _h->ProjectionY();
 
-    double* bounds = new double[4];
+        double* bounds = new double[4];
 
-    int mean_Y = mean_counts(_h->ProjectionX());
-    int mean_Z = mean_counts(_h->ProjectionY());
+        int mean_Y = mean_counts(h_pr_y);
+        int mean_Z = mean_counts(h_pr_z);
 
-    if (_DrawOption == 1) {
-        draw_projections(h_pr_y, h_pr_z, mean_Y, mean_Z, _OM_num);
-    }
+        int run_av_hwidth = 30;
 
-    double bounds_y[2];
-    double bounds_z[2];
+        TGraph* y_graph = running_average(h_pr_y, run_av_hwidth); 
+        TGraph* z_graph = running_average(h_pr_z, run_av_hwidth); 
 
-    for (int bin = 1; bin <= h_pr_y->GetNbinsX(); bin++) {
-        if (h_pr_y->GetBinContent(bin) >= mean_Y * k_mean_cut) {
-            bounds_y[0] = h_pr_y->GetBinLowEdge(bin);
-            break;
+
+        if (_DrawOption) 
+        {
+                draw_projections(h_pr_y, h_pr_z, mean_Y, mean_Z, _OM_num, _point);
+                draw_projections(y_graph, z_graph, mean_Y, mean_Z, _OM_num, _point);
         }
-    }
 
-    for (int bin = h_pr_y->GetNbinsX(); bin >= 1; bin--) {
-        if (h_pr_y->GetBinContent(bin) >= mean_Y * k_mean_cut) {
-            bounds_y[1] = h_pr_y->GetBinLowEdge(bin) + h_pr_y->GetBinWidth(bin);
-            break;
-        }
-    }
+        double bounds_y[2];
+        double bounds_z[2];
 
-    for (int bin = 1; bin <= h_pr_z->GetNbinsX(); bin++) {
-        if (h_pr_z->GetBinContent(bin) >= mean_Z / 2) {
-            bounds_z[0] = h_pr_z->GetBinLowEdge(bin);
-            break;
-        }
-    }
+        bounds_y[0] = find_intersection(y_graph, mean_Y, TString("min"));
+        bounds_y[1] = find_intersection(y_graph, mean_Y, TString("max"));
 
-    for (int bin = h_pr_z->GetNbinsX(); bin >= 1; bin--) {
-        if (h_pr_z->GetBinContent(bin) >= mean_Z / 2) {
-            bounds_z[1] = h_pr_z->GetBinLowEdge(bin) + h_pr_z->GetBinWidth(bin);
-            break;
-        }
-    }
+        bounds_z[0] = find_intersection(z_graph, mean_Z, TString("min"));
+        bounds_z[1] = find_intersection(z_graph, mean_Z, TString("max"));
 
-    bounds[0] = bounds_y[0];
-    bounds[1] = bounds_y[1];
-    bounds[2] = bounds_z[0];
-    bounds[3] = bounds_z[1];
-    return bounds;
+
+        bounds[0] = bounds_y[0];
+        bounds[1] = bounds_y[1];
+        bounds[2] = bounds_z[0];
+        bounds[3] = bounds_z[1];
+        return bounds;
 }
 
-void draw_projections(TH1D* _h_pr_y, TH1D* _h_pr_z, int _mean_Y, int _mean_Z, int _OM_num){
-    TCanvas* C_pr = new TCanvas("Canvas_projections", "Canvas_projections", 1000, 500);
+double find_intersection(TGraph* _gr, double mean_val, TString _option)
+{
+        double step, var;
+        if (_option == "min") 
+        {
+                step = 10;
+                var = _gr->GetXaxis()->GetXmin();
+        }       
+        else if (_option == "max")
+        {
+                step = -10;
+                var = _gr->GetXaxis()->GetXmax();
+        }
+        else return 0;
+        
+        double diff = _gr->Eval(var, 0, "S") - mean_val * k_mean_spaghetti;
+        while (TMath::Abs(diff) > 0.001)
+        {       
+                var += step;
+                double diff_new = _gr->Eval(var, 0, "S") - mean_val * k_mean_spaghetti;
+                if ((diff_new > 0 && diff < 0) ||
+                    (diff_new < 0 && diff > 0)) step /= -2;
+                diff = diff_new;
+        }
+        return var;
+}
 
-    TLine* line_Y = new TLine(_h_pr_y->GetXaxis()->GetXmin(), _mean_Y * k_mean_cut, _h_pr_y->GetXaxis()->GetXmax(), _mean_Y * k_mean_cut);
-    line_Y->SetLineColor(kRed);
-    line_Y->SetLineWidth(2);
+TGraph* running_average(TH1D* _h, int _run_av_hwidth){
+        int points = _h->GetNbinsX();
 
-    TLine* line_Z = new TLine(_h_pr_z->GetXaxis()->GetXmin(), _mean_Z * k_mean_cut, _h_pr_z->GetXaxis()->GetXmax(), _mean_Z * k_mean_cut);
-    line_Z->SetLineColor(kRed);
-    line_Z->SetLineWidth(2);
+        double Arr_X[points], Arr_N[points];
+        for (int bin = 0; bin < points; bin++) 
+        {
+                Arr_X[bin] = _h->GetBinCenter(bin);
+                Arr_N[bin] = _h->GetBinContent(bin);
+        }
 
-    _h_pr_y->GetXaxis()->SetTitle("y[mm]");
-    _h_pr_y->GetYaxis()->SetTitle("Counts");
-    _h_pr_y->SetTitle(Form("Y projection of tracks OM%d", _OM_num)); // Added title
-    _h_pr_y->Draw();
-    line_Y->Draw();
+        int points_new = points + 2 * _run_av_hwidth;
+        double Arr_N_new[points_new], Arr_X_new[points_new];
 
-    C_pr->SaveAs(Form("%sProjections/Projection_Y_OM%03d.png", PATH, _OM_num));
+        for (int bin = 0; bin < points_new; bin++) 
+        {
+                double sum = 0;
+                for (int i = bin - _run_av_hwidth; i <= bin + _run_av_hwidth; i++) 
+                {
+                        double a;
+                        if ((i < _run_av_hwidth) || (i >= points_new - _run_av_hwidth)) a = 0;
+                        else a = Arr_N[i - _run_av_hwidth];
+                        sum += a;
+                }
+                Arr_N_new[bin] = sum / (2 * _run_av_hwidth + 1);
 
-    _h_pr_z->GetXaxis()->SetTitle("z[mm]");
-    _h_pr_z->GetYaxis()->SetTitle("Counts");
-    _h_pr_z->SetTitle(Form("Z projection of tracks OM%d", _OM_num)); // Added title
-    _h_pr_z->Draw();
-    line_Z->Draw();
+                if (bin < _run_av_hwidth) 
+                {
+                        Arr_X_new[bin] = Arr_X[0] - (_run_av_hwidth - bin) * (Arr_X[1] - Arr_X[0]);
+                }
+                else if (bin >= points_new - _run_av_hwidth) 
+                {
+                        Arr_X_new[bin] = Arr_X[points - 1] + (bin - points_new + _run_av_hwidth + 1) * (Arr_X[1] - Arr_X[0]);
+                }
+                else 
+                {
+                        Arr_X_new[bin] = Arr_X[bin - _run_av_hwidth];
+                }
+        }
 
-    C_pr->SaveAs(Form("%sProjections/Projection_Z_OM%03d.png", PATH, _OM_num));
+        TGraph* graph = new TGraph(points_new, Arr_X_new, Arr_N_new);
+        return graph;
+}
+
+void draw_projections(TH1D* _h_pr_y, TH1D* _h_pr_z, int _mean_Y, int _mean_Z, int _OM_num, int _point){
+        OM_xyz_swcr(_OM_num);
+
+        double X;
+        double X_zero_plane = xyz[0];
+
+        if (X_zero_plane > 0) X = X_zero_plane - mw_sizex / 2  + (X_OBSERV_MIN + _point * STEP);
+        else X = X_zero_plane + mw_sizex / 2 - (X_OBSERV_MIN + _point * STEP); 
+        
+        TCanvas* C_pr = new TCanvas("Canvas_projections", "Canvas_projections", 800, 600);
+
+        TLine* line_Y = new TLine(_h_pr_y->GetXaxis()->GetXmin(), _mean_Y * k_mean_spaghetti, _h_pr_y->GetXaxis()->GetXmax(), _mean_Y * k_mean_spaghetti);
+        line_Y->SetLineColor(kRed);
+        line_Y->SetLineWidth(2);
+
+        TLine* line_Z = new TLine(_h_pr_z->GetXaxis()->GetXmin(), _mean_Z * k_mean_spaghetti, _h_pr_z->GetXaxis()->GetXmax(), _mean_Z * k_mean_spaghetti);
+        line_Z->SetLineColor(kRed);
+        line_Z->SetLineWidth(2);
+
+ 
+
+        _h_pr_y->GetXaxis()->SetTitle("y[mm]");
+        _h_pr_y->GetYaxis()->SetTitle("Counts");
+        _h_pr_y->SetTitle(Form("Y projection of tracks OM#%d X=%.1lfmm", _OM_num, X)); // Added title
+        _h_pr_y->SetStats(0);
+        _h_pr_y->Draw();
+        line_Y->Draw();
+
+        C_pr->SaveAs(Form("%sClear_Projections_threshold/Projection_Y_OM%03d_point_%03d.png", PATH, _OM_num, _point));
+
+
+        _h_pr_z->GetXaxis()->SetTitle("z[mm]");
+        _h_pr_z->GetYaxis()->SetTitle("Counts");
+        _h_pr_z->SetTitle(Form("Z projection of tracks OM#%d X=%.1lfmm", _OM_num, X)); // Added title
+        _h_pr_z->SetStats(0);
+        _h_pr_z->Draw();
+        line_Z->Draw();
+
+        C_pr->SaveAs(Form("%sClear_Projections_threshold/Projection_Z_OM%03d_point_%03d.png", PATH, _OM_num, _point));
+}
+
+void draw_projections(TGraph* _gr_y, TGraph* _gr_z, int _mean_Y, int _mean_Z, int _OM_num, int _point){
+        OM_xyz_swcr(_OM_num);
+
+        double X;
+        double X_zero_plane = xyz[0];
+
+        if (X_zero_plane > 0) X = X_zero_plane - mw_sizex / 2  + (X_OBSERV_MIN + _point * STEP);
+        else X = X_zero_plane + mw_sizex / 2 - (X_OBSERV_MIN + _point * STEP); 
+
+
+        TCanvas* C_Y = new TCanvas("Canvas_projections", "Canvas_projections", 800, 600);
+
+        TLine* line_Y = new TLine(_gr_y->GetXaxis()->GetXmin(), _mean_Y * k_mean_spaghetti, _gr_y->GetXaxis()->GetXmax(), _mean_Y * k_mean_spaghetti);
+        line_Y->SetLineColor(kRed);
+        line_Y->SetLineWidth(2);
+
+        TLine* line_Z = new TLine(_gr_z->GetXaxis()->GetXmin(), _mean_Z * k_mean_spaghetti, _gr_z->GetXaxis()->GetXmax(), _mean_Z * k_mean_spaghetti);
+        line_Z->SetLineColor(kRed);
+        line_Z->SetLineWidth(2);
+
+        _gr_y->GetXaxis()->SetTitle("y[mm]");
+        _gr_y->GetYaxis()->SetTitle("Counts");
+        _gr_y->SetTitle(Form("Y projection of tracks OM#%d X=%.1lfmm", _OM_num, X)); // Added title
+        _gr_y->Draw();
+        C_Y->SaveAs(Form("%sClear_Projections_RA/Projection_Y_OM%03d_point_%03d.png", PATH, _OM_num, _point));
+        line_Y->Draw();
+
+        C_Y->SaveAs(Form("%sClear_Projections_RA_threshold/Projection_Y_OM%03d_point_%03d.png", PATH, _OM_num, _point));
+
+        TCanvas* C_Z = new TCanvas("Canvas_projections", "Canvas_projections", 800, 600);
+
+        _gr_z->GetXaxis()->SetTitle("z[mm]");
+        _gr_z->GetYaxis()->SetTitle("Counts");
+        _gr_z->SetTitle(Form("Z projection of tracks OM#%d X=%.1lfmm", _OM_num, X)); // Added title
+        _gr_z->Draw();
+        C_Z->SaveAs(Form("%sClear_Projections_RA/Projection_Z_OM%03d_point_%03d.png", PATH, _OM_num, _point));
+        line_Z->Draw();
+
+        C_Z->SaveAs(Form("%sClear_Projections_RA_threshold/Projection_Z_OM%03d_point_%03d.png", PATH, _OM_num, _point));
 }
 
 TTree* filter_tree(TTree* _t, int _OM_num, double _bounds0[4], double _bounds1[4]){

@@ -1,10 +1,9 @@
-#include "/sps/nemo/scratch/ikovalen/TKEvent_old/TKEvent/include/TKEvent.h"
 #include "config.h"
 
 using namespace std;
 using namespace TMath;
 
-R__LOAD_LIBRARY(/sps/nemo/scratch/ikovalen/TKEvent_old/TKEvent/lib/libTKEvent.so);
+// R__LOAD_LIBRARY(/sps/nemo/scratch/ikovalen/TKEvent_old/TKEvent/lib/libTKEvent.so);
 
 void OM_xyz_swcr(int OM_num);
 
@@ -63,14 +62,14 @@ void General_Visu(){
 		auto h_line = new TLine(Y_MIN, Z_MIN + i * mw_sizez, Y_MAX, Z_MIN + i * mw_sizez);
 		h_line->SetLineWidth(1);
 		h_line->SetLineColor(2);
-		h_line->Draw("Same");
+		// h_line->Draw("Same");
 	}
         for(int	i = 0; i <= 20; i++)
         {
                 auto v_line = new TLine(Y_MIN + i * mw_sizey, Z_MIN, Y_MIN + i * mw_sizey, Z_MAX);
                 v_line->SetLineWidth(1);
                 v_line->SetLineColor(2);
-                v_line->Draw("Same");
+                // v_line->Draw("Same");
         }
         C0->SaveAs(Form("%shist_OMs_tracks_ital.png", PATH));
 
@@ -105,14 +104,14 @@ void General_Visu(){
                 auto h_line = new TLine(Y_MIN, Z_MIN + i * mw_sizez, Y_MAX, Z_MIN + i * mw_sizez);
                 h_line->SetLineWidth(1);
                 h_line->SetLineColor(2);
-                h_line->Draw("Same");
+                // h_line->Draw("Same");
         }
 	for(int i = 0; i <= 20; i++)
         {
                 auto v_line = new TLine(Y_MIN + i * mw_sizey, Z_MIN, Y_MIN + i * mw_sizey, Z_MAX);
                 v_line->SetLineWidth(1);
                 v_line->SetLineColor(2);
-                v_line->Draw("Same");
+                // v_line->Draw("Same");
         }
 	C1->SaveAs(Form("%shist_OMs_tracks_fren.png", PATH));
 

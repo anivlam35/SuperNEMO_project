@@ -13,7 +13,6 @@ void draw_projections(TGraph* _gr_y, TGraph* _gr_z, int _mean_Y, int _mean_Z, in
 double find_intersection(TGraph* _gr, double mean_val, TString _option);
 TGraph* running_average(TH1D* _h, int _run_av_hwidth);
 
-int WALL = 0;
 
 void Spaghetti_analysis()
 {
@@ -26,11 +25,34 @@ void Spaghetti_analysis()
 
         int N_OMs_mw = 0;
         
-        for(int entry = 0; entry < OM_num_tree->GetEntries(); entry++)
-        {
-                OM_num_tree->GetEntry(entry);
-                if(OM_num < 260) N_OMs_mw++;
+        int start_entry = -1; 
+
+        if (SIDE == 0){
+                start_entry = 0;
+                for(int entry = 0; entry < OM_num_tree->GetEntries(); entry++)
+                {
+                        OM_num_tree->GetEntry(entry);
+                        if(OM_num < 260) N_OMs_mw++;
+                }
         }
+        else if (SIDE == 1){
+                for(int entry = 0; entry < OM_num_tree->GetEntries(); entry++)
+                {
+                        OM_num_tree->GetEntry(entry);
+                        if(OM_num >= 260) 
+                        {
+                                N_OMs_mw++;
+                                if (start_entry == -1) start_entry = entry;
+                        }
+                }
+        }
+        
+        OM_num_tree->GetEntry(start_entry);
+        OM_xyz_swcr(OM_num);
+        double X_BasePlane;
+                
+        if (xyz[0] > 0) X_BasePlane = xyz[0] - mw_sizex / 2;
+        else X_BasePlane = xyz[0] + mw_sizex / 2; 
 
         int N_Points = int(X_OBSERV_MAX - X_OBSERV_MIN) / STEP + 1;
 	double Arr_X[N_Points], Arr_Y[N_Points], Arr_Z[N_Points];
@@ -40,7 +62,7 @@ void Spaghetti_analysis()
 
         for(int entry = 0; entry < N_OMs_mw; entry++)
 	{
-                OM_num_tree->GetEntry(entry);
+                OM_num_tree->GetEntry(start_entry + entry);
 
                 OM_xyz_swcr(OM_num);
 
@@ -58,131 +80,122 @@ void Spaghetti_analysis()
                         double X_shift = X_OBSERV_MIN + point * STEP;
 
                         TH2D* h_vert = create_histo(tr, OM_num, X_shift);
-                        double* bounds = find_YZ_bounds(h_vert, OM_num, point, 1);
-                        // if (OM_num < 260)
-
-                        //         TString h_name = Form("Histo for %.2lf mm OM #%d", X, OM_num);						   
-                        //         h_vert = new TH2D(h_name, h_name, YBINS, YMIN, YMAX, ZBINS, ZMIN, ZMAX);
-                        //         h_vert->SetMaximum(50);
-                        //         h_vert->GetXaxis()->SetRangeUser(YMIN, YMAX);
-                        //         h_vert->GetYaxis()->SetRangeUser(ZMIN, ZMAX);
-                        //         h_vert->GetXaxis()->SetTitle("y[mm]");
-                        //         h_vert->GetYaxis()->SetTitle("z[mm]");
-
-                        // for(int i = 0; i < tr->GetEntries(); i++)
-                        // {
-                        //         tr->GetEntry(i);
-
-                        //         double Y = parA * X + parB;
-                        //         double Z = parC * X + parD;
-
-                        //         h_vert->Fill(Y, Z);
-                        // }
+                        double* bounds = find_YZ_bounds(h_vert, OM_num, point, 0);
 
                         TCanvas* C0 = new TCanvas("Canvas", "Canvas", 1000, 1000);
                         h_vert->Draw("colz");
                         C0->SaveAs(Form("%sCUTS/OM_%03d_point_%03d.png", PATH, OM_num, point));
 
-                        Arr_X[point] = X_shift;
-                        Arr_Y[point] = bounds[1] - bounds[0];
+                        double X;
+                        if (xyz[0] > 0) X = xyz[0] - mw_sizex / 2  + X_shift;
+                        else X = xyz[0] + mw_sizex / 2 - X_shift;
+                        Arr_X[point] = X;
+                        // Arr_Y[point] = bounds[1] - bounds[0];
                         Arr_Z[point] = bounds[3] - bounds[2];
-                }
 
-                grY[entry] = new TGraph(N_Points, Arr_X, Arr_Y);
+                        delete h_vert;
+                        delete bounds;
+                        delete C0;
+                }
+                delete tr;
+
+
+                // grY[entry] = new TGraph(N_Points, Arr_X, Arr_Y);
                 grZ[entry] = new TGraph(N_Points, Arr_X, Arr_Z);
-                grY[entry]->Draw();
+                // grY[entry]->Draw();
 	}
 
-        TCanvas* CY = new TCanvas("#Delta y(x)", "GraphY", 3600, 2400);
+        // TCanvas* CY = new TCanvas("#Delta y(x)", "GraphY", 1500, 1000);
 
-        TPad *pad1y = new TPad("pad1", "pad1", 0, 0.3, 1, 1.0);
-        pad1y->Draw();
-        pad1y->cd();
+        // TPad *pad1y = new TPad("pad1", "pad1", 0, 0.3, 1, 1.0);
+        // pad1y->Draw();
+        // pad1y->cd();
 
-        pad1y->SetBottomMargin(0);
+        // pad1y->SetBottomMargin(0);
 
-        OM_num_tree->GetEntry(0);
+        // OM_num_tree->GetEntry(start_entry);
 
-        auto legendy = new TLegend(0.9,0.1,1.0,0.9);
-        legendy->SetHeader("#Delta y(x)","C"); // option "C" allows to center the header
-        legendy->AddEntry(grY[0], Form("OM %d", OM_num),"pl");
+        // auto legendy = new TLegend(0.9,0.1,1.0,0.9);
+        // legendy->SetHeader("#Delta y(x)","C"); // option "C" allows to center the header
+        // legendy->AddEntry(grY[0], Form("OM %d", OM_num),"pl");
 
-        TGraph_formatting(grY[0], OM_num);
-        grY[0]->Draw("APL");
-        grY[0]->GetYaxis()->SetTitle("#Delta y(x) [mm]");
-        grY[0]->GetXaxis()->SetTitle("x [mm]");
+        // TGraph_formatting(grY[0], OM_num);
+        // grY[0]->Draw("APL");
+        // grY[0]->GetYaxis()->SetTitle("#Delta y(x) [mm]");
+        // grY[0]->GetXaxis()->SetTitle("x [mm]");
 
-        for(int entry = 1; entry < N_OMs_mw; entry++)
-        {
-                OM_num_tree->GetEntry(entry);
+        // for(int entry = 1; entry < N_OMs_mw; entry++)
+        // {
+        //         OM_num_tree->GetEntry(start_entry + entry);
 
-                TString nm = Form("OM %d", OM_num);
+        //         TString nm = Form("OM %d", OM_num);
 
 
-                grY[entry]->SetName(nm);
-                grY[entry]->SetMarkerColor(1);
-                grY[entry]->SetMarkerStyle(OM_num % 4 + 20);
-                grY[entry]->SetMarkerSize(0.5);
-                grY[entry]->SetLineColor(51 + int(OM_num) % 50);
-                grY[entry]->SetLineWidth(1);
-                grY[entry]->Draw("PL same");
+        //         grY[entry]->SetName(nm);
+        //         grY[entry]->SetMarkerColor(1);
+        //         grY[entry]->SetMarkerStyle((OM_num % 260) % 4 + 20);
+        //         grY[entry]->SetMarkerSize(0.5);
+        //         grY[entry]->SetLineColor(+ 5 * int((OM_num % 260)) / 26);
+        //         grY[entry]->SetLineWidth(1);
+        //         grY[entry]->Draw("PL same");
 
-                legendy->AddEntry(grY[entry], nm, "pl");
-        }
+        //         // legendy->AddEntry(grY[entry], nm, "pl");
+        // }
 
-        legendy->Draw("same");	
+        // // legendy->Draw("same");	
 
-        CY->cd();
-        TPad *pad2y = new TPad("pad2", "pad2", 0, 0.05, 1, 0.3);
-        pad2y->Draw();
-        pad2y->cd();
+        // CY->cd();
+        // TPad *pad2y = new TPad("pad2", "pad2", 0, 0.05, 1, 0.3);
+        // pad2y->Draw();
+        // pad2y->cd();
 
-        pad2y->SetBottomMargin(0.2);
-        pad2y->SetTopMargin(0);
+        // pad2y->SetBottomMargin(0.2);
+        // pad2y->SetTopMargin(0);
 
-        TH1F *hY = new TH1F("histo", "histo", N_Points, X_OBSERV_MIN - STEP / 2, X_OBSERV_MAX + STEP / 2);
+        // TH1F *hY = new TH1F("histo", "histo", N_Points, X_BasePlane + X_OBSERV_MIN - STEP / 2, X_BasePlane + X_OBSERV_MAX + STEP / 2);
 
-        TH1F_formatting(hY);
-        hY->GetYaxis()->SetTitle("N");
-        hY->GetXaxis()->SetTitle("x [mm]");
+        // TH1F_formatting(hY);
+        // hY->GetYaxis()->SetTitle("N");
+        // hY->GetXaxis()->SetTitle("x [mm]");
 
-        for(int entry = 0; entry < N_OMs_mw; entry++)
-        {
-                const double* xValues = grY[entry]->GetX();
-                const double* yValues = grY[entry]->GetY();
+        // for(int entry = 0; entry < N_OMs_mw; entry++)
+        // {
+        //         const double* xValues = grY[entry]->GetX();
+        //         const double* yValues = grY[entry]->GetY();
 
-                // Find the index of the minimum Y value
-                double minY = yValues[0];
-                int minIndex = 0;
-                for (int i = 1; i < grY[entry]->GetN(); ++i)
-                {
-                        if (yValues[i] < minY)
-                        {
-                        minY = yValues[i];
-                        minIndex = i;
-                        }
-                }
+        //         // Find the index of the minimum Y value
+        //         double minY = yValues[0];
+        //         int minIndex = 0;
+        //         for (int i = 1; i < grY[entry]->GetN(); ++i)
+        //         {
+        //                 if (yValues[i] < minY)
+        //                 {
+        //                 minY = yValues[i];
+        //                 minIndex = i;
+        //                 }
+        //         }
+                
 
-                // Get the x-position corresponding to the minimum Y value
-                double minXPosition = xValues[minIndex];
+        //         // Get the x-position corresponding to the minimum Y value
+        //         double minXPosition = xValues[minIndex];
 
-                hY->Fill(minXPosition);
-        }
+        //         hY->Fill(minXPosition);
+        // }
 
-        hY->Draw();
+        // hY->Draw();
 
-        CY->SetTitle("#Delta y(x)");
+        // CY->SetTitle("#Delta y(x)");
 
-        CY->Print(Form("%svY.png", PATH));
+        // CY->Print(Form("%svY.png", PATH));
 
-        TCanvas* CZ = new TCanvas("#Delta z(x)", "GraphZ", 3600, 2400);
+        TCanvas* CZ = new TCanvas("#Delta z(x)", "GraphZ", 1500, 1000);
 
         TPad *pad1z = new TPad("pad1", "pad1", 0, 0.3, 1, 1.0);
         pad1z->Draw();
         pad1z->cd();
         pad1z->SetBottomMargin(0);
 
-        OM_num_tree->GetEntry(0);
+        OM_num_tree->GetEntry(start_entry);
 
         auto legendz = new TLegend(0.9,0.1,1.0,0.9);
         legendz->SetHeader("#Delta z(x)","C"); // option "C" allows to center the header
@@ -192,25 +205,26 @@ void Spaghetti_analysis()
         grZ[0]->Draw("APL");
         grZ[0]->GetYaxis()->SetTitle("#Delta z(x) [mm]");
         grZ[0]->GetXaxis()->SetTitle("x [mm]");
+        grZ[0]->SetTitle("OMs x-coordinates (\"french\" side)");
 
         for(int entry=1; entry < N_OMs_mw; entry++)
         {
-                OM_num_tree->GetEntry(entry);
+                OM_num_tree->GetEntry(start_entry + entry);
 
                 TString nm = Form("OM %d", OM_num);
 
                 grZ[entry]->SetName(nm);
                 grZ[entry]->SetMarkerColor(1);
-                grZ[entry]->SetMarkerStyle(OM_num % 4 + 20);
+                grZ[entry]->SetMarkerStyle((OM_num % 260) % 4 + 20);
                 grZ[entry]->SetMarkerSize(0.5);
-                grZ[entry]->SetLineColor(51 + int(OM_num) % 50);
+                grZ[entry]->SetLineColor(51 + 5 * int(OM_num % 260) / 26);
                 grZ[entry]->SetLineWidth(1);
                 grZ[entry]->Draw("PL same");
 
-                legendz->AddEntry(grZ[entry], nm, "pl");
+                // legendz->AddEntry(grZ[entry], nm, "pl");
         }
 
-        legendz->Draw("same");
+        // legendz->Draw("same");
 
         CZ->cd();
         TPad *pad2z = new TPad("pad2", "pad2", 0, 0.05, 1, 0.3);
@@ -220,7 +234,7 @@ void Spaghetti_analysis()
         pad2z->SetBottomMargin(0.2);
         pad2z->SetTopMargin(0);
 
-        TH1F *hZ = new TH1F("histo", "histo", N_Points, X_OBSERV_MIN - STEP / 2, X_OBSERV_MAX + STEP / 2);
+        TH1F *hZ = new TH1F("histo", "histo", N_Points, X_BasePlane + X_OBSERV_MIN - STEP / 2, X_BasePlane + X_OBSERV_MAX + STEP / 2);
 
         TH1F_formatting(hZ);
         hZ->GetYaxis()->SetTitle("N");
@@ -250,6 +264,7 @@ void Spaghetti_analysis()
                 hZ->Fill(minXPosition);
         }
 
+	cout << "Mean_Z: " << hZ->GetMean() << ", SD: " << (N_OMs_mw / (N_OMs_mw - 1)) * hZ->GetRMS() << endl;
         hZ->Draw();
 
         CZ->SetTitle("#delta z(x)");
@@ -257,15 +272,21 @@ void Spaghetti_analysis()
 
         for(int entry = 0; entry < N_OMs_mw; entry++)
         {	
-                OM_num_tree->GetEntry(entry);
+                OM_num_tree->GetEntry(start_entry + entry);
 
-                TString print_name_RMS_Y = Form("%sRMS_ALL_OMs/RMS_Y_OM_%03d.png", PATH, OM_num);
-                TCanvas* CindY = new TCanvas(Form("RMS_Y_OM_%d", OM_num), Form("RMS_Y_OM_%d", OM_num));
-                grY[entry]->Draw();
-                CindY->Print(print_name_RMS_Y);
+                // TString print_name_RMS_Y = Form("%sRMS_ALL_OMs/RMS_Y_OM_%03d.png", PATH, OM_num);
+                // TCanvas* CindY = new TCanvas(Form("RMS_Y_OM_%d", OM_num), Form("RMS_Y_OM_%d", OM_num));
+                // grY[entry]->SetTitle(Form("CW along y-axis. OM#%d.", OM_num));
+                // grY[entry]->GetXaxis()->SetTitle("x [mm]");
+                // grY[entry]->GetYaxis()->SetTitle("#Delta y");
+                // grY[entry]->Draw();
+                // CindY->Print(print_name_RMS_Y);
 
                 TString print_name_RMS_Z = Form("%sRMS_ALL_OMs/RMS_Z_OM_%03d.png", PATH, OM_num);
                 TCanvas* CindZ = new TCanvas(Form("RMS_Z_OM_%d", OM_num), Form("RMS_Z_OM_%d", OM_num));
+                grZ[entry]->SetTitle(Form("CW along z-axis. OM#%d.", OM_num));
+                grZ[entry]->GetXaxis()->SetTitle("x [mm]");
+                grZ[entry]->GetYaxis()->SetTitle("#Delta z");
                 grZ[entry]->Draw();
                 CindZ->Print(print_name_RMS_Z);
         }
@@ -273,8 +294,8 @@ void Spaghetti_analysis()
 
 void TGraph_formatting(TGraph* gr, int _OM_num)
 {
-        gr->SetMinimum(100);
-        gr->SetMaximum(250);
+        gr->SetMinimum(250);
+        gr->SetMaximum(350);
         gr->SetName(Form("OM %d", _OM_num));
         gr->SetMarkerColor(1);
         gr->SetMarkerStyle(20);
@@ -285,7 +306,7 @@ void TGraph_formatting(TGraph* gr, int _OM_num)
         gr->GetYaxis()->SetNdivisions(510);
         gr->GetYaxis()->SetLabelFont(43);
         gr->GetYaxis()->SetTitleFont(43);
-        gr->GetYaxis()->SetTitleOffset(1);
+        gr->GetYaxis()->SetTitleOffset(1.5);
         gr->GetYaxis()->SetLabelSize(20);
         gr->GetYaxis()->SetTitleSize(20);
 
@@ -305,14 +326,14 @@ void TH1F_formatting(TH1F* h)
         h->GetYaxis()->SetLabelSize(15);
         h->GetYaxis()->SetTitleFont(43);
         h->GetYaxis()->SetLabelFont(43);
-        h->GetYaxis()->SetTitleOffset(1);
+        h->GetYaxis()->SetTitleOffset(1.5);
         h->GetYaxis()->SetNdivisions(10);
         h->GetXaxis()->SetTickLength(0.1);
         h->GetXaxis()->SetTitleSize(20);
         h->GetXaxis()->SetLabelSize(15);
         h->GetXaxis()->SetTitleFont(43);
         h->GetXaxis()->SetLabelFont(43);
-        h->GetXaxis()->SetTitleOffset(3);
+        h->GetXaxis()->SetTitleOffset(1);
 }
 
 TH2D* create_histo(TTree* _t, int _OM_num, double _X_plane_shift){
@@ -471,65 +492,98 @@ TGraph* running_average(TH1D* _h, int _run_av_hwidth){
         }
 
         TGraph* graph = new TGraph(points_new, Arr_X_new, Arr_N_new);
+        graph->GetXaxis()->SetLimits(_h->GetXaxis()->GetXmin(), _h->GetXaxis()->GetXmax());
         return graph;
 }
 
 void draw_projections(TH1D* _h_pr_y, TH1D* _h_pr_z, int _mean_Y, int _mean_Z, int _OM_num, int _point){
-        TCanvas* C_pr = new TCanvas("Canvas_projections", "Canvas_projections", 1000, 500);
+        OM_xyz_swcr(_OM_num);
 
-        TLine* line_Y = new TLine(_h_pr_y->GetXaxis()->GetXmin(), _mean_Y * k_mean_spaghetti, _h_pr_y->GetXaxis()->GetXmax(), _mean_Y * k_mean_spaghetti);
-        line_Y->SetLineColor(kRed);
-        line_Y->SetLineWidth(2);
+        double X;
+        double X_zero_plane = xyz[0];
+
+        if (X_zero_plane > 0) X = X_zero_plane - mw_sizex / 2  + (X_OBSERV_MIN + _point * STEP);
+        else X = X_zero_plane + mw_sizex / 2 - (X_OBSERV_MIN + _point * STEP); 
+        
+        TCanvas* C_pr = new TCanvas("Canvas_projections", "Canvas_projections", 800, 600);
+
+        // TLine* line_Y = new TLine(_h_pr_y->GetXaxis()->GetXmin(), _mean_Y * k_mean_spaghetti, _h_pr_y->GetXaxis()->GetXmax(), _mean_Y * k_mean_spaghetti);
+        // line_Y->SetLineColor(kRed);
+        // line_Y->SetLineWidth(2);
 
         TLine* line_Z = new TLine(_h_pr_z->GetXaxis()->GetXmin(), _mean_Z * k_mean_spaghetti, _h_pr_z->GetXaxis()->GetXmax(), _mean_Z * k_mean_spaghetti);
         line_Z->SetLineColor(kRed);
         line_Z->SetLineWidth(2);
 
-        _h_pr_y->GetXaxis()->SetTitle("y[mm]");
-        _h_pr_y->GetYaxis()->SetTitle("Counts");
-        _h_pr_y->SetTitle(Form("Y projection of tracks OM%d", _OM_num)); // Added title
-        _h_pr_y->Draw();
-        line_Y->Draw();
+ 
 
-        C_pr->SaveAs(Form("%sClear_Projections/Projection_Y_OM%03d_point_%03d.png", PATH, _OM_num, _point));
+        // _h_pr_y->GetXaxis()->SetTitle("y[mm]");
+        // _h_pr_y->GetYaxis()->SetTitle("Counts");
+        // _h_pr_y->SetTitle(Form("Y projection of tracks OM#%d X=%.1lfmm", _OM_num, X)); // Added title
+        // _h_pr_y->SetStats(0);
+        // _h_pr_y->Draw();
+        // C_pr->SaveAs(Form("%sClear_Projections/Projection_Y_OM%03d_point_%03d.png", PATH, _OM_num, _point));
+        // line_Y->Draw();
+
+        // C_pr->SaveAs(Form("%sClear_Projections_threshold/Projection_Y_OM%03d_point_%03d.png", PATH, _OM_num, _point));
+
 
         _h_pr_z->GetXaxis()->SetTitle("z[mm]");
         _h_pr_z->GetYaxis()->SetTitle("Counts");
-        _h_pr_z->SetTitle(Form("Z projection of tracks OM%d", _OM_num)); // Added title
+        _h_pr_z->SetTitle(Form("Z projection of tracks OM#%d X=%.1lfmm", _OM_num, X)); // Added title
+        _h_pr_z->SetStats(0);
         _h_pr_z->Draw();
+        C_pr->SaveAs(Form("%sClear_Projections/Projection_Z_OM%03d_point_%03d.png", PATH, _OM_num, _point));
         line_Z->Draw();
 
-        C_pr->SaveAs(Form("%sClear_Projections/Projection_Z_OM%03d_point_%03d.png", PATH, _OM_num, _point));
+        C_pr->SaveAs(Form("%sClear_Projections_threshold/Projection_Z_OM%03d_point_%03d.png", PATH, _OM_num, _point));
+
+        delete C_pr;
+        delete line_Z;
 }
 
 void draw_projections(TGraph* _gr_y, TGraph* _gr_z, int _mean_Y, int _mean_Z, int _OM_num, int _point){
-        TCanvas* C_Y = new TCanvas("Canvas_projections", "Canvas_projections", 1000, 500);
+        OM_xyz_swcr(_OM_num);
 
-        TLine* line_Y = new TLine(_gr_y->GetXaxis()->GetXmin(), _mean_Y * k_mean_spaghetti, _gr_y->GetXaxis()->GetXmax(), _mean_Y * k_mean_spaghetti);
-        line_Y->SetLineColor(kRed);
-        line_Y->SetLineWidth(2);
+        double X;
+        double X_zero_plane = xyz[0];
+
+        if (X_zero_plane > 0) X = X_zero_plane - mw_sizex / 2  + (X_OBSERV_MIN + _point * STEP);
+        else X = X_zero_plane + mw_sizex / 2 - (X_OBSERV_MIN + _point * STEP); 
+
+
+        // TCanvas* C_Y = new TCanvas("Canvas_projections", "Canvas_projections", 800, 600);
+
+        // TLine* line_Y = new TLine(_gr_y->GetXaxis()->GetXmin(), _mean_Y * k_mean_spaghetti, _gr_y->GetXaxis()->GetXmax(), _mean_Y * k_mean_spaghetti);
+        // line_Y->SetLineColor(kRed);
+        // line_Y->SetLineWidth(2);
 
         TLine* line_Z = new TLine(_gr_z->GetXaxis()->GetXmin(), _mean_Z * k_mean_spaghetti, _gr_z->GetXaxis()->GetXmax(), _mean_Z * k_mean_spaghetti);
         line_Z->SetLineColor(kRed);
         line_Z->SetLineWidth(2);
 
-        _gr_y->GetXaxis()->SetTitle("y[mm]");
-        _gr_y->GetYaxis()->SetTitle("Counts");
-        _gr_y->SetTitle(Form("Y projection of tracks OM%d", _OM_num)); // Added title
-        _gr_y->Draw();
-        line_Y->Draw();
+        // _gr_y->GetXaxis()->SetTitle("y[mm]");
+        // _gr_y->GetYaxis()->SetTitle("Counts");
+        // _gr_y->SetTitle(Form("Y projection of tracks OM#%d X=%.1lfmm", _OM_num, X)); // Added title
+        // _gr_y->Draw();
+        // C_Y->SaveAs(Form("%sClear_Projections_RA/Projection_Y_OM%03d_point_%03d.png", PATH, _OM_num, _point));
+        // line_Y->Draw();
 
-        C_Y->SaveAs(Form("%sClear_Projections_RA/Projection_Y_OM%03d_point_%03d.png", PATH, _OM_num, _point));
+        // C_Y->SaveAs(Form("%sClear_Projections_RA_threshold/Projection_Y_OM%03d_point_%03d.png", PATH, _OM_num, _point));
 
-        TCanvas* C_Z = new TCanvas("Canvas_projections", "Canvas_projections", 1000, 500);
+        TCanvas* C_Z = new TCanvas("Canvas_projections", "Canvas_projections", 800, 600);
 
         _gr_z->GetXaxis()->SetTitle("z[mm]");
         _gr_z->GetYaxis()->SetTitle("Counts");
-        _gr_z->SetTitle(Form("Z projection of tracks OM%d", _OM_num)); // Added title
+        _gr_z->SetTitle(Form("Z projection of tracks OM#%d X=%.1lfmm", _OM_num, X)); // Added title
         _gr_z->Draw();
+        C_Z->SaveAs(Form("%sClear_Projections_RA/Projection_Z_OM%03d_point_%03d.png", PATH, _OM_num, _point));
         line_Z->Draw();
 
-        C_Z->SaveAs(Form("%sClear_Projections_RA/Projection_Z_OM%03d_point_%03d.png", PATH, _OM_num, _point));
+        C_Z->SaveAs(Form("%sClear_Projections_RA_threshold/Projection_Z_OM%03d_point_%03d.png", PATH, _OM_num, _point));
+
+        delete line_Z;
+        delete C_Z;
 }
 
 void OM_xyz_swcr(int OM_num)
